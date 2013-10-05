@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 mmh. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "Card.h"
 
 @interface PlayingCard : Card
