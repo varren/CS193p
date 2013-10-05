@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A08AC45118002CFF00CAA6D7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45018002CFF00CAA6D7 /* Card.m */; };
+		A08AC45518002D7200CAA6D7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45418002D7200CAA6D7 /* Deck.m */; };
+		A08AC45818002DB400CAA6D7 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45718002DB400CAA6D7 /* PlayingCard.m */; };
+		A08AC45B18002DDA00CAA6D7 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45A18002DDA00CAA6D7 /* PlayingCardDeck.m */; };
 		A0BA704417AA045700058122 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BA704317AA045700058122 /* UIKit.framework */; };
 		A0BA704617AA045700058122 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BA704517AA045700058122 /* Foundation.framework */; };
 		A0BA704817AA045700058122 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0BA704717AA045700058122 /* CoreGraphics.framework */; };
@@ -22,6 +26,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A08AC44F18002CFF00CAA6D7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
+		A08AC45018002CFF00CAA6D7 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Card.m; path = Model/Card.m; sourceTree = "<group>"; };
+		A08AC45318002D7200CAA6D7 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Model/Deck.h; sourceTree = "<group>"; };
+		A08AC45418002D7200CAA6D7 /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Deck.m; path = Model/Deck.m; sourceTree = "<group>"; };
+		A08AC45618002DB400CAA6D7 /* PlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCard.h; path = Model/PlayingCard.h; sourceTree = "<group>"; };
+		A08AC45718002DB400CAA6D7 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
+		A08AC45918002DDA00CAA6D7 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
+		A08AC45A18002DDA00CAA6D7 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
 		A0BA704017AA045700058122 /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0BA704317AA045700058122 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0BA704517AA045700058122 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,6 +67,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A08AC45218002D2800CAA6D7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A08AC44F18002CFF00CAA6D7 /* Card.h */,
+				A08AC45018002CFF00CAA6D7 /* Card.m */,
+				A08AC45318002D7200CAA6D7 /* Deck.h */,
+				A08AC45418002D7200CAA6D7 /* Deck.m */,
+				A08AC45618002DB400CAA6D7 /* PlayingCard.h */,
+				A08AC45718002DB400CAA6D7 /* PlayingCard.m */,
+				A08AC45918002DDA00CAA6D7 /* PlayingCardDeck.h */,
+				A08AC45A18002DDA00CAA6D7 /* PlayingCardDeck.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		A0BA703717AA045600058122 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +115,7 @@
 				A0BA705217AA045700058122 /* CardGameAppDelegate.h */,
 				A0BA705317AA045700058122 /* CardGameAppDelegate.m */,
 				A0BA705B17AA045700058122 /* MainStoryboard_iPhone.storyboard */,
+				A08AC45218002D2800CAA6D7 /* Model */,
 				A0BA705E17AA045700058122 /* MainStoryboard_iPad.storyboard */,
 				A0BA706117AA045700058122 /* CardGameViewController.h */,
 				A0BA706217AA045700058122 /* CardGameViewController.m */,
@@ -181,6 +209,10 @@
 				A0BA705017AA045700058122 /* main.m in Sources */,
 				A0BA705417AA045700058122 /* CardGameAppDelegate.m in Sources */,
 				A0BA706317AA045700058122 /* CardGameViewController.m in Sources */,
+				A08AC45118002CFF00CAA6D7 /* Card.m in Sources */,
+				A08AC45518002D7200CAA6D7 /* Deck.m in Sources */,
+				A08AC45818002DB400CAA6D7 /* PlayingCard.m in Sources */,
+				A08AC45B18002DDA00CAA6D7 /* PlayingCardDeck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +345,7 @@
 				A0BA706817AA045700058122 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
