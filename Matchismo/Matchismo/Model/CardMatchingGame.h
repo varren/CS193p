@@ -15,6 +15,9 @@
 
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
+-(void)setMode:(int) mode;
 
 @property (nonatomic,readonly) int score;
+@property (strong, nonatomic, readonly) NSString *lastActionStatus;
+
 @end

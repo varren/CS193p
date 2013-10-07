@@ -20,7 +20,13 @@
         } else if(otherCard.rank == self.rank) {
             score = 4;
         }
-    }
+    }/*else if (otherCards.count > 1){
+        for (PlayingCard* card in otherCards)
+            score += [self match:@[card]];
+        
+        PlayingCard* nextCard = (PlayingCard *) [otherCards lastObject];
+        score += [nextCard match:[otherCards subarrayWithRange:NSMakeRange(0, [otherCards count] - 2)]];
+    }*/
     
     
     return score;
