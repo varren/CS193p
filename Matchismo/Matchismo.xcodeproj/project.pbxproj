@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A080D597180352D100C89F61 /* cardback.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A080D596180352D100C89F61 /* cardback.jpg */; };
+		A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07F8ABC180423BD00CF491D /* cardback.jpg */; };
 		A08AC45118002CFF00CAA6D7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45018002CFF00CAA6D7 /* Card.m */; };
 		A08AC45518002D7200CAA6D7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45418002D7200CAA6D7 /* Deck.m */; };
 		A08AC45818002DB400CAA6D7 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45718002DB400CAA6D7 /* PlayingCard.m */; };
@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A080D596180352D100C89F61 /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cardback.jpg; sourceTree = "<group>"; };
+		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cardback.jpg; sourceTree = "<group>"; };
 		A08AC44F18002CFF00CAA6D7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
 		A08AC45018002CFF00CAA6D7 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Card.m; path = Model/Card.m; sourceTree = "<group>"; };
 		A08AC45318002D7200CAA6D7 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Model/Deck.h; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		A0BA704A17AA045700058122 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A080D596180352D100C89F61 /* cardback.jpg */,
+				A07F8ABC180423BD00CF491D /* cardback.jpg */,
 				A0BA704B17AA045700058122 /* Matchismo-Info.plist */,
 				A0BA704C17AA045700058122 /* InfoPlist.strings */,
 				A0BA704F17AA045700058122 /* main.m */,
@@ -200,7 +200,7 @@
 				A0BA705817AA045700058122 /* Default@2x.png in Resources */,
 				A0BA705A17AA045700058122 /* Default-568h@2x.png in Resources */,
 				A0BA705D17AA045700058122 /* MainStoryboard_iPhone.storyboard in Resources */,
-				A080D597180352D100C89F61 /* cardback.jpg in Resources */,
+				A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

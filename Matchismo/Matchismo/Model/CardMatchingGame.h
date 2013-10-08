@@ -12,6 +12,9 @@
 
 -(id)initWithCardCount:(NSUInteger) cardCount
              usingDeck:(Deck *) deck;
+-(id)initWithCardCount:(NSUInteger) cardCount
+             usingDeck:(Deck *) deck
+               andMode:(int) mode;
 
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;

@@ -301,7 +301,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="reDealCards:" destination="2" eventType="touchUpInside" id="VAn-eC-Vgj"/>
+                                    <action selector="deal" destination="2" eventType="touchUpInside" id="iuT-M9-yKP"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="xZJ-Oz-YcA">
@@ -312,7 +312,7 @@
                                     <segment title="3"/>
                                 </segments>
                                 <connections>
-                                    <action selector="changeMode:" destination="2" eventType="valueChanged" id="WQQ-oe-wzf"/>
+                                    <action selector="changeMode" destination="2" eventType="valueChanged" id="F3W-eC-2z1"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
@@ -350,6 +350,7 @@
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
+                <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="lastFlipResultLable" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="modeControl" candidateClass="UISegmentedControl"/>

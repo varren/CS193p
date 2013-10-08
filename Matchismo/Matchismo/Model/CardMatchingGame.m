@@ -29,11 +29,16 @@
 - (NSString *) lastActionStatus{
     return _lastFlipStatus ? _lastFlipStatus : @"";
 }
+
 -(void) setLastActionStatus:(NSString *)newStatus{
     _lastFlipStatus = newStatus;
 }
 
 #define DEFAULT_GAME_MODE 2 // 2-cards mathcing game
+-(int) mode{
+    return (!_mode) ? DEFAULT_GAME_MODE : _mode;
+}
+
 -(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck{
     self = [super init];
     
@@ -47,8 +52,14 @@
             }
         }
     }
-    self.mode = DEFAULT_GAME_MODE;
+    
     self.lastActionStatus = @"New Game Started";
+    return self;
+}
+
+-(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck andMode: (int) mode{
+    self = [self initWithCardCount:count usingDeck:deck];
+    self.mode = mode;
     return self;
 }
 
