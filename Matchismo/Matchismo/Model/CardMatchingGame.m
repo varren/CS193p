@@ -11,8 +11,9 @@
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (readwrite, nonatomic) int score;
-@property (strong, readwrite, nonatomic) NSString *lastActionStatus;
 @property (nonatomic) int mode; // 2, 3 or 4... cards matching mode
+@property (strong, nonatomic) NSMutableArray *flippedCards;
+@property (nonatomic) int lastTurnScore;
 
 @end
 
@@ -22,16 +23,12 @@
     if(!_cards)_cards =[[NSMutableArray alloc]init];
     return _cards;
 }
-
-// lastFlipStatus getter and setter
-@synthesize lastActionStatus = _lastFlipStatus;
-
-- (NSString *) lastActionStatus{
-    return _lastFlipStatus ? _lastFlipStatus : @"";
+-(NSMutableArray *) flippedCards{
+    if(!_flippedCards)_flippedCards =[[NSMutableArray alloc]init];
+    return _flippedCards;
 }
-
--(void) setLastActionStatus:(NSString *)newStatus{
-    _lastFlipStatus = newStatus;
+-(NSString*)flippedCardsDesc{
+    return [[self.flippedCards valueForKey:@"contents"] componentsJoinedByString:@" & "];
 }
 
 #define DEFAULT_GAME_MODE 2 // 2-cards mathcing game
@@ -53,7 +50,7 @@
         }
     }
     
-    self.lastActionStatus = @"New Game Started";
+ 
     return self;
 }
 
@@ -70,65 +67,61 @@
 # define MATCH_BONUS 4
 # define FLIP_COST 1
 # define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY
-
 -(void)flipCardAtIndex:(NSUInteger)index{
+ 
     Card *card = [self cardAtIndex:index];
     if(!card.isUnplayable){
-        if(!card.isFaceUp)
-            [self checkMatch:card];
+        self.lastTurnScore = 0;
+        self.flippedCards = [[NSMutableArray alloc]initWithObjects:card, nil];
+        
+        if(!card.isFaceUp){
+
+            for (Card *otherCard in self.cards)
+                if (otherCard.isFaceUp && !otherCard.isUnplayable)
+                    [self.flippedCards  addObject:otherCard];
+        
+        
+            if([self.flippedCards  count] == self.mode) //got n cards flipeed according to mode
+                [self calculateScoreFor: self.flippedCards];
+        }
+        
         card.faceUp = !card.isFaceUp;
+        
+        self.score += self.lastTurnScore ;
+        self.score -= FLIP_COST;
     }
 }
 
--(void) checkMatch: (Card *) card{
-    self.lastActionStatus = [NSString stringWithFormat:@"Flipped up %@", card.contents];
-    NSMutableArray *cards = [[NSMutableArray alloc]initWithObjects:card, nil];
-    
-    for (Card *otherCard in self.cards) 
-        if (otherCard.isFaceUp && !otherCard.isUnplayable)
-            [cards addObject:otherCard];
-    
-    if([cards count] == self.mode){ 
-        int finalPoints = [self calculateMatchPointsFor: cards];
-        [self setMatchStateForCards:cards scorePoints:finalPoints];
-        self.score += finalPoints;
-    }
-    
 
-    self.score -= FLIP_COST;
-    
-}
+
 // here is main maching algorithm for card combinations
--(int)calculateMatchPointsFor: (NSArray *)cards{ 
-    int finalPoints = 0;
+-(void)calculateScoreFor: (NSArray *)cards{
     
     for (int i = 0; i < [cards count]; i++) 
         for (int j = i + 1; j < [cards count]; j++) 
-            finalPoints += [cards[i] match:@[cards[j]]];
+            self.lastTurnScore += [cards[i] match:@[cards[j]]];
         
     
-    if (finalPoints) finalPoints *= MATCH_BONUS * DIFFICALTY_COEFFITIENT;
-    else  finalPoints -= MISMATCH_PENALTY;
-    
-    return finalPoints;
-}
-
--(void) setMatchStateForCards:(NSArray *) otherCards scorePoints: (int) scorePoints {
-    NSString *cardValues = [[otherCards valueForKey:@"contents"] componentsJoinedByString:@" & "];
-    
-    if (scorePoints > 0) {
-        for (Card *otherCard in otherCards)
-            otherCard.unplayable = YES;
-        
-        self.lastActionStatus = [NSString stringWithFormat:@"Matched %@ for %d points",
-                                 cardValues, scorePoints];
-    }else{
-        for (Card *otherCard in otherCards)
-            otherCard.faceUp = NO;
-        
-        self.lastActionStatus = [NSString stringWithFormat:@"%@ don't match! %d points penalty",
-                                 cardValues, scorePoints];
-        
+    if (self.lastTurnScore) {
+        self.lastTurnScore *= MATCH_BONUS * DIFFICALTY_COEFFITIENT;
+        for (Card *card in cards)
+            card.unplayable = YES;
+    }
+    else  {
+        self.lastTurnScore -= MISMATCH_PENALTY;
+        for (Card *card in cards)
+            card.faceUp = NO;
     }
 }
+
+
+-(NSString *) status{
+    NSString *status = @"";
+    if ([self.flippedCards count] == 0 ) status = @"New Game Started";
+    else if (self.lastTurnScore > 0) status = [NSString stringWithFormat:@"Matched %@ for %d points", [self flippedCardsDesc], self.lastTurnScore];
+    else if (self.lastTurnScore < 0) status = [NSString stringWithFormat:@"%@ don't match! %d points penalty", [self flippedCardsDesc], self.lastTurnScore];
+    else if (self.lastTurnScore == 0) status = [NSString stringWithFormat:@"Flipped up %@", ((Card *)self.flippedCards[0]).contents];
+    return status;
+}
+
 @end

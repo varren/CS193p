@@ -44,8 +44,8 @@
                                     <action selector="flipCard:" destination="2" eventType="touchUpInside" id="9Gl-us-QbD"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="11O-v1-6uY">
-                                <rect key="frame" x="20" y="419" width="136" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Flips: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="11O-v1-6uY">
+                                <rect key="frame" x="164" y="406" width="136" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -276,7 +276,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score: 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yTO-s8-2g5">
-                                <rect key="frame" x="164" y="419" width="136" height="21"/>
+                                <rect key="frame" x="164" y="428" width="136" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -290,9 +290,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4OZ-BW-jwm">
-                                <rect key="frame" x="205" y="376" width="95" height="44"/>
+                                <rect key="frame" x="133" y="406" width="64" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <state key="normal" title="Deal">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -305,7 +305,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="xZJ-Oz-YcA">
-                                <rect key="frame" x="20" y="376" width="177" height="44"/>
+                                <rect key="frame" x="20" y="406" width="105" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="2"/>
@@ -315,14 +315,22 @@
                                     <action selector="changeMode" destination="2" eventType="valueChanged" id="F3W-eC-2z1"/>
                                 </connections>
                             </segmentedControl>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" id="vNE-3V-Jif">
+                                <rect key="frame" x="18" y="376" width="284" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="historySliderMoved:" destination="2" eventType="valueChanged" id="Ypd-Yo-oSn"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="11O-v1-6uY" id="C2r-kD-tN7"/>
-                        <outlet property="lastFlipResultLable" destination="8Rz-sP-UW1" id="nUn-oh-Y2U"/>
+                        <outlet property="historySlider" destination="vNE-3V-Jif" id="DZi-re-e5y"/>
                         <outlet property="modeControl" destination="xZJ-Oz-YcA" id="IZM-4N-zPM"/>
                         <outlet property="scoreLabel" destination="yTO-s8-2g5" id="0cW-eH-DuR"/>
+                        <outlet property="statusLabel" destination="8Rz-sP-UW1" id="sgd-4l-9nG"/>
                         <outletCollection property="cardButtons" destination="qse-Qx-QZF" id="rqN-pX-OdV"/>
                         <outletCollection property="cardButtons" destination="0KB-JK-a4t" id="gRb-hI-ron"/>
                         <outletCollection property="cardButtons" destination="1O6-L4-7Mi" id="B1t-iR-TBU"/>
@@ -350,11 +358,12 @@
         <class className="CardGameViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
             <relationships>
-                <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
+                <relationship kind="action" name="historySliderMoved:"/>
                 <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="lastFlipResultLable" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="modeControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
                 <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
             </relationships>
         </class>
