@@ -32,6 +32,7 @@
 }
 
 #define DEFAULT_GAME_MODE 2 // 2-cards mathcing game
+
 -(int) mode{
     return (!_mode) ? DEFAULT_GAME_MODE : _mode;
 }

@@ -9,7 +9,7 @@
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
-
+#import "GameResult.h"
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -22,10 +22,17 @@
 @property (strong,nonatomic) NSMutableDictionary *history;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (nonatomic) int flipCount;
-
+@property (strong, nonatomic) GameResult *gameResult;
 @end
 
 @implementation CardGameViewController
+
+-(GameResult*)gameResult{
+    if (!_gameResult) {
+        _gameResult = [[GameResult alloc] init];
+    }
+    return _gameResult;
+}
 
 -(CardMatchingGame *)game{
     if(!_game) {
@@ -38,8 +45,7 @@
 }
 
 -(int)mode{
-    // if 1-st option selected (default) will start 2-cards matching game. else 3-card
-    return self.modeControl.selectedSegmentIndex ? 3 : 2;
+    return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
 }
 
 -(NSMutableDictionary*)history{
@@ -52,7 +58,11 @@
     [self updateUI];
 }
 
-# define DEFAULT_IMG_INSERTS 12
+#define DEFAULT_CARDBACK_TOP_INSERTS 6
+#define DEFAULT_CARDBACK_SIDES_INSERTS 2
+#define ACTIVE_ALPHA 1.0
+#define INACTIVE_ALPHA 0.3
+
 -(void)updateUI{
     
     // updating cards view
@@ -63,16 +73,20 @@
 
         UIImage *img = card.isFaceUp ? [UIImage imageNamed: @"clear" ] : [UIImage imageNamed: @"cardback.jpg" ] ;
         [cardButton setImage: img forState:UIControlStateNormal];
-        [cardButton setImageEdgeInsets:UIEdgeInsetsMake(DEFAULT_IMG_INSERTS, 2, DEFAULT_IMG_INSERTS, 2)];
+        [cardButton setImageEdgeInsets:UIEdgeInsetsMake(
+                                                        DEFAULT_CARDBACK_TOP_INSERTS,
+                                                        DEFAULT_CARDBACK_SIDES_INSERTS,
+                                                        DEFAULT_CARDBACK_TOP_INSERTS,
+                                                        DEFAULT_CARDBACK_SIDES_INSERTS)];
   
         cardButton.selected = card.isFaceUp;
         cardButton.enabled = !card.isUnplayable;
 
-        cardButton.alpha = card.isUnplayable ? 0.3 : 1.0;
+        cardButton.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
     }
     
     self.modeControl.alpha =
-    self.modeControl.isUserInteractionEnabled ? 1.0 :0.3;
+    self.modeControl.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
@@ -87,6 +101,7 @@
 }
 
 - (IBAction)deal{
+    self.gameResult = nil;
     self.game = nil;
     self.history = nil;
     self.flipCount = 0;
@@ -99,8 +114,7 @@
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self.historySlider setMaximumValue:self.flipCount];
-
-
+    self.gameResult.score = self.game.score;
     [self updateUI];
 
 }
@@ -108,8 +122,7 @@
 - (IBAction)historySliderMoved:(id)sender {
     int value = (int)self.historySlider.value;
     self.statusLabel.text = self.history[@(value)];
-    UIColor *textColor = value == self.flipCount ? [UIColor blackColor] : [UIColor grayColor];
-
+    UIColor *textColor = (value == self.flipCount) ? [UIColor blackColor] : [UIColor grayColor];
     [self.statusLabel setTextColor:textColor];
 
 }
