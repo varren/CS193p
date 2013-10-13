@@ -73,7 +73,7 @@
 
 -(void) setScore: (int) score{
     _score = score;
-    _end = [NSDate date];
+    self.end = [NSDate date];
     [self synchronise];
 }
 

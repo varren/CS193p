@@ -16,15 +16,21 @@
 
 @implementation GameResultsViewController
 
+#define OUTPUT_SCORES_FORMAT @"%-20s \t| %-5s \t| %5s \n"
 -(void) updateUI{
-    NSString *displayText = @"";
+    
+    NSString *displayText = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Collumn names:   Date" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+
     for (GameResult *result in [[GameResult allGameResults]sortedArrayUsingSelector:self.sortedSelector]) {
-        displayText = [displayText stringByAppendingFormat:@"Score: %d (%@, %0g)\n", result.score,
-                       [dateFormatter stringFromDate:result.end],
-                       round(result.duration)];
+        NSString *sScore = [NSString stringWithFormat:@"%d", result.score];
+        NSString *sTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:result.end]];
+        NSString *sDuration = [NSString stringWithFormat:@"%0g sec",round(result.duration)];
+        displayText = [displayText stringByAppendingFormat:OUTPUT_SCORES_FORMAT,[sTime UTF8String], [sScore UTF8String], [sDuration UTF8String]];
+        
+        //displayText = [displayText stringByAppendingFormat:@"Score: %d (%@, %0g)\n", result.score, [dateFormatter stringFromDate:result.end], round(result.duration)];
     }
     
     self.display.text = displayText;
@@ -37,6 +43,7 @@
 
 //unsued init methods before viewDidLoad
 -(void)setup{
+    [self updateUI];
     //initial setup that cant wait until viewDidLoad
 }
 -(void)awakeFromNib{

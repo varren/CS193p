@@ -7,9 +7,8 @@
 //
 
 #import "CardGameViewController.h"
-#import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
 #import "GameResult.h"
+
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -20,9 +19,10 @@
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 
 @property (strong,nonatomic) NSMutableDictionary *history;
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (nonatomic) int flipCount;
+@property (strong, nonatomic) CardGame *game;
 @property (strong, nonatomic) GameResult *gameResult;
+@property (nonatomic) int flipCount;
+
 @end
 
 @implementation CardGameViewController
@@ -34,15 +34,16 @@
     return _gameResult;
 }
 
--(CardMatchingGame *)game{
+-(CardGame *)game{
     if(!_game) {
-        _game = [[CardMatchingGame alloc]
-                 initWithCardCount:self.cardButtons.count
-                 usingDeck:[[PlayingCardDeck alloc]init]
-                 andMode: [self mode]];
+        _game = [[CardGame alloc]
+                 initWithCardCount:self.cardsCount
+                 usingDeck:[self createDeck]];
     }
     return _game;
 }
+
+-(Deck*) createDeck{return nil;} //abstract
 
 -(int)mode{
     return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
@@ -58,33 +59,10 @@
     [self updateUI];
 }
 
-#define DEFAULT_CARDBACK_TOP_INSERTS 6
-#define DEFAULT_CARDBACK_SIDES_INSERTS 2
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.3
 
 -(void)updateUI{
-    
-    // updating cards view
-    for (UIButton *cardButton in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-
-        UIImage *img = card.isFaceUp ? [UIImage imageNamed: @"clear" ] : [UIImage imageNamed: @"cardback.jpg" ] ;
-        [cardButton setImage: img forState:UIControlStateNormal];
-        [cardButton setImageEdgeInsets:UIEdgeInsetsMake(
-                                                        DEFAULT_CARDBACK_TOP_INSERTS,
-                                                        DEFAULT_CARDBACK_SIDES_INSERTS,
-                                                        DEFAULT_CARDBACK_TOP_INSERTS,
-                                                        DEFAULT_CARDBACK_SIDES_INSERTS)];
-  
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-
-        cardButton.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
-    }
-    
     self.modeControl.alpha =
     self.modeControl.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
     
@@ -110,7 +88,10 @@
 }
 
 - (IBAction)flipCard:(UIButton *)sender {
+
     self.modeControl.userInteractionEnabled = NO;
+    [self.game setMode: [self mode]];
+
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self.historySlider setMaximumValue:self.flipCount];
