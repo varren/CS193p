@@ -15,16 +15,17 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="2" kind="relationship" relationship="viewControllers" id="aJW-AD-dWz"/>
-                        <segue destination="UTt-uU-Z9O" kind="relationship" relationship="viewControllers" id="NbP-6g-vZX"/>
-                        <segue destination="Co8-Qd-kY1" kind="relationship" relationship="viewControllers" id="ARI-H2-QNk"/>
+                        <segue destination="2" kind="relationship" relationship="viewControllers" id="gFG-L9-2Hg"/>
+                        <segue destination="Co8-Qd-kY1" kind="relationship" relationship="viewControllers" id="Id4-38-41r"/>
+                        <segue destination="UTt-uU-Z9O" kind="relationship" relationship="viewControllers" id="Nxo-VO-C4S"/>
+                        <segue destination="8vs-ai-7Lc" kind="relationship" relationship="viewControllers" id="lyo-3V-cri"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjd-pv-YnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-645" y="-17"/>
+            <point key="canvasLocation" x="-720" y="-36"/>
         </scene>
-        <!--Set Game View Controller - Set-->
+        <!--Set Game View Controller - Set Game-->
         <scene sceneID="Yao-NJ-hlO">
             <objects>
                 <viewController id="Co8-Qd-kY1" customClass="SetGameViewController" sceneMemberID="viewController">
@@ -62,22 +63,12 @@
                                     <action selector="deal" destination="Co8-Qd-kY1" eventType="touchUpInside" id="qk9-Ac-MYv"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="ciD-0O-TgK">
-                                <rect key="frame" x="20" y="348" width="98" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="2"/>
-                                    <segment title="3"/>
-                                </segments>
-                                <connections>
-                                    <action selector="changeMode" destination="2" eventType="valueChanged" id="OhT-Nc-v5u"/>
-                                </connections>
-                            </segmentedControl>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" id="Qn5-4g-JmP">
                                 <rect key="frame" x="18" y="324" width="284" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="historySliderMoved:" destination="2" eventType="valueChanged" id="1Y6-BT-Wrv"/>
+                                    <action selector="historySliderMoved:" destination="Co8-Qd-kY1" eventType="valueChanged" id="O7L-Ld-Uab"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="bta-Ub-PhJ">
@@ -516,17 +507,15 @@
                                 <rect key="frame" x="20" y="0.0" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set" id="Gu7-uN-QRs"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Set Game" image="setgame.png" id="Gu7-uN-QRs"/>
                     <connections>
                         <outlet property="flipsLabel" destination="aa4-py-NXq" id="e3f-hY-TQL"/>
-                        <outlet property="historySlider" destination="Qn5-4g-JmP" id="QrS-lw-gT2"/>
-                        <outlet property="modeControl" destination="ciD-0O-TgK" id="hr4-SG-ewh"/>
+                        <outlet property="historySlider" destination="Qn5-4g-JmP" id="QDh-B6-Dps"/>
                         <outlet property="scoreLabel" destination="Xye-9Q-t8y" id="e5O-z3-9Ug"/>
                         <outlet property="statusLabel" destination="bsh-bL-hm9" id="cde-21-FC9"/>
                         <outletCollection property="cardButtons" destination="bta-Ub-PhJ" id="vup-ah-GsV"/>
@@ -557,7 +546,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XCF-m4-abM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="99" y="-17"/>
+            <point key="canvasLocation" x="39" y="2"/>
         </scene>
         <!--Game Results View Controller - Scores-->
         <scene sceneID="RzO-cH-9Zo">
@@ -575,7 +564,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XLD-M1-5O6">
-                                <rect key="frame" x="20" y="348" width="90" height="44"/>
+                                <rect key="frame" x="210" y="348" width="90" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="By Date">
@@ -590,7 +579,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Db4-Ia-RYV">
-                                <rect key="frame" x="115" y="348" width="90" height="44"/>
+                                <rect key="frame" x="20" y="348" width="90" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="By Score">
@@ -605,7 +594,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jnA-VV-Auq">
-                                <rect key="frame" x="210" y="348" width="90" height="44"/>
+                                <rect key="frame" x="115" y="348" width="90" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <state key="normal" title="By Duration">
@@ -622,16 +611,40 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Scores" id="ik5-Rh-Md8"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Scores" image="scores.png" id="ik5-Rh-Md8"/>
                     <connections>
                         <outlet property="display" destination="Yev-FD-dx1" id="VbV-Yz-b6j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ep-mP-SOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="99" y="559"/>
+            <point key="canvasLocation" x="383" y="502"/>
         </scene>
-        <!--Matching Game View Controller - Match-->
+        <!--View Controller - Settings-->
+        <scene sceneID="fEY-1I-z6L">
+            <objects>
+                <viewController id="8vs-ai-7Lc" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rYm-QW-ytd">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Nothing useful here for now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q7R-98-CSf">
+                                <rect key="frame" x="20" y="20" width="208" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" tag="3" title="Settings" image="setup.png" id="apj-Ju-0b8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wlS-JY-ERW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="390" y="-323"/>
+        </scene>
+        <!--Matching Game View Controller - Match Game-->
         <scene sceneID="5">
             <objects>
                 <viewController id="2" customClass="MatchingGameViewController" sceneMemberID="viewController">
@@ -952,7 +965,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Match" id="b9k-0y-MDM"/>
+                    <tabBarItem key="tabBarItem" title="Match Game" image="cardgame.png" id="b9k-0y-MDM"/>
                     <connections>
                         <outlet property="flipsLabel" destination="11O-v1-6uY" id="W0C-ET-48t"/>
                         <outlet property="historySlider" destination="vNE-3V-Jif" id="DZi-re-e5y"/>
@@ -979,36 +992,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="99" y="-575"/>
+            <point key="canvasLocation" x="39" y="-707"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CardGameViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CardGameViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="flipCard:" candidateClass="UIButton"/>
-                <relationship kind="action" name="historySliderMoved:"/>
-                <relationship kind="outlet" name="flipsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="historySlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="modeControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="statusLabel" candidateClass="UILabel"/>
-                <relationship kind="outletCollection" name="cardButtons" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="GameResultsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameResultsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="display" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="MatchingGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MatchingGameViewController.h"/>
-        </class>
-        <class className="SetGameViewController" superclassName="CardGameViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SetGameViewController.h"/>
-        </class>
-    </classes>
+    <resources>
+        <image name="cardgame.png" width="32" height="32"/>
+        <image name="scores.png" width="32" height="32"/>
+        <image name="setgame.png" width="32" height="32"/>
+        <image name="setup.png" width="32" height="32"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

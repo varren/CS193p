@@ -10,7 +10,7 @@
 #import "PlayingCardDeck.h"
 
 @interface MatchingGameViewController ()
-
+@property (weak, nonatomic) IBOutlet UISegmentedControl *modeControl;
 @end
 
 @implementation MatchingGameViewController
@@ -20,21 +20,14 @@
     return deck;
 }
 
--(NSInteger)cardsCount{
-    return [self.cardButtons count];
-}
-
 
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.3
 
--(void)updateUI{
- 
-    // updating cards view
-    for (UIButton *cardButton in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+-(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{
+
         [cardButton setTitle:card.contents forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         
@@ -50,8 +43,7 @@
         cardButton.enabled = !card.isUnplayable;
         
         cardButton.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
-    }
-    [super updateUI];
+
 }
 
 @end

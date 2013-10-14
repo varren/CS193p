@@ -15,4 +15,5 @@
 -(int)mode{
     return DEFAULT_GAME_MODE;
 }
+
 @end

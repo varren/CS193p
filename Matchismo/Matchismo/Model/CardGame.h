@@ -16,10 +16,11 @@
 
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
+-(NSArray*) allFlippedCards;
 
-
--(NSString *)status;
-
-@property (nonatomic) int mode; // 2, 3, 4... cards matching mode
+//2, 3, 4... cards matching mode
+@property (nonatomic) int mode;
 @property (readonly, nonatomic) int score;
+@property (readonly, nonatomic) int lastTurnScore;
+
 @end

@@ -14,6 +14,10 @@
 		A07CA9FB1809FE2000A0C317 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CA9FA1809FE2000A0C317 /* SetCard.m */; };
 		A07CA9FE1809FE8000A0C317 /* SetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CA9FD1809FE8000A0C317 /* SetDeck.m */; };
 		A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07F8ABC180423BD00CF491D /* cardback.jpg */; };
+		A0820EA0180B841300A214F9 /* scores.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9C180B841200A214F9 /* scores.png */; };
+		A0820EA1180B841300A214F9 /* setgame.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9D180B841300A214F9 /* setgame.png */; };
+		A0820EA2180B841300A214F9 /* setup.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9E180B841300A214F9 /* setup.png */; };
+		A0820EA4180B852000A214F9 /* cardgame.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820EA3180B852000A214F9 /* cardgame.png */; };
 		A08537A21807278D009FF5B9 /* GameResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A08537A11807278D009FF5B9 /* GameResultsViewController.m */; };
 		A08AC45118002CFF00CAA6D7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45018002CFF00CAA6D7 /* Card.m */; };
 		A08AC45518002D7200CAA6D7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45418002D7200CAA6D7 /* Deck.m */; };
@@ -48,6 +52,10 @@
 		A07CA9FC1809FE8000A0C317 /* SetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetDeck.h; path = Model/SetDeck.h; sourceTree = "<group>"; };
 		A07CA9FD1809FE8000A0C317 /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetDeck.m; path = Model/SetDeck.m; sourceTree = "<group>"; };
 		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cardback.jpg; sourceTree = "<group>"; };
+		A0820E9C180B841200A214F9 /* scores.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scores.png; sourceTree = "<group>"; };
+		A0820E9D180B841300A214F9 /* setgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setgame.png; sourceTree = "<group>"; };
+		A0820E9E180B841300A214F9 /* setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setup.png; sourceTree = "<group>"; };
+		A0820EA3180B852000A214F9 /* cardgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardgame.png; path = ../cardgame.png; sourceTree = "<group>"; };
 		A08537A01807278D009FF5B9 /* GameResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultsViewController.h; sourceTree = "<group>"; };
 		A08537A11807278D009FF5B9 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultsViewController.m; sourceTree = "<group>"; };
 		A08AC44F18002CFF00CAA6D7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
@@ -195,6 +203,10 @@
 		A0BA704A17AA045700058122 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A0820EA3180B852000A214F9 /* cardgame.png */,
+				A0820E9C180B841200A214F9 /* scores.png */,
+				A0820E9D180B841300A214F9 /* setgame.png */,
+				A0820E9E180B841300A214F9 /* setup.png */,
 				A07F8ABC180423BD00CF491D /* cardback.jpg */,
 				A0BA704B17AA045700058122 /* Matchismo-Info.plist */,
 				A0BA704C17AA045700058122 /* InfoPlist.strings */,
@@ -265,6 +277,10 @@
 				A0BA705A17AA045700058122 /* Default-568h@2x.png in Resources */,
 				A0BA705D17AA045700058122 /* MainStoryboard_iPhone.storyboard in Resources */,
 				A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */,
+				A0820EA0180B841300A214F9 /* scores.png in Resources */,
+				A0820EA1180B841300A214F9 /* setgame.png in Resources */,
+				A0820EA2180B841300A214F9 /* setup.png in Resources */,
+				A0820EA4180B852000A214F9 /* cardgame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

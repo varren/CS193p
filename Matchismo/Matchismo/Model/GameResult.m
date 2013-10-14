@@ -18,6 +18,7 @@
 #define START_KEY @"StartTime"
 #define END_KEY @"EndTime"
 #define SCORE_KEY @"ScoreKey"
+#define GAME_TYPE @"GameType"
 #define ALL_RESULTS_KEY @"GameResults_All"
 
 +(NSArray *)allGameResults{
@@ -30,11 +31,12 @@
     return allGameResults;
 }
 
--(id)init{
+-(id)initFor: (NSString*)gameType{
     self = [super init];
     if(self){
         _start = [NSDate date];
         _end = _start;
+        _gameType = gameType;
     }
     return self;
 }
@@ -47,9 +49,9 @@
             _start = data[START_KEY];
             _end = data [END_KEY];
             _score = [data[SCORE_KEY] integerValue];
+            _gameType = data[GAME_TYPE];
             if(!_start || !_end) self = nil;
         }
-        
     }
     return self;
 }
@@ -63,7 +65,7 @@
 }
 
 -(id)asPropertyList{
-    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score)};
+    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score), GAME_TYPE : self.gameType};
 }
 
 

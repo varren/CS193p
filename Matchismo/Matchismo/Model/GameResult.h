@@ -10,8 +10,11 @@
 
 @interface GameResult : NSObject
 
+-(id)initFor: (NSString*)gameType;
+
 + (NSArray *) allGameResults;
 
+@property (readonly, nonatomic) NSString * gameType;
 @property (readonly, nonatomic) NSDate *start;
 @property (readonly, nonatomic) NSDate *end;
 @property (readonly, nonatomic) NSTimeInterval duration;

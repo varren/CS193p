@@ -12,6 +12,7 @@
 @end
 @implementation CardMatchingGame : CardGame
 
-#define DEFAULT_GAME_MODE 2 // 2-cards mathcing game
-
+-(NSString*)gameName{
+    return@"M";
+}
 @end

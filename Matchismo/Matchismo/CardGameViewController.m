@@ -29,10 +29,11 @@
 
 -(GameResult*)gameResult{
     if (!_gameResult) {
-        _gameResult = [[GameResult alloc] init];
+        _gameResult = [[GameResult alloc] initFor: @""];
     }
     return _gameResult;
 }
+
 
 -(CardGame *)game{
     if(!_game) {
@@ -45,6 +46,10 @@
 
 -(Deck*) createDeck{return nil;} //abstract
 
+-(NSInteger) cardsCount{
+    if(!_cardsCount)_cardsCount = self.cardButtons.count;
+    return _cardsCount;
+}
 -(int)mode{
     return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
 }
@@ -63,20 +68,27 @@
 #define INACTIVE_ALPHA 0.3
 
 -(void)updateUI{
+    for(UIButton* cardButton in self.cardButtons){
+        
+        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        [self updateButton: cardButton withCard: card];
+    }
     self.modeControl.alpha =
     self.modeControl.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    self.statusLabel.text = [self.game status];
-    
+
     //slider update
-    [self.statusLabel setTextColor:[UIColor blackColor]];
-    [self.history setObject:[self.game status] forKey:@(self.flipCount)];
+    [self.statusLabel setAttributedText:  [self status] ];
+    NSMutableAttributedString *historyStatus = [[self status] mutableCopy];
+    NSRange range = NSMakeRange(0, historyStatus.length);
+    [historyStatus addAttributes:@{NSBackgroundColorAttributeName: [UIColor lightGrayColor]} range:range];
+    [self.history setObject: historyStatus forKey:@(self.flipCount)];
     [self.historySlider setValue:self.flipCount];
-    //NSLog(@"%d = %@ score = %d", self.flipCount, [self.game status],self.game.score);
 
 }
+-(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{}//abstract
 
 - (IBAction)deal{
     self.gameResult = nil;
@@ -88,10 +100,12 @@
 }
 
 - (IBAction)flipCard:(UIButton *)sender {
-
-    self.modeControl.userInteractionEnabled = NO;
-    [self.game setMode: [self mode]];
-
+    
+    if(!self.flipCount){ // if first flip
+        self.modeControl.userInteractionEnabled = NO;
+        [self.game setMode: [self mode]];
+    }
+    
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self.historySlider setMaximumValue:self.flipCount];
@@ -102,15 +116,53 @@
 
 - (IBAction)historySliderMoved:(id)sender {
     int value = (int)self.historySlider.value;
-    self.statusLabel.text = self.history[@(value)];
-    UIColor *textColor = (value == self.flipCount) ? [UIColor blackColor] : [UIColor grayColor];
-    [self.statusLabel setTextColor:textColor];
-
+    NSAttributedString *text = (value == (int)self.historySlider.maximumValue) ? [self status] : self.history[@(value)];
+    [self.statusLabel setAttributedText: text];
 }
+
 
 - (IBAction)changeMode {
     [self.game setMode: [self mode]];
 }
 
+
+-(NSAttributedString*) flippedCards{
+    NSMutableAttributedString * cards = [[NSMutableAttributedString alloc] init];
+    
+    for (int i = 0; i < [self.game.allFlippedCards count]; i++) {
+        if(i) [cards appendAttributedString:[[NSMutableAttributedString alloc] initWithString: @" & " ]];
+        Card * card = self.game.allFlippedCards[i];
+        [cards appendAttributedString: [self arrtibutedCard:card]];
+    }
+    
+    return cards;
+}
+
+-(NSAttributedString*) arrtibutedCard:(Card*) card {
+    return [[NSMutableAttributedString alloc] initWithString: [card contents]];
+}
+
+-(NSAttributedString *) status{
+    NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString: @""];
+   
+    if ([self.game.allFlippedCards count] == 0) // because there can be 0 cards only on start of a new game
+        status = [[NSMutableAttributedString alloc] initWithString: @"New Game Started"];
+    
+    else if (self.game.lastTurnScore > 0){
+        [status appendAttributedString: [[NSMutableAttributedString alloc] initWithString: @"Matched " ]];
+        [status appendAttributedString: [self flippedCards]];
+        [status appendAttributedString: [[NSMutableAttributedString alloc] initWithString: [NSString stringWithFormat:@" for %d points", self.game.lastTurnScore]]];
+                                         
+    }else if (self.game.lastTurnScore < 0){
+        [status appendAttributedString: [self flippedCards]];
+        [status appendAttributedString: [[NSMutableAttributedString alloc] initWithString: [NSString stringWithFormat:@" don't match! %d points penalty", self.game.lastTurnScore]]];
+    
+    }else if (self.game.lastTurnScore == 0){
+        [status appendAttributedString: [[NSMutableAttributedString alloc] initWithString: @"Flipped " ]];
+        [status appendAttributedString: [self flippedCards]];
+    }
+
+    return status;
+}
 
 @end

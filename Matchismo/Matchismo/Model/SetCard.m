@@ -26,8 +26,39 @@
     }
     return self;
 }
+
+#define MATCH_SCORES 10
+
 -(int)match:(NSArray *)otherCards{
-    return 1;//
+    NSMutableSet *shapes = [[NSMutableSet alloc] initWithObjects:self.shape, nil];
+    NSMutableSet *number = [[NSMutableSet alloc] initWithObjects:@(self.number), nil];
+    NSMutableSet *color =[[NSMutableSet alloc] initWithObjects:self.color, nil];
+    NSMutableSet *shading = [[NSMutableSet alloc] initWithObjects:@(self.shading), nil];
+    
+    for (SetCard* otherCard in otherCards) {
+        [shapes addObject:otherCard.shape];
+        [number addObject:@(otherCard.number)];
+        [color addObject:otherCard.color];
+        [shading addObject:@(otherCard.shading)];
+    }
+    
+    if([self isValidSetOfShapes:shapes number:number color:color shading:shading ofSize:otherCards.count + 1])
+        return MATCH_SCORES;
+    else
+        return -MATCH_SCORES/2;
+  
+}
+        
+-(BOOL)isValidSetOfShapes: (NSSet*) shapes number:(NSSet *)number color:(NSSet *)color shading:(NSSet *)shading ofSize: (NSInteger) size{
+    return [self isValidSet: shapes ofSize:size] &&
+           [self isValidSet: number ofSize:size] &&
+           [self isValidSet: color ofSize:size] &&
+           [self isValidSet: shading ofSize:size] ;
+    
+}
+#define ALL_THE_SAME 1
+-(BOOL)isValidSet: (NSSet*) set ofSize: (NSInteger) size{
+    return set.count == size || set.count == ALL_THE_SAME;
 }
 
 +(NSArray *)validShape{
@@ -47,24 +78,6 @@
 
 -(NSString *)contents{
     return [self.shape stringByPaddingToLength:self.number withString:self.shape startingAtIndex:0];
-}
-#define DEFAULT_TEXT_FONT_SIZE 20
-#define DEFAULT_STROKE_SIZE @-5
--(NSAttributedString *) attributedContents{
-    
-    NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:[self contents]];
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:DEFAULT_TEXT_FONT_SIZE],
-                                 NSForegroundColorAttributeName: [self.color colorWithAlphaComponent:(self.shading)],
-                                 NSStrokeWidthAttributeName : DEFAULT_STROKE_SIZE,
-                                 NSStrokeColorAttributeName: self.color};
-    
-    NSRange range = [[aString string] rangeOfString: [aString string]];
-    
-    if(range.location != NSNotFound && attributes)
-        [aString setAttributes: attributes range:range];
-
-     return aString;
 }
 
 @end

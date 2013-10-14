@@ -15,40 +15,62 @@
 @end
 
 @implementation SetGameViewController
+
+
 -(Deck*) createDeck{
     Deck* deck = [[SetDeck alloc]init];
     return deck;
 }
 
--(NSInteger)cardsCount{
-    //NSLog(@"Cards on screed%d",[self.cardButtons count]);
-    return [self.cardButtons count];
-   
+
+#define DEFAULT_SET_GAME_MODE 3
+-(int)mode{
+    return DEFAULT_SET_GAME_MODE;
 }
 
 
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
-#define ACTIVE_ALPHA .9
-#define INACTIVE_ALPHA 0.3
+#define ACTIVE_ALPHA 1.0
+#define INACTIVE_ALPHA 0.0
+#define DEFAULT_TEXT_FONT_SIZE 20
 
--(void)updateUI{
-    for(UIButton* cardButton in self.cardButtons){
-        SetCard *card = (SetCard*)[self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [cardButton setAttributedTitle:card.attributedContents forState:UIControlStateNormal];
+
+-(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{
+ 
+        NSMutableAttributedString *aCard = [[self arrtibutedCard:card] mutableCopy];
         
-        [cardButton setTitle:card.contents forState:UIControlStateNormal];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
+        NSRange len = [[aCard string]rangeOfString:[aCard string]];
+        [aCard addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:DEFAULT_TEXT_FONT_SIZE] range:len];
         
+        [cardButton setAttributedTitle:aCard forState:UIControlStateNormal];
+        [cardButton setAttributedTitle:aCard forState:UIControlStateSelected];
+        [cardButton setAttributedTitle:aCard forState:UIControlStateSelected|UIControlStateDisabled];
+   
         cardButton.selected = card.isFaceUp;
         cardButton.backgroundColor = card.isFaceUp ? [UIColor lightGrayColor] : nil;
         cardButton.enabled = !card.isUnplayable;
         
         cardButton.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
-    }
-    [super updateUI];
-    // updating cards view
+    
+    
+}
+
+#define DEFAULT_STROKE_SIZE @-5
+-(NSAttributedString*) arrtibutedCard:(Card*) card{
+    NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:card.contents];
+    SetCard *setCard = (SetCard*)card;
+    
+    NSRange range = NSMakeRange(0, aString.length);
+    
+    NSDictionary* attributes = @{ NSForegroundColorAttributeName: [setCard.color colorWithAlphaComponent:(setCard.shading)],
+                                  NSStrokeWidthAttributeName : DEFAULT_STROKE_SIZE,
+                                  NSStrokeColorAttributeName: setCard.color};
+    
+    if(range.location != NSNotFound)
+        [aString setAttributes: attributes range:range];
+    
+    return aString;
     
 }
 

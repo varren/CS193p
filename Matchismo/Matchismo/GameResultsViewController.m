@@ -16,10 +16,11 @@
 
 @implementation GameResultsViewController
 
-#define OUTPUT_SCORES_FORMAT @"%-20s \t| %-5s \t| %5s \n"
+#define OUTPUT_SCORES_FORMAT @"%-5s |  %-5s \t| %4s \t| %-18s \n"
+
 -(void) updateUI{
     
-    NSString *displayText = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Collumn names:   Date" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String]];
+    NSString *displayText = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Type" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String],[@"Date" UTF8String]];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -28,7 +29,8 @@
         NSString *sScore = [NSString stringWithFormat:@"%d", result.score];
         NSString *sTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:result.end]];
         NSString *sDuration = [NSString stringWithFormat:@"%0g sec",round(result.duration)];
-        displayText = [displayText stringByAppendingFormat:OUTPUT_SCORES_FORMAT,[sTime UTF8String], [sScore UTF8String], [sDuration UTF8String]];
+
+        displayText = [displayText stringByAppendingFormat:OUTPUT_SCORES_FORMAT,[result.gameType UTF8String], [sScore UTF8String], [sDuration UTF8String],[sTime UTF8String]];
         
         //displayText = [displayText stringByAppendingFormat:@"Score: %d (%@, %0g)\n", result.score, [dateFormatter stringFromDate:result.end], round(result.duration)];
     }

@@ -21,19 +21,21 @@
             score = 4;
         }
     }else if (otherCards.count > 1){
-        //comparing this card with all the cards in otherCards and + comparing all the otherCards to each other
-        /*for (int i = 0; i < [otherCards count]; i++){
-            score+= [self match:@[otherCards[i]]];
-            for (int j = i + 1; j < [otherCards count]; j++)
-                score += [otherCards[i] match:@[otherCards[j]]];
+
+        for (int i=0; i < [otherCards count]; i++) {
+            
+            score+=[self match:@[otherCards[i]]];
+            
+            for (int j=0; j<[otherCards count]; j++) 
+                score+=[otherCards[i]match:@[otherCards[j]]];
+            
         }
-        */
-        // same but recoursive
-        /*for (PlayingCard* card in otherCards)
-            score += [self match:@[card]];
         
-        PlayingCard* nextCard = (PlayingCard *) [otherCards lastObject];
-        score += [nextCard match:[otherCards subarrayWithRange:NSMakeRange(0, [otherCards count] - 2)]];*/
+        score = score / ([otherCards count]);
+        
+        
+
+        
     }
     
     
@@ -74,6 +76,7 @@
 
     return [self rankStrings].count -1;
 }
+
 -(void)setRank:(NSUInteger)rank{
     if (rank <= [PlayingCard maxRank]) {
         _rank = rank;

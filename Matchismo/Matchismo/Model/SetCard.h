@@ -9,14 +9,19 @@
 #import "Card.h"
 
 @interface SetCard : Card
+
 -(id)initCardOf: (NSNumber *)number shape: (NSString*)shape color: (UIColor*)color shading:(NSString*)shading;
 
--(NSString *)contents;
--(NSAttributedString *) attributedContents;
+@property(readonly, strong,nonatomic)NSString *shape;
+@property(readonly, strong,nonatomic)UIColor *color;
+@property(readonly, nonatomic) NSInteger number;
+@property(readonly, nonatomic)double shading;
 
 +(NSArray *)validShape; //of NSString
 +(NSArray *)validColor; //of UIColor
 +(NSArray *)validShading; //of float (alpha)
 +(NSArray *)validNumbers; //of int
+
+
 
 @end

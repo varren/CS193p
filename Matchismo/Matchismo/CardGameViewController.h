@@ -11,11 +11,7 @@
 #import "CardGame.h"
 @interface CardGameViewController : UIViewController
 
-@property (readonly, strong, nonatomic) CardGame *game;
-@property (readonly, strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-
+-(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger cardsCount; // abstract
--(Deck*) createDeck; // abstract
-
--(void)updateUI;
+-(void)updateButton: (UIButton*) cardButton withCard: (Card*)card; // abstract
 @end
