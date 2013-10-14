@@ -8,76 +8,64 @@
 
 #import "SetCard.h"
 @interface SetCard()
-@property(strong,nonatomic)NSString *shape;
-@property(strong,nonatomic)UIColor *color;
-@property(nonatomic) NSInteger number;
-@property(nonatomic)double shading;
+@property(strong, nonatomic)NSString *shape;
+@property(strong, nonatomic)NSString *color;
+@property(strong, nonatomic)NSNumber *number;
+@property(strong, nonatomic)NSNumber *shading;
 
 @end
 @implementation SetCard
 
--(id)initCardOf: (NSNumber *)number shape: (NSString*)shape color: (UIColor*)color shading:(NSNumber*) shading{
+-(id)initCardOf: (NSNumber *)number shape: (NSString*)shape color: (NSString*)color shading:(NSNumber*) shading{
     self = [super init];
     if(self){
         _shape = shape;
         _color = color;
-        _number = [number intValue];
-        _shading = [shading doubleValue];
+        _number = number;
+        _shading = shading;
     }
     return self;
 }
 
-#define MATCH_SCORES 10
+#define MATCH_SCORES 5
 
 -(int)match:(NSArray *)otherCards{
-    NSMutableSet *shapes = [[NSMutableSet alloc] initWithObjects:self.shape, nil];
-    NSMutableSet *number = [[NSMutableSet alloc] initWithObjects:@(self.number), nil];
-    NSMutableSet *color =[[NSMutableSet alloc] initWithObjects:self.color, nil];
-    NSMutableSet *shading = [[NSMutableSet alloc] initWithObjects:@(self.shading), nil];
     
-    for (SetCard* otherCard in otherCards) {
-        [shapes addObject:otherCard.shape];
-        [number addObject:@(otherCard.number)];
-        [color addObject:otherCard.color];
-        [shading addObject:@(otherCard.shading)];
-    }
+    for (NSString* property in self.properties)
+        if(![self isValidSet: property forCards: otherCards])
+            return -MATCH_SCORES/2;
     
-    if([self isValidSetOfShapes:shapes number:number color:color shading:shading ofSize:otherCards.count + 1])
-        return MATCH_SCORES;
-    else
-        return -MATCH_SCORES/2;
+    return MATCH_SCORES;
   
 }
         
--(BOOL)isValidSetOfShapes: (NSSet*) shapes number:(NSSet *)number color:(NSSet *)color shading:(NSSet *)shading ofSize: (NSInteger) size{
-    return [self isValidSet: shapes ofSize:size] &&
-           [self isValidSet: number ofSize:size] &&
-           [self isValidSet: color ofSize:size] &&
-           [self isValidSet: shading ofSize:size] ;
-    
-}
 #define ALL_THE_SAME 1
--(BOOL)isValidSet: (NSSet*) set ofSize: (NSInteger) size{
-    return set.count == size || set.count == ALL_THE_SAME;
+-(BOOL)isValidSet: (NSString*) property forCards:(NSArray *)otherCards{
+    NSMutableSet *valuesSet = [[NSMutableSet alloc] initWithObjects:[self valueForKey:property], nil];
+    [valuesSet  addObjectsFromArray: [otherCards valueForKey:property]];
+    return valuesSet.count == otherCards.count + 1 || valuesSet.count == ALL_THE_SAME;
 }
 
+-(NSArray*)properties{
+    return @[@"shape", @"number", @"color", @"shading"];
+}
 +(NSArray *)validShape{
     return @[@"▲", @"●", @"■"];
 }
 
 +(NSArray *)validColor{
-    return @[[UIColor blueColor],[UIColor greenColor],[UIColor redColor]];
+    return @[@"blueColor", @"greenColor", @"redColor"];
 }
 +(NSArray *)validShading{
     return @[@(0.0), @(0.2), @(1.0)]; //alpha
 }
 
 +(NSArray *)validNumbers{
-    return @[@(1),@(2),@(3)];
+    return @[@(1), @(2), @(3)];
 }
 
 -(NSString *)contents{
-    return [self.shape stringByPaddingToLength:self.number withString:self.shape startingAtIndex:0];
+    return [self.shape stringByPaddingToLength:[self.number intValue] withString:self.shape startingAtIndex:0];
 }
 
 @end

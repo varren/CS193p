@@ -12,15 +12,15 @@
 
 -(id)initCardOf: (NSNumber *)number shape: (NSString*)shape color: (UIColor*)color shading:(NSString*)shading;
 
-@property(readonly, strong,nonatomic)NSString *shape;
-@property(readonly, strong,nonatomic)UIColor *color;
-@property(readonly, nonatomic) NSInteger number;
-@property(readonly, nonatomic)double shading;
+@property(readonly, strong, nonatomic)NSString *shape;
+@property(readonly, strong, nonatomic)NSString *color;
+@property(readonly, strong, nonatomic)NSNumber *number;
+@property(readonly, strong, nonatomic)NSNumber *shading;
 
 +(NSArray *)validShape; //of NSString
-+(NSArray *)validColor; //of UIColor
-+(NSArray *)validShading; //of float (alpha)
-+(NSArray *)validNumbers; //of int
++(NSArray *)validColor; //of NSString
++(NSArray *)validShading; // float (alpha)
++(NSArray *)validNumbers; // int
 
 
 

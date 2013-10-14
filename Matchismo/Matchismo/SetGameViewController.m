@@ -22,6 +22,9 @@
     return deck;
 }
 
+-(NSString*)gameType{
+    return @"Sets";
+}
 
 #define DEFAULT_SET_GAME_MODE 3
 -(int)mode{
@@ -62,10 +65,11 @@
     SetCard *setCard = (SetCard*)card;
     
     NSRange range = NSMakeRange(0, aString.length);
+    UIColor *color = [UIColor performSelector:NSSelectorFromString(setCard.color)];
     
-    NSDictionary* attributes = @{ NSForegroundColorAttributeName: [setCard.color colorWithAlphaComponent:(setCard.shading)],
+    NSDictionary* attributes = @{ NSForegroundColorAttributeName: [color colorWithAlphaComponent:([setCard.shading doubleValue])],
                                   NSStrokeWidthAttributeName : DEFAULT_STROKE_SIZE,
-                                  NSStrokeColorAttributeName: setCard.color};
+                                  NSStrokeColorAttributeName: color};
     
     if(range.location != NSNotFound)
         [aString setAttributes: attributes range:range];

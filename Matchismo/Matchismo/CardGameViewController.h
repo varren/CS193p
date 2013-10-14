@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
-#import "CardGame.h"
+
+
 @interface CardGameViewController : UIViewController
 
 -(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger cardsCount; // abstract
+@property (nonatomic) NSString* gameType; //abstract
 -(void)updateButton: (UIButton*) cardButton withCard: (Card*)card; // abstract
 @end

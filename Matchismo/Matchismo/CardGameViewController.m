@@ -8,6 +8,7 @@
 
 #import "CardGameViewController.h"
 #import "GameResult.h"
+#import "CardMatchingGame.h" 
 
 @interface CardGameViewController ()
 
@@ -19,9 +20,10 @@
 @property (weak, nonatomic) IBOutlet UISlider *historySlider;
 
 @property (strong,nonatomic) NSMutableDictionary *history;
-@property (strong, nonatomic) CardGame *game;
+@property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) GameResult *gameResult;
 @property (nonatomic) int flipCount;
+@property (nonatomic) int mode;
 
 @end
 
@@ -29,27 +31,29 @@
 
 -(GameResult*)gameResult{
     if (!_gameResult) {
-        _gameResult = [[GameResult alloc] initFor: @""];
+        _gameResult = [[GameResult alloc] initFor: self.gameType];
     }
     return _gameResult;
 }
 
 
--(CardGame *)game{
+-(CardMatchingGame *)game{
     if(!_game) {
-        _game = [[CardGame alloc]
+        _game = [[CardMatchingGame alloc]
                  initWithCardCount:self.cardsCount
                  usingDeck:[self createDeck]];
     }
     return _game;
 }
 
--(Deck*) createDeck{return nil;} //abstract
 
 -(NSInteger) cardsCount{
     if(!_cardsCount)_cardsCount = self.cardButtons.count;
     return _cardsCount;
-}
+} // kinda abstract 
+-(Deck*) createDeck{return nil;} //abstract
+-(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{} //abstract
+
 -(int)mode{
     return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
 }
@@ -69,7 +73,6 @@
 
 -(void)updateUI{
     for(UIButton* cardButton in self.cardButtons){
-        
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
         [self updateButton: cardButton withCard: card];
     }
@@ -88,7 +91,6 @@
     [self.historySlider setValue:self.flipCount];
 
 }
--(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{}//abstract
 
 - (IBAction)deal{
     self.gameResult = nil;

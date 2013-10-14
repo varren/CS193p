@@ -19,7 +19,9 @@
     Deck* deck = [[PlayingCardDeck alloc]init];
     return deck;
 }
-
+-(NSString*)gameType{
+    return @"Card";
+}
 
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2

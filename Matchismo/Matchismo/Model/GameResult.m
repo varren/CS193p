@@ -7,6 +7,8 @@
 //
 
 #import "GameResult.h"
+
+
 @interface GameResult()
 
 @property (readwrite, nonatomic) NSDate *start;
@@ -19,12 +21,12 @@
 #define END_KEY @"EndTime"
 #define SCORE_KEY @"ScoreKey"
 #define GAME_TYPE @"GameType"
-#define ALL_RESULTS_KEY @"GameResults_All"
+NSString *const USER_DEFAULTS_SCORES_KEY = @"GameResults_All";
 
 +(NSArray *)allGameResults{
     NSMutableArray *allGameResults = [NSMutableArray array];
     
-    for (id data in [[[NSUserDefaults standardUserDefaults] dictionaryForKey:ALL_RESULTS_KEY] allValues]) {
+    for (id data in [[[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULTS_SCORES_KEY] allValues]) {
         [allGameResults addObject:[[GameResult alloc] initFromPropertyList:data] ];
     }
     
@@ -57,10 +59,10 @@
 }
 
 -(void)synchronise{
-    NSMutableDictionary *userDefaults = [[[NSUserDefaults standardUserDefaults]dictionaryForKey:ALL_RESULTS_KEY] mutableCopy];
+    NSMutableDictionary *userDefaults = [[[NSUserDefaults standardUserDefaults]dictionaryForKey:USER_DEFAULTS_SCORES_KEY] mutableCopy];
     if(!userDefaults)userDefaults = [[NSMutableDictionary alloc]init];
     userDefaults[[self.start description]] = [self asPropertyList];
-    [[NSUserDefaults standardUserDefaults] setObject:userDefaults forKey:ALL_RESULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] setObject:userDefaults forKey:USER_DEFAULTS_SCORES_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
