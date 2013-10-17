@@ -127,7 +127,7 @@
 }
 -(void) drawPipsWithHorisontalOffset:(CGFloat)hoffset
                       verticalOffset:(CGFloat)voffset
-                  mirroredVertically:(BOOL)upsideDown{
+                  upsideDown:(BOOL)upsideDown{
 
 }
 -(void) drawPipsWithHorisontalOffset:(CGFloat)hoffset

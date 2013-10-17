@@ -63,51 +63,51 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A07CA9EB1809F33300A0C317 /* MatchingGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchingGameViewController.h; sourceTree = "<group>"; };
-		A07CA9EC1809F33300A0C317 /* MatchingGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchingGameViewController.m; sourceTree = "<group>"; };
-		A07CA9EE1809F3D600A0C317 /* SetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetGameViewController.h; sourceTree = "<group>"; };
-		A07CA9EF1809F3D600A0C317 /* SetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetGameViewController.m; sourceTree = "<group>"; };
+		A07CA9EB1809F33300A0C317 /* MatchingGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchingGameViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/MatchingGameViewController.h; sourceTree = "<absolute>"; };
+		A07CA9EC1809F33300A0C317 /* MatchingGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchingGameViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/MatchingGameViewController.m; sourceTree = "<absolute>"; };
+		A07CA9EE1809F3D600A0C317 /* SetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetGameViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SetGameViewController.h; sourceTree = "<absolute>"; };
+		A07CA9EF1809F3D600A0C317 /* SetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetGameViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SetGameViewController.m; sourceTree = "<absolute>"; };
 		A07CA9F11809F53B00A0C317 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Model/CardMatchingGame.h; sourceTree = "<group>"; };
 		A07CA9F21809F53B00A0C317 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Model/CardMatchingGame.m; sourceTree = "<group>"; };
 		A07CA9F91809FE2000A0C317 /* SetCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCard.h; path = Model/SetCard.h; sourceTree = "<group>"; };
 		A07CA9FA1809FE2000A0C317 /* SetCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetCard.m; path = Model/SetCard.m; sourceTree = "<group>"; };
 		A07CA9FC1809FE8000A0C317 /* SetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetDeck.h; path = Model/SetDeck.h; sourceTree = "<group>"; };
 		A07CA9FD1809FE8000A0C317 /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetDeck.m; path = Model/SetDeck.m; sourceTree = "<group>"; };
-		A07D1846180C31CC000BEECE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		A07D1847180C31CC000BEECE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		A07D1846180C31CC000BEECE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SettingsViewController.h; sourceTree = "<absolute>"; };
+		A07D1847180C31CC000BEECE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SettingsViewController.m; sourceTree = "<absolute>"; };
 		A07E1AC6180F735700FF682D /* PlayingCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardView.h; path = Views/PlayingCardView.h; sourceTree = "<group>"; };
 		A07E1AC7180F735800FF682D /* PlayingCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardView.m; path = Views/PlayingCardView.m; sourceTree = "<group>"; };
-		A07E1ACA180F85B300FF682D /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♠.jpg"; sourceTree = "<group>"; };
-		A07E1ACB180F85B300FF682D /* J♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ACC180F85B300FF682D /* J♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♣.jpg"; sourceTree = "<group>"; };
-		A07E1ACD180F85B300FF682D /* J♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ACE180F85B300FF682D /* J♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♥.jpg"; sourceTree = "<group>"; };
-		A07E1ACF180F85B300FF682D /* J♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD0180F85B300FF682D /* J♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♦.jpg"; sourceTree = "<group>"; };
-		A07E1AD1180F85B300FF682D /* J♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "J♦@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD2180F85B300FF682D /* K♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♠.jpg"; sourceTree = "<group>"; };
-		A07E1AD3180F85B300FF682D /* K♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD4180F85B300FF682D /* K♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♣.jpg"; sourceTree = "<group>"; };
-		A07E1AD5180F85B300FF682D /* K♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD6180F85B300FF682D /* K♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♥.jpg"; sourceTree = "<group>"; };
-		A07E1AD7180F85B300FF682D /* K♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD8180F85B300FF682D /* K♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♦.jpg"; sourceTree = "<group>"; };
-		A07E1AD9180F85B300FF682D /* K♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "K♦@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADA180F85B300FF682D /* Q♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♠.jpg"; sourceTree = "<group>"; };
-		A07E1ADB180F85B300FF682D /* Q♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADC180F85B300FF682D /* Q♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♣.jpg"; sourceTree = "<group>"; };
-		A07E1ADD180F85B300FF682D /* Q♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADE180F85B300FF682D /* Q♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♥.jpg"; sourceTree = "<group>"; };
-		A07E1ADF180F85B300FF682D /* Q♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AE0180F85B300FF682D /* Q♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♦.jpg"; sourceTree = "<group>"; };
-		A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Q♦@2x.jpg"; sourceTree = "<group>"; };
-		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cardback.jpg; sourceTree = "<group>"; };
-		A0820E9C180B841200A214F9 /* scores.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scores.png; sourceTree = "<group>"; };
-		A0820E9D180B841300A214F9 /* setgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setgame.png; sourceTree = "<group>"; };
-		A0820E9E180B841300A214F9 /* setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setup.png; sourceTree = "<group>"; };
-		A0820EA3180B852000A214F9 /* cardgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardgame.png; path = ../cardgame.png; sourceTree = "<group>"; };
-		A08537A01807278D009FF5B9 /* GameResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameResultsViewController.h; sourceTree = "<group>"; };
-		A08537A11807278D009FF5B9 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameResultsViewController.m; sourceTree = "<group>"; };
+		A07E1ACA180F85B300FF682D /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠.jpg"; path = "../Resources/Face Card Images/J♠.jpg"; sourceTree = "<group>"; };
+		A07E1ACB180F85B300FF682D /* J♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠@2x.jpg"; path = "../Resources/Face Card Images/J♠@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ACC180F85B300FF682D /* J♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣.jpg"; path = "../Resources/Face Card Images/J♣.jpg"; sourceTree = "<group>"; };
+		A07E1ACD180F85B300FF682D /* J♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣@2x.jpg"; path = "../Resources/Face Card Images/J♣@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ACE180F85B300FF682D /* J♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥.jpg"; path = "../Resources/Face Card Images/J♥.jpg"; sourceTree = "<group>"; };
+		A07E1ACF180F85B300FF682D /* J♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥@2x.jpg"; path = "../Resources/Face Card Images/J♥@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AD0180F85B300FF682D /* J♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦.jpg"; path = "../Resources/Face Card Images/J♦.jpg"; sourceTree = "<group>"; };
+		A07E1AD1180F85B300FF682D /* J♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦@2x.jpg"; path = "../Resources/Face Card Images/J♦@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AD2180F85B300FF682D /* K♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠.jpg"; path = "../Resources/Face Card Images/K♠.jpg"; sourceTree = "<group>"; };
+		A07E1AD3180F85B300FF682D /* K♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠@2x.jpg"; path = "../Resources/Face Card Images/K♠@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AD4180F85B300FF682D /* K♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣.jpg"; path = "../Resources/Face Card Images/K♣.jpg"; sourceTree = "<group>"; };
+		A07E1AD5180F85B300FF682D /* K♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣@2x.jpg"; path = "../Resources/Face Card Images/K♣@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AD6180F85B300FF682D /* K♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥.jpg"; path = "../Resources/Face Card Images/K♥.jpg"; sourceTree = "<group>"; };
+		A07E1AD7180F85B300FF682D /* K♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥@2x.jpg"; path = "../Resources/Face Card Images/K♥@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AD8180F85B300FF682D /* K♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦.jpg"; path = "../Resources/Face Card Images/K♦.jpg"; sourceTree = "<group>"; };
+		A07E1AD9180F85B300FF682D /* K♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦@2x.jpg"; path = "../Resources/Face Card Images/K♦@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ADA180F85B300FF682D /* Q♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠.jpg"; path = "../Resources/Face Card Images/Q♠.jpg"; sourceTree = "<group>"; };
+		A07E1ADB180F85B300FF682D /* Q♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠@2x.jpg"; path = "../Resources/Face Card Images/Q♠@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ADC180F85B300FF682D /* Q♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣.jpg"; path = "../Resources/Face Card Images/Q♣.jpg"; sourceTree = "<group>"; };
+		A07E1ADD180F85B300FF682D /* Q♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣@2x.jpg"; path = "../Resources/Face Card Images/Q♣@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ADE180F85B300FF682D /* Q♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥.jpg"; path = "../Resources/Face Card Images/Q♥.jpg"; sourceTree = "<group>"; };
+		A07E1ADF180F85B300FF682D /* Q♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥@2x.jpg"; path = "../Resources/Face Card Images/Q♥@2x.jpg"; sourceTree = "<group>"; };
+		A07E1AE0180F85B300FF682D /* Q♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦.jpg"; path = "../Resources/Face Card Images/Q♦.jpg"; sourceTree = "<group>"; };
+		A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦@2x.jpg"; path = "../Resources/Face Card Images/Q♦@2x.jpg"; sourceTree = "<group>"; };
+		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cardback.jpg; path = Resources/cardback.jpg; sourceTree = "<group>"; };
+		A0820E9C180B841200A214F9 /* scores.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scores.png; path = Resources/scores.png; sourceTree = "<group>"; };
+		A0820E9D180B841300A214F9 /* setgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setgame.png; path = Resources/setgame.png; sourceTree = "<group>"; };
+		A0820E9E180B841300A214F9 /* setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setup.png; path = Resources/setup.png; sourceTree = "<group>"; };
+		A0820EA3180B852000A214F9 /* cardgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardgame.png; path = Resources/cardgame.png; sourceTree = "<group>"; };
+		A08537A01807278D009FF5B9 /* GameResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResultsViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/GameResultsViewController.h; sourceTree = "<absolute>"; };
+		A08537A11807278D009FF5B9 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameResultsViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/GameResultsViewController.m; sourceTree = "<absolute>"; };
 		A08AC44F18002CFF00CAA6D7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
 		A08AC45018002CFF00CAA6D7 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Card.m; path = Model/Card.m; sourceTree = "<group>"; };
 		A08AC45318002D7200CAA6D7 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deck.h; path = Model/Deck.h; sourceTree = "<group>"; };
@@ -128,12 +128,12 @@
 		A0BA705117AA045700058122 /* Matchismo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Matchismo-Prefix.pch"; sourceTree = "<group>"; };
 		A0BA705217AA045700058122 /* CardGameAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardGameAppDelegate.h; sourceTree = "<group>"; };
 		A0BA705317AA045700058122 /* CardGameAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardGameAppDelegate.m; sourceTree = "<group>"; };
-		A0BA705517AA045700058122 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A0BA705717AA045700058122 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		A0BA705917AA045700058122 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A0BA705517AA045700058122 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
+		A0BA705717AA045700058122 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
+		A0BA705917AA045700058122 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		A0BA705C17AA045700058122 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		A0BA706117AA045700058122 /* CardGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardGameViewController.h; sourceTree = "<group>"; };
-		A0BA706217AA045700058122 /* CardGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardGameViewController.m; sourceTree = "<group>"; };
+		A0BA706117AA045700058122 /* CardGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CardGameViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/CardGameViewController.h; sourceTree = "<absolute>"; };
+		A0BA706217AA045700058122 /* CardGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CardGameViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/CardGameViewController.m; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +201,7 @@
 				A07D1846180C31CC000BEECE /* SettingsViewController.h */,
 				A07D1847180C31CC000BEECE /* SettingsViewController.m */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		A07E1AC5180F72D000FF682D /* Views */ = {
