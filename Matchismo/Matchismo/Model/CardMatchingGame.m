@@ -13,7 +13,7 @@
 @property (readwrite, nonatomic) int score;
 @property (strong, nonatomic) NSMutableArray *flippedCards;
 @property (nonatomic) int lastTurnScore;
-
+@property (strong,nonatomic) Deck *deck;
 
 @end
 
@@ -39,20 +39,14 @@
     return _mode;
 }
 
-
+-(int)currentCardsCount{
+    return [self.cards count];
+}
 -(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck{
     self = [super init];
+    self.deck = deck;
     
-    if (self) {
-        for (int i =0; i < count; i++) {
-            Card *card = [deck drawRandomCard];
-            if(!card){
-                self = nil;
-            }else{
-                self.cards[i] = card;
-            }
-        }
-    }
+    if([self addCards:count] != count) self = nil;
     
     return self;
 }
@@ -104,6 +98,20 @@
         for (Card *otherCard in otherCards)
             otherCard.faceUp = NO;
     }
+}
+
+-(int)addCards:(NSInteger) count{
+    int cards = 0;
+    int haveCards = self.cards.count;
+    for (int i = 0; i < count; i++) {
+        Card *card = [self.deck drawRandomCard];
+        if(card){
+            self.cards[haveCards + i] = card;
+            cards++;
+        }
+    }
+    
+    return cards;
 }
 
 # define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY

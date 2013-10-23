@@ -11,16 +11,16 @@
 @interface GameResult : NSObject
 extern NSString *const USER_DEFAULTS_SCORES_KEY;
 
--(id)initFor: (NSString*)gameType;
+-(id)initFor: (NSInteger)gameType;
 
 + (NSArray *) allGameResults;
 
-@property (readonly, nonatomic) NSString * gameType;
 @property (readonly, nonatomic) NSDate *start;
 @property (readonly, nonatomic) NSDate *end;
 @property (readonly, nonatomic) NSTimeInterval duration;
 
 @property (nonatomic) int score;
+@property (readonly, nonatomic) int gameType;
 
 //sorting options
 -(NSComparisonResult) compareScoreToGameResult:(GameResult*)otherResult;

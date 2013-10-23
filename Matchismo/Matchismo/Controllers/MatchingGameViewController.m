@@ -7,7 +7,10 @@
 //
 
 #import "MatchingGameViewController.h"
+#import "PlayingCardView.h"
+#import "CardCollectionViewCell.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCard.h"
 
 @interface MatchingGameViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeControl;
@@ -19,33 +22,31 @@
     Deck* deck = [[PlayingCardDeck alloc]init];
     return deck;
 }
--(NSString*)gameType{
-    return @"Card";
-}
+#define CARDS_GAME_ID 1
+#define CARDS_GAME_STARTING_CARDS_COUNT 22
+
+-(NSInteger)gameType  {return CARDS_GAME_ID;}
+-(NSInteger)startCardsCount{return CARDS_GAME_STARTING_CARDS_COUNT;}
 
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.3
 
--(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{
-
-        [cardButton setTitle:card.contents forState:UIControlStateSelected];
-        [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
-        
-        UIImage *img = card.isFaceUp ? [UIImage imageNamed: @"clear" ] : [UIImage imageNamed: @"cardback.jpg" ] ;
-        [cardButton setImage: img forState:UIControlStateNormal];
-        [cardButton setImageEdgeInsets:UIEdgeInsetsMake(
-                                                        DEFAULT_CARDBACK_TOP_INSERTS,
-                                                        DEFAULT_CARDBACK_SIDES_INSERTS,
-                                                        DEFAULT_CARDBACK_TOP_INSERTS,
-                                                        DEFAULT_CARDBACK_SIDES_INSERTS)];
-        
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        
-        cardButton.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
-
+-(void)updateCell: (id) cardCell usingCard: (Card*)card{
+    if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
+        CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
+        if([cardView isKindOfClass:[PlayingCardView class]]){
+            PlayingCardView * playingCardView = (PlayingCardView *)cardView;
+            if ([card isKindOfClass:[PlayingCard class]]) {
+                PlayingCard *playingCard =(PlayingCard *) card;
+                playingCardView.rank = playingCard.rank;
+                playingCardView.suit = playingCard.suit;
+                playingCardView.faceUp = playingCard.isFaceUp;
+                playingCardView.alpha = playingCard.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
+            }
+        }
+    }
 }
 
 @end

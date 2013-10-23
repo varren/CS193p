@@ -38,11 +38,15 @@
 		A07E1AF7180F85B300FF682D /* Q♥@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1ADF180F85B300FF682D /* Q♥@2x.jpg */; };
 		A07E1AF8180F85B300FF682D /* Q♦.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1AE0180F85B300FF682D /* Q♦.jpg */; };
 		A07E1AF9180F85B300FF682D /* Q♦@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */; };
+		A07E1EE018131673004B21B5 /* SetCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07E1EDF18131673004B21B5 /* SetCardView.m */; };
+		A07EBEB71813949200442AF6 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07EBEB61813949200442AF6 /* CardView.m */; };
 		A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07F8ABC180423BD00CF491D /* cardback.jpg */; };
+		A07FA0C21810B72B00E4663D /* SuperCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07FA0C11810B72B00E4663D /* SuperCardViewController.m */; };
 		A0820EA0180B841300A214F9 /* scores.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9C180B841200A214F9 /* scores.png */; };
 		A0820EA1180B841300A214F9 /* setgame.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9D180B841300A214F9 /* setgame.png */; };
 		A0820EA2180B841300A214F9 /* setup.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820E9E180B841300A214F9 /* setup.png */; };
 		A0820EA4180B852000A214F9 /* cardgame.png in Resources */ = {isa = PBXBuildFile; fileRef = A0820EA3180B852000A214F9 /* cardgame.png */; };
+		A082AED5181212D8000EAEB5 /* CardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A082AED4181212D8000EAEB5 /* CardCollectionViewCell.m */; };
 		A08537A21807278D009FF5B9 /* GameResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A08537A11807278D009FF5B9 /* GameResultsViewController.m */; };
 		A08AC45118002CFF00CAA6D7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45018002CFF00CAA6D7 /* Card.m */; };
 		A08AC45518002D7200CAA6D7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = A08AC45418002D7200CAA6D7 /* Deck.m */; };
@@ -77,35 +81,43 @@
 		A07D1847180C31CC000BEECE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SettingsViewController.m; sourceTree = "<absolute>"; };
 		A07E1AC6180F735700FF682D /* PlayingCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardView.h; path = Views/PlayingCardView.h; sourceTree = "<group>"; };
 		A07E1AC7180F735800FF682D /* PlayingCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardView.m; path = Views/PlayingCardView.m; sourceTree = "<group>"; };
-		A07E1ACA180F85B300FF682D /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠.jpg"; path = "../Resources/Face Card Images/J♠.jpg"; sourceTree = "<group>"; };
-		A07E1ACB180F85B300FF682D /* J♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠@2x.jpg"; path = "../Resources/Face Card Images/J♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ACC180F85B300FF682D /* J♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣.jpg"; path = "../Resources/Face Card Images/J♣.jpg"; sourceTree = "<group>"; };
-		A07E1ACD180F85B300FF682D /* J♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣@2x.jpg"; path = "../Resources/Face Card Images/J♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ACE180F85B300FF682D /* J♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥.jpg"; path = "../Resources/Face Card Images/J♥.jpg"; sourceTree = "<group>"; };
-		A07E1ACF180F85B300FF682D /* J♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥@2x.jpg"; path = "../Resources/Face Card Images/J♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD0180F85B300FF682D /* J♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦.jpg"; path = "../Resources/Face Card Images/J♦.jpg"; sourceTree = "<group>"; };
-		A07E1AD1180F85B300FF682D /* J♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦@2x.jpg"; path = "../Resources/Face Card Images/J♦@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD2180F85B300FF682D /* K♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠.jpg"; path = "../Resources/Face Card Images/K♠.jpg"; sourceTree = "<group>"; };
-		A07E1AD3180F85B300FF682D /* K♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠@2x.jpg"; path = "../Resources/Face Card Images/K♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD4180F85B300FF682D /* K♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣.jpg"; path = "../Resources/Face Card Images/K♣.jpg"; sourceTree = "<group>"; };
-		A07E1AD5180F85B300FF682D /* K♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣@2x.jpg"; path = "../Resources/Face Card Images/K♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD6180F85B300FF682D /* K♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥.jpg"; path = "../Resources/Face Card Images/K♥.jpg"; sourceTree = "<group>"; };
-		A07E1AD7180F85B300FF682D /* K♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥@2x.jpg"; path = "../Resources/Face Card Images/K♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AD8180F85B300FF682D /* K♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦.jpg"; path = "../Resources/Face Card Images/K♦.jpg"; sourceTree = "<group>"; };
-		A07E1AD9180F85B300FF682D /* K♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦@2x.jpg"; path = "../Resources/Face Card Images/K♦@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADA180F85B300FF682D /* Q♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠.jpg"; path = "../Resources/Face Card Images/Q♠.jpg"; sourceTree = "<group>"; };
-		A07E1ADB180F85B300FF682D /* Q♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠@2x.jpg"; path = "../Resources/Face Card Images/Q♠@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADC180F85B300FF682D /* Q♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣.jpg"; path = "../Resources/Face Card Images/Q♣.jpg"; sourceTree = "<group>"; };
-		A07E1ADD180F85B300FF682D /* Q♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣@2x.jpg"; path = "../Resources/Face Card Images/Q♣@2x.jpg"; sourceTree = "<group>"; };
-		A07E1ADE180F85B300FF682D /* Q♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥.jpg"; path = "../Resources/Face Card Images/Q♥.jpg"; sourceTree = "<group>"; };
-		A07E1ADF180F85B300FF682D /* Q♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥@2x.jpg"; path = "../Resources/Face Card Images/Q♥@2x.jpg"; sourceTree = "<group>"; };
-		A07E1AE0180F85B300FF682D /* Q♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦.jpg"; path = "../Resources/Face Card Images/Q♦.jpg"; sourceTree = "<group>"; };
-		A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦@2x.jpg"; path = "../Resources/Face Card Images/Q♦@2x.jpg"; sourceTree = "<group>"; };
+		A07E1ACA180F85B300FF682D /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♠.jpg"; sourceTree = "<absolute>"; };
+		A07E1ACB180F85B300FF682D /* J♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♠@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1ACC180F85B300FF682D /* J♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♣.jpg"; sourceTree = "<absolute>"; };
+		A07E1ACD180F85B300FF682D /* J♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♣@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♣@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1ACE180F85B300FF682D /* J♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♥.jpg"; sourceTree = "<absolute>"; };
+		A07E1ACF180F85B300FF682D /* J♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♥@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♥@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD0180F85B300FF682D /* J♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♦.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD1180F85B300FF682D /* J♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♦@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♦@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD2180F85B300FF682D /* K♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♠.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD3180F85B300FF682D /* K♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♠@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♠@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD4180F85B300FF682D /* K♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♣.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD5180F85B300FF682D /* K♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♣@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♣@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD6180F85B300FF682D /* K♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♥.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD7180F85B300FF682D /* K♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♥@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♥@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD8180F85B300FF682D /* K♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♦.jpg"; sourceTree = "<absolute>"; };
+		A07E1AD9180F85B300FF682D /* K♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "K♦@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/K♦@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADA180F85B300FF682D /* Q♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♠.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADB180F85B300FF682D /* Q♠@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♠@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♠@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADC180F85B300FF682D /* Q♣.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♣.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADD180F85B300FF682D /* Q♣@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♣@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♣@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADE180F85B300FF682D /* Q♥.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♥.jpg"; sourceTree = "<absolute>"; };
+		A07E1ADF180F85B300FF682D /* Q♥@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♥@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♥@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1AE0180F85B300FF682D /* Q♦.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♦.jpg"; sourceTree = "<absolute>"; };
+		A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♦@2x.jpg"; sourceTree = "<absolute>"; };
+		A07E1EDE18131673004B21B5 /* SetCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCardView.h; path = Views/SetCardView.h; sourceTree = "<group>"; };
+		A07E1EDF18131673004B21B5 /* SetCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetCardView.m; path = Views/SetCardView.m; sourceTree = "<group>"; };
+		A07EBEB51813949200442AF6 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardView.h; path = Views/CardView.h; sourceTree = "<group>"; };
+		A07EBEB61813949200442AF6 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardView.m; path = Views/CardView.m; sourceTree = "<group>"; };
 		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cardback.jpg; path = Resources/cardback.jpg; sourceTree = "<group>"; };
+		A07FA0C01810B72B00E4663D /* SuperCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperCardViewController.h; sourceTree = "<group>"; };
+		A07FA0C11810B72B00E4663D /* SuperCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperCardViewController.m; sourceTree = "<group>"; };
 		A0820E9C180B841200A214F9 /* scores.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scores.png; path = Resources/scores.png; sourceTree = "<group>"; };
 		A0820E9D180B841300A214F9 /* setgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setgame.png; path = Resources/setgame.png; sourceTree = "<group>"; };
 		A0820E9E180B841300A214F9 /* setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setup.png; path = Resources/setup.png; sourceTree = "<group>"; };
 		A0820EA3180B852000A214F9 /* cardgame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardgame.png; path = Resources/cardgame.png; sourceTree = "<group>"; };
+		A082AED3181212D8000EAEB5 /* CardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardCollectionViewCell.h; path = Views/CardCollectionViewCell.h; sourceTree = "<group>"; };
+		A082AED4181212D8000EAEB5 /* CardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardCollectionViewCell.m; path = Views/CardCollectionViewCell.m; sourceTree = "<group>"; };
 		A08537A01807278D009FF5B9 /* GameResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameResultsViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/GameResultsViewController.h; sourceTree = "<absolute>"; };
 		A08537A11807278D009FF5B9 /* GameResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameResultsViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/GameResultsViewController.m; sourceTree = "<absolute>"; };
 		A08AC44F18002CFF00CAA6D7 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
@@ -190,6 +202,8 @@
 		A07D1849180C8CE5000BEECE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A07FA0C01810B72B00E4663D /* SuperCardViewController.h */,
+				A07FA0C11810B72B00E4663D /* SuperCardViewController.m */,
 				A0BA706117AA045700058122 /* CardGameViewController.h */,
 				A0BA706217AA045700058122 /* CardGameViewController.m */,
 				A08537A01807278D009FF5B9 /* GameResultsViewController.h */,
@@ -209,6 +223,12 @@
 			children = (
 				A07E1AC6180F735700FF682D /* PlayingCardView.h */,
 				A07E1AC7180F735800FF682D /* PlayingCardView.m */,
+				A082AED3181212D8000EAEB5 /* CardCollectionViewCell.h */,
+				A082AED4181212D8000EAEB5 /* CardCollectionViewCell.m */,
+				A07E1EDE18131673004B21B5 /* SetCardView.h */,
+				A07E1EDF18131673004B21B5 /* SetCardView.m */,
+				A07EBEB51813949200442AF6 /* CardView.h */,
+				A07EBEB61813949200442AF6 /* CardView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -427,6 +447,10 @@
 				A07CA9FE1809FE8000A0C317 /* SetDeck.m in Sources */,
 				A07D1848180C31CC000BEECE /* SettingsViewController.m in Sources */,
 				A07E1AC8180F735800FF682D /* PlayingCardView.m in Sources */,
+				A07FA0C21810B72B00E4663D /* SuperCardViewController.m in Sources */,
+				A082AED5181212D8000EAEB5 /* CardCollectionViewCell.m in Sources */,
+				A07E1EE018131673004B21B5 /* SetCardView.m in Sources */,
+				A07EBEB71813949200442AF6 /* CardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

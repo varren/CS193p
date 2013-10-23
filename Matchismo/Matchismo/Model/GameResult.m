@@ -33,7 +33,7 @@ NSString *const USER_DEFAULTS_SCORES_KEY = @"GameResults_All";
     return allGameResults;
 }
 
--(id)initFor: (NSString*)gameType{
+-(id)initFor: (NSInteger)gameType{
     self = [super init];
     if(self){
         _start = [NSDate date];
@@ -51,7 +51,7 @@ NSString *const USER_DEFAULTS_SCORES_KEY = @"GameResults_All";
             _start = data[START_KEY];
             _end = data [END_KEY];
             _score = [data[SCORE_KEY] integerValue];
-            _gameType = data[GAME_TYPE];
+            _gameType = [data[GAME_TYPE] integerValue];
             if(!_start || !_end) self = nil;
         }
     }
@@ -67,7 +67,7 @@ NSString *const USER_DEFAULTS_SCORES_KEY = @"GameResults_All";
 }
 
 -(id)asPropertyList{
-    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score), GAME_TYPE : self.gameType};
+    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score), GAME_TYPE : @(self.gameType)};
 }
 
 

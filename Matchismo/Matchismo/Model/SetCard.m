@@ -8,15 +8,15 @@
 
 #import "SetCard.h"
 @interface SetCard()
-@property(strong, nonatomic)NSString *shape;
-@property(strong, nonatomic)NSString *color;
+@property(strong, nonatomic)NSNumber *shape;
+@property(strong, nonatomic)NSNumber *color;
 @property(strong, nonatomic)NSNumber *number;
 @property(strong, nonatomic)NSNumber *shading;
 
 @end
 @implementation SetCard
 
--(id)initCardOf: (NSNumber *)number shape: (NSString*)shape color: (NSString*)color shading:(NSNumber*) shading{
+-(id)initCardOf: (NSNumber *)number shape: (NSNumber*)shape color: (NSNumber*)color shading:(NSNumber*) shading{
     self = [super init];
     if(self){
         _shape = shape;
@@ -50,22 +50,22 @@
     return @[@"shape", @"number", @"color", @"shading"];
 }
 +(NSArray *)validShape{
-    return @[@"▲", @"●", @"■"];
+    return @[@(DIAMOND), @(SQUIGGLE), @(OVAL)];
 }
-
 +(NSArray *)validColor{
-    return @[@"blueColor", @"greenColor", @"redColor"];
+    return @[@(RED), @(GREEN), @(PURPLE)];
 }
 +(NSArray *)validShading{
-    return @[@(0.0), @(0.2), @(1.0)]; //alpha
+    return @[@(SOLID), @(STRIPED), @(OPEN)];
 }
-
 +(NSArray *)validNumbers{
     return @[@(1), @(2), @(3)];
 }
 
+-(NSString *)stringShape{return @[@"■",@"▲", @"●"][[self.shape intValue]];}
+
 -(NSString *)contents{
-    return [self.shape stringByPaddingToLength:[self.number intValue] withString:self.shape startingAtIndex:0];
+    return [self.stringShape stringByPaddingToLength:[self.number intValue] withString:self.stringShape  startingAtIndex:0];
 }
 
 @end

@@ -13,7 +13,8 @@
 @interface CardGameViewController : UIViewController
 
 -(Deck*) createDeck; //abstract
-@property (nonatomic) NSInteger cardsCount; // abstract
-@property (nonatomic) NSString* gameType; //abstract
--(void)updateButton: (UIButton*) cardButton withCard: (Card*)card; // abstract
+@property (nonatomic) NSInteger startCardsCount; // abstract
+@property (nonatomic) NSInteger gameType; //abstract
+-(void)updateCell: (id) cardCell usingCard: (Card*)card; // abstract
+-(int) mode; 
 @end

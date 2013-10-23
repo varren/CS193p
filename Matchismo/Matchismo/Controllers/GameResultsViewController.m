@@ -12,32 +12,68 @@
 @interface GameResultsViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *display;
 @property (nonatomic) SEL sortedSelector;
+
 @end
 
 @implementation GameResultsViewController
 
 #define OUTPUT_SCORES_FORMAT @"%-5s |  %-5s \t| %4s \t| %-18s \n"
-
+#define CARD_MATCHING_GAME 1
+#define SETS_MATHCING_GAME 2
 -(void) updateUI{
     
-    NSString *displayText = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Type" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String],[@"Date" UTF8String]];
+    NSString *text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Type" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String],[@"Date" UTF8String]];
+    
+    NSMutableAttributedString * displayText = [[NSMutableAttributedString alloc]initWithString:text];
+    
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 
     for (GameResult *result in [[GameResult allGameResults]sortedArrayUsingSelector:self.sortedSelector]) {
+        
+
         NSString *sScore = [NSString stringWithFormat:@"%d", result.score];
         NSString *sTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:result.end]];
         NSString *sDuration = [NSString stringWithFormat:@"%0g sec",round(result.duration)];
-
-        displayText = [displayText stringByAppendingFormat:OUTPUT_SCORES_FORMAT,[result.gameType UTF8String], [sScore UTF8String], [sDuration UTF8String],[sTime UTF8String]];
         
-        //displayText = [displayText stringByAppendingFormat:@"Score: %d (%@, %0g)\n", result.score, [dateFormatter stringFromDate:result.end], round(result.duration)];
+        text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[[self gameNameFrom:result] UTF8String], [sScore UTF8String], [sDuration UTF8String],[sTime UTF8String]];
+        
+        NSMutableAttributedString * newLine = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName: [self selectColorFor:result]}];
+        
+        [displayText appendAttributedString:newLine];
+        
     }
     
-    self.display.text = displayText;
+    [self.display setAttributedText: displayText];
 }
 
+
+-(UIColor*)selectColorFor:(GameResult*) result{
+    UIColor *sColor;
+
+    if(result.gameType == SETS_MATHCING_GAME)
+        sColor = [UIColor blueColor];
+    else if (result.gameType == CARD_MATCHING_GAME)
+        sColor = [UIColor redColor];
+    else
+        sColor = [UIColor blackColor];
+    
+    return sColor;
+}
+
+-(NSString*)gameNameFrom:(GameResult*) result{
+    NSString * sGameType;
+    
+    if(result.gameType == SETS_MATHCING_GAME)
+        sGameType = @"SETS";
+    else if (result.gameType == CARD_MATCHING_GAME)
+        sGameType = @"CARD";
+    else sGameType = @"";
+    
+    return sGameType;
+}
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self updateUI];

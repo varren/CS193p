@@ -10,24 +10,40 @@
 #import "GameResult.h"
 #import "CardMatchingGame.h" 
 
-@interface CardGameViewController ()
+@interface CardGameViewController ()<UICollectionViewDataSource>
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeControl;
-@property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
-@property (weak, nonatomic) IBOutlet UISlider *historySlider;
+@property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
+@property (weak, nonatomic) IBOutlet UIButton *addCardsButton;
 
-@property (strong,nonatomic) NSMutableDictionary *history;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) GameResult *gameResult;
-@property (nonatomic) int flipCount;
 @property (nonatomic) int mode;
 
 @end
 
 @implementation CardGameViewController
+
+#pragma mark - Abstract functions
+
+-(Deck*) createDeck{return nil;} //abstract
+-(void)updateCell: (id) cardCell usingCard: (Card*)card{} //abstract
+-(int)mode{
+    return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
+}
+
+#pragma mark - Properties
+
+-(CardMatchingGame *)game{
+    if(!_game) {
+        _game = [[CardMatchingGame alloc]
+                 initWithCardCount:self.startCardsCount
+                 usingDeck:[self createDeck]];
+    }
+    return _game;
+}
 
 -(GameResult*)gameResult{
     if (!_gameResult) {
@@ -37,96 +53,112 @@
 }
 
 
--(CardMatchingGame *)game{
-    if(!_game) {
-        _game = [[CardMatchingGame alloc]
-                 initWithCardCount:self.cardsCount
-                 usingDeck:[self createDeck]];
-    }
-    return _game;
+
+#pragma mark - Data Source protocol
+#define COLLECTION_VIEW_BORDERS 10.0
+-(void)setCardCollectionView:(UICollectionView *)cardCollectionView{
+    _cardCollectionView = cardCollectionView;
+    UICollectionViewFlowLayout *flow = (UICollectionViewFlowLayout *)self.cardCollectionView.collectionViewLayout;
+    flow.sectionInset = UIEdgeInsetsMake(COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS);
+}
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return 1;
 }
 
-
--(NSInteger) cardsCount{
-    if(!_cardsCount)_cardsCount = self.cardButtons.count;
-    return _cardsCount;
-} // kinda abstract 
--(Deck*) createDeck{return nil;} //abstract
--(void)updateButton: (UIButton*) cardButton withCard: (Card*)card{} //abstract
-
--(int)mode{
-    return [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.game.currentCardsCount;
 }
 
--(NSMutableDictionary*)history{
-    if(!_history)_history = [[NSMutableDictionary alloc]init];
-    return _history;
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%d:: %d",indexPath.section , indexPath.item);
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PlayingCard" forIndexPath:indexPath];
+    Card * card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card];
+    return cell;
 }
 
--(void) setCardButtons:(NSArray *)cardButtons{
-    _cardButtons = cardButtons;
-    [self updateUI];
-}
-
+#pragma mark - UI functions
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.3
 
 -(void)updateUI{
-    for(UIButton* cardButton in self.cardButtons){
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-        [self updateButton: cardButton withCard: card];
+    
+    for(UICollectionViewCell *cell in [self.cardCollectionView visibleCells]){
+        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
+        Card *card = [self.game cardAtIndex:indexPath.item];
+        [self updateCell:cell usingCard:card];
+        
     }
+    	
     self.modeControl.alpha =
     self.modeControl.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
+    self.addCardsButton.alpha =
+    self.addCardsButton.isUserInteractionEnabled	 ? ACTIVE_ALPHA : INACTIVE_ALPHA;
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-
-    //slider update
-    [self.statusLabel setAttributedText:  [self status] ];
-    NSMutableAttributedString *historyStatus = [[self status] mutableCopy];
-    NSRange range = NSMakeRange(0, historyStatus.length);
-    [historyStatus addAttributes:@{NSBackgroundColorAttributeName: [UIColor lightGrayColor]} range:range];
-    [self.history setObject: historyStatus forKey:@(self.flipCount)];
-    [self.historySlider setValue:self.flipCount];
 
 }
 
+
 - (IBAction)deal{
+
     self.gameResult = nil;
     self.game = nil;
-    self.history = nil;
-    self.flipCount = 0;
+    [self.cardCollectionView reloadData];
+    self.addCardsButton.userInteractionEnabled =YES;
     self.modeControl.userInteractionEnabled = YES;
     [self updateUI];
 }
 
-- (IBAction)flipCard:(UIButton *)sender {
+- (IBAction)flipCard:(UITapGestureRecognizer *)gesture {
+    CGPoint tapLocation = [gesture locationInView:self.cardCollectionView];
+    NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
     
-    if(!self.flipCount){ // if first flip
+    
+    if(indexPath){
+    
+        
+        [self hideTabBar:self.tabBarController];   
         self.modeControl.userInteractionEnabled = NO;
         [self.game setMode: [self mode]];
+        
+        
+
+        [self.game flipCardAtIndex:indexPath.item];
+        self.gameResult.score = self.game.score;
+        [self updateUI];
     }
-    
-    [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
-    self.flipCount++;
-    [self.historySlider setMaximumValue:self.flipCount];
-    self.gameResult.score = self.game.score;
-    [self updateUI];
-
 }
 
-- (IBAction)historySliderMoved:(id)sender {
-    int value = (int)self.historySlider.value;
-    NSAttributedString *text = (value == (int)self.historySlider.maximumValue) ? [self status] : self.history[@(value)];
-    [self.statusLabel setAttributedText: text];
-}
 
 
 - (IBAction)changeMode {
     [self.game setMode: [self mode]];
 }
+#define CARDS_TO_ADD 3
+#define MAIN_CARDS_SECTION 0
+- (IBAction)addCards {
+    int countInitCards = [self.game addCards: CARDS_TO_ADD];
+    
+    NSMutableArray * indexPaths = [NSMutableArray array];
+    
+    for (int i = countInitCards; i > 0 ; i--) {
+        NSIndexPath * nextCardPath = [NSIndexPath indexPathForItem:self.game.currentCardsCount - i inSection:MAIN_CARDS_SECTION];
+        [indexPaths addObject:nextCardPath];
+        NSLog(@"%d::%d <- cards to ad at, %d", nextCardPath.section, nextCardPath.item, self.game.currentCardsCount);
+    }
+    
+    [self.cardCollectionView insertItemsAtIndexPaths:indexPaths];
 
+    if(countInitCards!= CARDS_TO_ADD){
+        [self.addCardsButton setUserInteractionEnabled:NO];
+        
+    }
+    
+    
+    //[self.cardCollectionView reloadData];
+    [self updateUI];
+}
 
 -(NSAttributedString*) flippedCards{
     NSMutableAttributedString * cards = [[NSMutableAttributedString alloc] init];
@@ -167,4 +199,69 @@
     return status;
 }
 
+
+- (IBAction)toggleMenu {
+    self.tabBarController.tabBar.isAccessibilityElement ?
+    [self showTabBar:self.tabBarController]:
+    [self hideTabBar:self.tabBarController];
+}
+
+// Method implementations FROM http://stackoverflow.com/questions/5272290/how-to-hide-uitabbarcontroller/5272334#5272334
+// How to hide uitabbarcontroller
+- (void) hideTabBar:(UITabBarController *) tabbarcontroller
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    float fHeight = screenRect.size.height;
+    if(  UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) )
+    {
+        fHeight = screenRect.size.width;
+    }
+    
+    for(UIView *view in tabbarcontroller.view.subviews)
+    {
+        if([view isKindOfClass:[UITabBar class]])
+        {
+            [view setFrame:CGRectMake(view.frame.origin.x, fHeight, view.frame.size.width, view.frame.size.height)];
+        }
+        else
+        {
+            [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, fHeight)];
+            view.backgroundColor = [UIColor blackColor];
+        }
+    }
+    [UIView commitAnimations];
+    tabbarcontroller.tabBar.isAccessibilityElement = YES;
+
+}
+
+- (void) showTabBar:(UITabBarController *) tabbarcontroller
+{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    float fHeight = screenRect.size.height - tabbarcontroller.tabBar.frame.size.height;
+    
+    if(  UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) )
+    {
+        fHeight = screenRect.size.width - tabbarcontroller.tabBar.frame.size.height;
+    }
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.5];
+    for(UIView *view in tabbarcontroller.view.subviews)
+    {
+        if([view isKindOfClass:[UITabBar class]])
+        {
+            [view setFrame:CGRectMake(view.frame.origin.x, fHeight, view.frame.size.width, view.frame.size.height)];
+        }
+        else
+        {
+            [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, fHeight)];
+        }
+    }
+    [UIView commitAnimations];
+    tabbarcontroller.tabBar.isAccessibilityElement = NO;
+ 
+}
 @end

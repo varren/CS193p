@@ -17,10 +17,11 @@
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
 -(NSArray*) allFlippedCards;
-
+-(int)addCards:(NSInteger) count; // returns number of initialised Cards and less if no more cards left
 //2, 3, 4... cards matching mode
-@property (nonatomic) int mode; //abstract
 
+@property (nonatomic) int currentCardsCount;
+@property (nonatomic) int mode; 
 
 @property (readonly, nonatomic) int score;
 @property (readonly, nonatomic) int lastTurnScore;
