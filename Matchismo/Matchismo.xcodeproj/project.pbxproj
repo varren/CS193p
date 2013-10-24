@@ -39,7 +39,6 @@
 		A07E1AF8180F85B300FF682D /* Q♦.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1AE0180F85B300FF682D /* Q♦.jpg */; };
 		A07E1AF9180F85B300FF682D /* Q♦@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */; };
 		A07E1EE018131673004B21B5 /* SetCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07E1EDF18131673004B21B5 /* SetCardView.m */; };
-		A07E432C1819009100C4608B /* MatchedCardsComboView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07E432B1819009100C4608B /* MatchedCardsComboView.m */; };
 		A07EBEB71813949200442AF6 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07EBEB61813949200442AF6 /* CardView.m */; };
 		A07F8ABD180423BD00CF491D /* cardback.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07F8ABC180423BD00CF491D /* cardback.jpg */; };
 		A07FA0C21810B72B00E4663D /* SuperCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07FA0C11810B72B00E4663D /* SuperCardViewController.m */; };
@@ -108,8 +107,6 @@
 		A07E1AE1180F85B300FF682D /* Q♦@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Q♦@2x.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/Q♦@2x.jpg"; sourceTree = "<absolute>"; };
 		A07E1EDE18131673004B21B5 /* SetCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetCardView.h; path = Views/SetCardView.h; sourceTree = "<group>"; };
 		A07E1EDF18131673004B21B5 /* SetCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetCardView.m; path = Views/SetCardView.m; sourceTree = "<group>"; };
-		A07E432A1819009100C4608B /* MatchedCardsComboView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchedCardsComboView.h; path = Views/MatchedCardsComboView.h; sourceTree = "<group>"; };
-		A07E432B1819009100C4608B /* MatchedCardsComboView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchedCardsComboView.m; path = Views/MatchedCardsComboView.m; sourceTree = "<group>"; };
 		A07EBEB51813949200442AF6 /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardView.h; path = Views/CardView.h; sourceTree = "<group>"; };
 		A07EBEB61813949200442AF6 /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardView.m; path = Views/CardView.m; sourceTree = "<group>"; };
 		A07F8ABC180423BD00CF491D /* cardback.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cardback.jpg; path = Resources/cardback.jpg; sourceTree = "<group>"; };
@@ -232,8 +229,6 @@
 				A07E1EDF18131673004B21B5 /* SetCardView.m */,
 				A07EBEB51813949200442AF6 /* CardView.h */,
 				A07EBEB61813949200442AF6 /* CardView.m */,
-				A07E432A1819009100C4608B /* MatchedCardsComboView.h */,
-				A07E432B1819009100C4608B /* MatchedCardsComboView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -456,7 +451,6 @@
 				A082AED5181212D8000EAEB5 /* CardCollectionViewCell.m in Sources */,
 				A07E1EE018131673004B21B5 /* SetCardView.m in Sources */,
 				A07EBEB71813949200442AF6 /* CardView.m in Sources */,
-				A07E432C1819009100C4608B /* MatchedCardsComboView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
