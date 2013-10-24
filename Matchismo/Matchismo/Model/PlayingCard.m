@@ -22,11 +22,11 @@
         }
     }else if (otherCards.count > 1){
 
-        for (int i=0; i < [otherCards count]; i++) {
+        for (int i = 0; i < [otherCards count]; i++) {
             
             score+=[self match:@[otherCards[i]]];
             
-            for (int j=0; j<[otherCards count]; j++) 
+            for (int j = 0; j<[otherCards count]; j++) 
                 score+=[otherCards[i]match:@[otherCards[j]]];
             
         }
@@ -83,5 +83,7 @@
     }
 }
 
-
+-(NSString*)description{
+    return [self.suit stringByAppendingFormat:@" %@", [PlayingCard rankStrings][self.rank]];
+}
 @end

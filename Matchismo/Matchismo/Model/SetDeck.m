@@ -17,7 +17,7 @@
             for (NSNumber *color in [SetCard validColor]) 
                 for (NSNumber *number in [SetCard validNumbers]) 
                     for (NSNumber *shading in [SetCard validShading]){
-                        SetCard *card = [[SetCard alloc] initCardOf: number shape: shape color: color shading: shading];
+                        SetCard *card = [[SetCard alloc] initCardOf: [number intValue] shape: [shape intValue] color: [color intValue] shading: [shading intValue]];
                         
                         [self addCard:card atTop:YES];
                     }

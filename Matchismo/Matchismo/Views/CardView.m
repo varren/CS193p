@@ -17,7 +17,10 @@
     [self setNeedsDisplay];
 }
 
-
+-(void)setIsHint:(BOOL)isHint{
+    _isHint = isHint;
+    [self setNeedsDisplay];
+}
 #pragma mark - Initialisation
 
 -(void)setup{

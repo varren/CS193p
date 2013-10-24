@@ -12,11 +12,11 @@
 
 @interface SetCardView : CardView
 
-@property (strong, nonatomic) NSString * shape;
-@property (strong, nonatomic) UIColor* color;
-@property (strong, nonatomic) NSNumber* shading; // alpha
-@property (nonatomic) NSInteger number;
+@property (nonatomic) NSUInteger shape;
+@property (nonatomic) NSUInteger color;
+@property (nonatomic) NSUInteger shading;
+@property (nonatomic) NSUInteger number;
 
-+(NSArray*) validShapes;
+
 @end
 

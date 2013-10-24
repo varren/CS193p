@@ -12,24 +12,28 @@
 
 #pragma mark - Properties
 
--(void)setShape:(NSString *)shape{
+-(void)setShape:(NSUInteger)shape{
     _shape = shape;
     [self setNeedsDisplay];
 }
--(void)setShading:(NSNumber *)shading{
+-(void)setShading:(NSUInteger)shading{
     _shading = shading;
     [self setNeedsDisplay];
 }
 
--(void)setColor:(UIColor *)color{
+-(void)setColor:(NSUInteger)color{
     _color = color;
     [self setNeedsDisplay];
 }
--(void)setNumber:(NSInteger)number{
+-(void)setNumber:(NSUInteger)number{
     _number = number;
     [self setNeedsDisplay];
 }
-
+/*[SetCardView validShapes][[setCard.shape intValue]];
+ setCardView.shading = @[@(1.0), @(0.5), @(0.0)][[setCard.shading intValue] ];
+ setCardView.color = [self colorFor: setCard.color];
+ setCardView.number = [setCard.number intValue];
+ */
 #pragma mark - Drawing
 
 #define CORNER_RADIUS 12.0
@@ -87,22 +91,29 @@
 
 
 }
-
+#define DIAMOND 1
+#define OVAL 2
+#define SQUIGGLE 3
 -(void) drawShapeInRect: (CGRect) rect{
     UIBezierPath * shape;
     
-    if ([self.shape isEqualToString: @"diamond"]) 
+    if (self.shape == DIAMOND)
         shape = [self drawDiamondIn:rect];
-    else if([self.shape isEqualToString: @"oval"])
+    else if(self.shape == OVAL)
         shape = [self drawOvalIn:rect];
     else
         shape = [self drawSquiggleIn:rect];
     
-    [[self.color colorWithAlphaComponent:[self.shading doubleValue]] setFill];
-    [self.color setStroke];
+    
+    UIColor *mainColor = [self validColors][self.color];
+    CGFloat shading = [(NSNumber*)[self validShades][self.shading] floatValue];
+
+    [[mainColor colorWithAlphaComponent: shading] setFill];
+    [mainColor setStroke];
     [shape stroke];
     [shape fill];
 }
+
 
 -(UIBezierPath *)drawDiamondIn: (CGRect) rect{
     UIBezierPath * diamond = [[UIBezierPath alloc] init];
@@ -171,8 +182,14 @@
     return CGPointMake(rect.origin.x + rect.size.width * xcoeff, rect.origin.y + rect.size.height * ycoeff);
 
 }
-+(NSArray*) validShapes{
+-(NSArray*) validShapes{
     return @[@"diamond",@"squiggle",@"oval"];
+}
+-(NSArray*) validColors{
+    return @[[UIColor purpleColor], [UIColor greenColor], [UIColor redColor]];
+}
+-(NSArray*)validShades{
+    return @[@(1.0), @(0.5), @(0.0)]; // alpha
 }
 @end
 

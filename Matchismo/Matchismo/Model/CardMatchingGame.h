@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLIPPED_A_CARD};
 @interface CardMatchingGame : NSObject
+
+
 
 //designated init
 -(id)initWithCardCount:(NSUInteger) cardCount
@@ -17,13 +20,17 @@
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
 -(NSArray*) allFlippedCards;
--(int)addCards:(NSInteger) count; // returns number of initialised Cards and less if no more cards left
-//2, 3, 4... cards matching mode
+
+-(int)addCard;
+
+-(int)addCardAtIndex:(NSInteger) index;
+-(void)removeCardAtIndex:(NSInteger)index;
 
 @property (nonatomic) int currentCardsCount;
-@property (nonatomic) int mode; 
+@property (nonatomic) int mode; //2, 3, 4... cards matching mode
 
 @property (readonly, nonatomic) int score;
+@property (readonly, nonatomic) GAME_STATUS status;
 @property (readonly, nonatomic) int lastTurnScore;
 
 

@@ -13,12 +13,12 @@ typedef NS_ENUM(NSUInteger, SET_SHADING) {SOLID,   STRIPED,  OPEN  };
 
 @interface SetCard : Card
 
--(id)initCardOf: (NSNumber *)number shape: (NSNumber*)shape color: (NSNumber*)color shading:(NSNumber*)shading;
+-(id)initCardOf: (NSUInteger)number shape: (NSUInteger)shape color: (NSUInteger)color shading:(NSUInteger)shading;
 
-@property(readonly, strong, nonatomic)NSNumber *shape;
-@property(readonly, strong, nonatomic)NSNumber *color;
-@property(readonly, strong, nonatomic)NSNumber *number;
-@property(readonly, strong, nonatomic)NSNumber *shading;
+@property(readonly, nonatomic)NSUInteger shape;
+@property(readonly, nonatomic)NSUInteger color;
+@property(readonly, nonatomic)NSUInteger number;
+@property(readonly, nonatomic)NSUInteger shading;
 
 +(NSArray *)validShape; //of NSString
 +(NSArray *)validColor; //of NSString

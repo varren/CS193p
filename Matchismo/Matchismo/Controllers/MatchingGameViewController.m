@@ -30,10 +30,11 @@
 
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
-#define ACTIVE_ALPHA 1.0
-#define INACTIVE_ALPHA 0.3
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card{
+
+-(void)updateCell: (id) cardCell usingCard: (Card*)card withGameState: (BOOL) needState{
+    [super updateCell:cardCell usingCard:card withGameState:  needState];
+    
     if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
         CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
         if([cardView isKindOfClass:[PlayingCardView class]]){
@@ -42,8 +43,7 @@
                 PlayingCard *playingCard =(PlayingCard *) card;
                 playingCardView.rank = playingCard.rank;
                 playingCardView.suit = playingCard.suit;
-                playingCardView.faceUp = playingCard.isFaceUp;
-                playingCardView.alpha = playingCard.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
+
             }
         }
     }

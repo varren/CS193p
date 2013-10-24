@@ -8,15 +8,15 @@
 
 #import "SetCard.h"
 @interface SetCard()
-@property(strong, nonatomic)NSNumber *shape;
-@property(strong, nonatomic)NSNumber *color;
-@property(strong, nonatomic)NSNumber *number;
-@property(strong, nonatomic)NSNumber *shading;
+@property(nonatomic)NSUInteger shape;
+@property(nonatomic)NSUInteger color;
+@property(nonatomic)NSUInteger number;
+@property(nonatomic)NSUInteger shading;
 
 @end
 @implementation SetCard
 
--(id)initCardOf: (NSNumber *)number shape: (NSNumber*)shape color: (NSNumber*)color shading:(NSNumber*) shading{
+-(id)initCardOf: (NSUInteger )number shape: (NSUInteger )shape color: (NSUInteger )color shading:(NSUInteger ) shading{
     self = [super init];
     if(self){
         _shape = shape;
@@ -41,7 +41,7 @@
         
 #define ALL_THE_SAME 1
 -(BOOL)isValidSet: (NSString*) property forCards:(NSArray *)otherCards{
-    NSMutableSet *valuesSet = [[NSMutableSet alloc] initWithObjects:[self valueForKey:property], nil];
+    NSMutableSet *valuesSet = [[NSMutableSet alloc] init]; //initWithObjects:[self valueForKey:property], nil];
     [valuesSet  addObjectsFromArray: [otherCards valueForKey:property]];
     return valuesSet.count == otherCards.count + 1 || valuesSet.count == ALL_THE_SAME;
 }
@@ -62,10 +62,10 @@
     return @[@(1), @(2), @(3)];
 }
 
--(NSString *)stringShape{return @[@"■",@"▲", @"●"][[self.shape intValue]];}
+-(NSString *)stringShape{return @[@"■",@"▲", @"●"][self.shape];}
 
 -(NSString *)contents{
-    return [self.stringShape stringByPaddingToLength:[self.number intValue] withString:self.stringShape  startingAtIndex:0];
+    return [self.stringShape stringByPaddingToLength:self.number withString:self.stringShape  startingAtIndex:0];
 }
 
 @end
