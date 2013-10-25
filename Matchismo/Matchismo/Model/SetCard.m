@@ -30,7 +30,7 @@
 #define MATCH_SCORES 5
 
 -(int)match:(NSArray *)otherCards{
-    
+   
     for (NSString* property in self.properties)
         if(![self isValidSet: property forCards: otherCards])
             return -MATCH_SCORES/2;
@@ -41,7 +41,7 @@
         
 #define ALL_THE_SAME 1
 -(BOOL)isValidSet: (NSString*) property forCards:(NSArray *)otherCards{
-    NSMutableSet *valuesSet = [[NSMutableSet alloc] init]; //initWithObjects:[self valueForKey:property], nil];
+    NSMutableSet *valuesSet = [[NSMutableSet alloc] initWithObjects:[self valueForKey:property], nil];
     [valuesSet  addObjectsFromArray: [otherCards valueForKey:property]];
     return valuesSet.count == otherCards.count + 1 || valuesSet.count == ALL_THE_SAME;
 }
@@ -66,6 +66,9 @@
 
 -(NSString *)contents{
     return [self.stringShape stringByPaddingToLength:self.number withString:self.stringShape  startingAtIndex:0];
+}
+-(NSString*)description{
+    return [self contents];
 }
 
 @end

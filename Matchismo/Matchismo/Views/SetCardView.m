@@ -37,6 +37,8 @@
 #pragma mark - Drawing
 
 #define CORNER_RADIUS 12.0
+#define SELECTED_ALPHA 0.5
+#define SELECTED_ALPHA 0.5
 - (void)drawRect:(CGRect)rect
 {
     UIBezierPath * roundedRect = [UIBezierPath bezierPathWithRoundedRect: self.bounds  cornerRadius:CORNER_RADIUS];
@@ -44,14 +46,7 @@
     [roundedRect addClip];
     
     
-    UIColor *cardColor;
-    
-    if(self.faceUp){
-        cardColor = [UIColor grayColor];
-        
-    }else{
-        cardColor = [UIColor whiteColor];
-    }
+    UIColor *cardColor  = (self.faceUp) ? [[UIColor whiteColor] colorWithAlphaComponent: 0.7]: [UIColor whiteColor];
     
     [cardColor setFill];
      UIRectFill(self.bounds);
@@ -189,7 +184,7 @@
     return @[[UIColor purpleColor], [UIColor greenColor], [UIColor redColor]];
 }
 -(NSArray*)validShades{
-    return @[@(1.0), @(0.5), @(0.0)]; // alpha
+    return @[@(1.0), @(0.3), @(0.0)]; // alpha
 }
 @end
 

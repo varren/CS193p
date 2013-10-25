@@ -38,8 +38,8 @@
 #define DEFAULT_TEXT_FONT_SIZE 20
 
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card withGameState: (BOOL) needState{
-
+-(void)updateCell: (id) cardCell usingCard: (Card*)card {
+    [super updateCell:cardCell usingCard:card];   
     if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
         CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
         if([cardView isKindOfClass:[SetCardView class]]){
@@ -56,7 +56,7 @@
         }
     }
 
-    [super updateCell:cardCell usingCard:card withGameState:  needState];   
+    
 }
 
 

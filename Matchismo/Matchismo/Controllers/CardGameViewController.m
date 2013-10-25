@@ -10,7 +10,7 @@
 #import "GameResult.h"
 #import "CardMatchingGame.h" 
 #import "CardCollectionViewCell.h"
-
+#import <QuartzCore/QuartzCore.h>
 @interface CardGameViewController ()<UICollectionViewDataSource>
 
 
@@ -56,48 +56,53 @@
     return _gameResult;
 }
 
+-(BOOL)keepMatchedCards{
+    if (!_keepMatchedCards)  _keepMatchedCards = YES;
+    return _keepMatchedCards;
+}
+
 #pragma mark - Data Source protocol
 
 #define MAIN_DISPLAY 0
 #define FLIPPED_CARDS_DISPLAY 1
 
--(void)setFlippedCardCollectionView:(UICollectionView *)flippedCardCollectionView{
-    _flippedCardCollectionView = flippedCardCollectionView;
-    UICollectionViewFlowLayout *flow = (UICollectionViewFlowLayout *)self.flippedCardCollectionView.collectionViewLayout;
-    flow.minimumInteritemSpacing = 0.0f;
-    flow.minimumLineSpacing = 0.0f;
-    flow.sectionInset = UIEdgeInsetsMake(0,0,0,0);
-    //flow.sectionInset = UIEdgeInsetsMake(COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS);
-
-}
+#define MAIN_CARDS_SECTION 0
+#define MATCHED_CARDS_SECTION 1
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 1;
+    if(collectionView.tag == MAIN_DISPLAY)
+        return 2;
+    else
+        return 1;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
+
     NSInteger count = 0;
     
-    if(collectionView.tag == MAIN_DISPLAY)
-        count =  self.game.currentCardsCount;
+    if(collectionView.tag == MAIN_DISPLAY){
+        if (section == MAIN_CARDS_SECTION){
+            count =  self.game.currentCardsCount;
+        } else if (section == MATCHED_CARDS_SECTION){
+            count = [self.game.matchedCards count];
+        }
+    }
     else if (collectionView.tag == FLIPPED_CARDS_DISPLAY)
         count =  [[self.game allFlippedCards] count];
     
-        
     return count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PlayingCard" forIndexPath:indexPath];
-    
-    if(collectionView.tag == MAIN_DISPLAY)
-        [self updateCell:cell usingCard:[self.game cardAtIndex:indexPath.item] withGameState: YES];
-    else if (collectionView.tag == FLIPPED_CARDS_DISPLAY)
-        [self updateCell:cell usingCard:[self.game allFlippedCards][indexPath.item] withGameState: NO];
+    [self updateCell:cell
+        inCollection:collectionView
+             atIndex:indexPath];
 
+    
     return cell;
 }
+
 #define COLLECTION_VIEW_BORDERS 10.0f
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     
@@ -106,60 +111,77 @@
     else
         return UIEdgeInsetsMake(0,0,0,0);
 }
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
 
     if(collectionView.tag == FLIPPED_CARDS_DISPLAY)
         return 0.0f;
     else return COLLECTION_VIEW_BORDERS/2;
 }
+
 #pragma mark - UI functions
 #define ACTIVE_ALPHA 1.0
-#define INACTIVE_ALPHA 0.3
+#define INACTIVE_ALPHA 0.5
 #define INVIS_ALPHA 0.0
 
 -(void)updateUI{
     
-    for(UICollectionViewCell *cell in [self.cardCollectionView visibleCells]){
-        NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
-        Card *card = [self.game cardAtIndex:indexPath.item];
-        [self updateCell:cell usingCard:card withGameState: YES];
-        
-    }
-    
+    for(UICollectionViewCell *cell in [self.cardCollectionView visibleCells])
+        [self updateCell:cell
+            inCollection:self.cardCollectionView
+                 atIndex:[self.cardCollectionView indexPathForCell:cell]];
+
+
     
     self.hintButton.alpha = [[self.game allFlippedCards] count] == 0 ? ACTIVE_ALPHA : INVIS_ALPHA;
     self.modeControl.alpha =
     self.modeControl.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
+    
     self.addCardsButton.alpha =
     self.addCardsButton.isUserInteractionEnabled ? ACTIVE_ALPHA : INACTIVE_ALPHA;
     
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-
 }
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card withGameState: (BOOL) needState{
-    if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
-        CardCollectionViewCell *cardCollCell = (CardCollectionViewCell *)cardCell;
-        
-        CardView *cardView = cardCollCell.cardView;
-        if(needState){
+-(void)updateCell:(UICollectionViewCell *)cell  inCollection: (UICollectionView *)collectionView atIndex: (NSIndexPath *)indexPath    {
+
+    CardView *cardView = ((CardCollectionViewCell *)cell).cardView;
+    
+    Card * card;
+    if(collectionView.tag == MAIN_DISPLAY){
+     
+        if(indexPath.section == MAIN_CARDS_SECTION){
+            card = [self.game cardAtIndex:indexPath.item];
             cardView.faceUp = card.isFaceUp;
             cardView.alpha = card.isUnplayable ? INACTIVE_ALPHA : ACTIVE_ALPHA;
-        } else {
+        }else if( indexPath.section == MATCHED_CARDS_SECTION){
+            card = self.game.matchedCards[indexPath.item];
             cardView.faceUp = YES;
-            cardView.alpha = 0.9;
-            
-            
-            if(self.game.status == GOT_MATCH)
-                cardCollCell.backgroundColor = [UIColor greenColor];
-            else if(self.game.status == GOT_MISMATCH)
-                cardCollCell.backgroundColor = [UIColor redColor];
-            else
-                cardCollCell.backgroundColor = nil;
         }
+    }else if(collectionView.tag == FLIPPED_CARDS_DISPLAY){
+        card = [self.game allFlippedCards][indexPath.item];
+        cardView.faceUp = YES;
+        
+        UIColor * color = [UIColor grayColor];
+        if(self.game.status == GOT_MATCH)
+            color = [UIColor greenColor];
+        else if(self.game.status == GOT_MISMATCH)
+            color = [UIColor redColor];
+        
+        CALayer * layer = [cell layer];
+        layer.borderColor = color.CGColor;
+        layer.borderWidth = 3.0;
+        layer.cornerRadius = 6.0;
+     
     }
     
-} //can override to add mechanics
+    [self updateCell:cell usingCard:card];
+}
+
+-(void)updateCell: (id) cardCell usingCard: (Card*)card {
+    
+    
+} //abstract
 
 - (IBAction)deal{
 
@@ -177,7 +199,7 @@
     NSIndexPath *indexPath = [self.cardCollectionView indexPathForItemAtPoint:tapLocation];
     
     
-    if(indexPath){
+    if(indexPath && indexPath.section == MAIN_CARDS_SECTION){
     
         if(self.game.status == NEW_GAME){
             [self hideTabBar:self.tabBarController];   
@@ -202,8 +224,8 @@
 - (IBAction)changeMode {
     [self.game setMode: [self mode]];
 }
+
 #define CARDS_TO_ADD 3
-#define MAIN_CARDS_SECTION 0
 - (IBAction)addCards {
     int countInitCards = 0;
     
@@ -226,30 +248,22 @@
         [self.addCardsButton setUserInteractionEnabled:NO];
         [self updateUI];
     }
-    
+}
 
-}
--(BOOL)keepMatchedCards{
-    if (!_keepMatchedCards) {
-        _keepMatchedCards = YES;
-    }
-    return _keepMatchedCards;
-}
+
+
 -(void)removeFlippedCards{
-    
-    NSMutableArray * indexPaths = [NSMutableArray array];
-    
+   
     for (int i = self.game.currentCardsCount - 1; i >= 0; i--) {
         Card * card = [self.game cardAtIndex:i];
         if (card.isUnplayable){
-            NSIndexPath * nextCardPath = [NSIndexPath indexPathForItem: i inSection:MAIN_CARDS_SECTION];
-            
-            [self.game removeCardAtIndex:i];
-            [indexPaths addObject:nextCardPath];
+            NSIndexPath * from = [NSIndexPath indexPathForItem: i inSection:MAIN_CARDS_SECTION];
+            NSIndexPath * to = [NSIndexPath indexPathForItem: [self.game.matchedCards count] inSection:MATCHED_CARDS_SECTION];
+            [self.game saveAndRemoveMatchAtIndex: i];
+            [self.cardCollectionView moveItemAtIndexPath:from toIndexPath:to ]; 
         }
     }
-    
-    [self.cardCollectionView deleteItemsAtIndexPaths:indexPaths];
+
     
 }
 

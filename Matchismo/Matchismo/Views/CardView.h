@@ -10,5 +10,6 @@
 
 @interface CardView : UIView
 @property (nonatomic) BOOL faceUp;
-@property (nonatomic) BOOL isHint;
+
+
 @end

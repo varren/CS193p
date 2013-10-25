@@ -10,8 +10,10 @@
 
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards;
-@property (readwrite, nonatomic) int score;
 @property (strong, nonatomic) NSMutableArray *flippedCards;
+@property (strong, nonatomic) NSMutableArray *matchedCards;
+@property (readwrite, nonatomic) int score;
+
 @property (nonatomic) int lastTurnScore;
 @property (strong,nonatomic) Deck *deck;
 @property (nonatomic) GAME_STATUS status;
@@ -29,6 +31,13 @@
     if(!_flippedCards)_flippedCards =[[NSMutableArray alloc]init];
     return _flippedCards;
 }
+-(NSMutableArray *)matchedCards{
+    if (!_matchedCards) {
+        _matchedCards = [NSMutableArray array];
+    }
+    
+    return  _matchedCards;
+}
 
 -(NSArray*) allFlippedCards{
     return [self.flippedCards copy];
@@ -44,6 +53,7 @@
 -(int)currentCardsCount{
     return [self.cards count];
 }
+
 -(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck{
     self = [super init];
     self.deck = deck;
@@ -60,60 +70,35 @@
     return self;
 }
 
-
 -(Card *)cardAtIndex:(NSUInteger)index{
     return (index < self.cards.count) ? self.cards[index] : nil;
 }
-
-
 
 -(void)flipCardAtIndex:(NSUInteger)index{
     
     Card *card = [self cardAtIndex:index];
     if(!card.isUnplayable){ //have some user interaction after this step
-        self.flippedCards = [[NSMutableArray alloc] init];
+        
+        if(self.status == GOT_MATCH || self.status == GOT_MISMATCH)
+            self.flippedCards = [[NSMutableArray alloc] init];
+        
         self.lastTurnScore = 0;
         self.status = FLIPPED_A_CARD;
         
-
-
-        for (Card *otherCard in self.cards)
-            if (otherCard.isFaceUp && !otherCard.isUnplayable)
-                [self.flippedCards  addObject:otherCard];
-        
         if(!card.isFaceUp){
 
-
-            
-  
             if([self.flippedCards count] + 1 == self.mode) // got n cards flipped according to mode
                 [self calculateScoreFor:card with: self.flippedCards];
-            
-            
-            
-        }
-        
-        
-        card.faceUp = !card.isFaceUp;
-        
-        if(self.status == GOT_MATCH || self.status == GOT_MISMATCH ||(self.status == FLIPPED_A_CARD && card.isFaceUp)){
+
             [self.flippedCards addObject:card];
-        } else{
+        } else {
             [self.flippedCards removeObject:card];
         }
         
-
-
-        
-
+        card.faceUp = !card.isFaceUp;
         self.score += self.lastTurnScore ;
         self.score -= self.flipCost;
-
     }
-}
--(void)saveFlippedCards{
-    
-   
 }
 
 -(void)calculateScoreFor:(Card*)card with: (NSArray *)otherCards{
@@ -126,6 +111,9 @@
             otherCard.unplayable = YES;
         card.unplayable = YES;
         self.status = GOT_MATCH;
+        
+
+        
     } else {
         self.status = GOT_MISMATCH;
         self.lastTurnScore -= self.mismatchPenalty;
@@ -134,6 +122,7 @@
         card.faceUp = YES;
     }
 }
+
 -(int)addCard{
     return [self addCardAtIndex:self.cards.count];
 }
@@ -152,22 +141,29 @@
     return cardsAdded;
 }
 
--(void)removeCardAtIndex:(NSInteger)index {
-    if(self.cards.count >= index || index >= 0){
+-(void)saveAndRemoveMatchAtIndex:(NSInteger)index{
+    if(self.cards.count > index || index >= 0){
+        [self.matchedCards addObject:self.cards[index]];
         [self.cards removeObjectAtIndex:index];
     }
+
 }
 
 
+-(void)removeCardAtIndex:(NSInteger)index {
+    if(self.cards.count > index || index >= 0){
+        [self.cards removeObjectAtIndex:index];
+    }
+}
 
 # define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY
 # define MISMATCH_PENALTY self.mode
 # define MATCH_BONUS 4 * DIFFICALTY_COEFFITIENT
 # define FLIP_COST 1
+
 -(int)matchBonus{return MATCH_BONUS;}
 -(int)flipCost{return FLIP_COST;}
 -(int)difficulty{return DIFFICALTY_COEFFITIENT;}
 -(int)mismatchPenalty{return MISMATCH_PENALTY;}
-
 
 @end

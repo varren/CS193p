@@ -20,10 +20,11 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
 -(NSArray*) allFlippedCards;
+@property (readonly, strong, nonatomic) NSMutableArray *matchedCards;
 
 -(int)addCard;
-
 -(int)addCardAtIndex:(NSInteger) index;
+-(void)saveAndRemoveMatchAtIndex:(NSInteger)index;
 -(void)removeCardAtIndex:(NSInteger)index;
 
 @property (nonatomic) int currentCardsCount;

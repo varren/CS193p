@@ -32,8 +32,8 @@
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card withGameState: (BOOL) needState{
-    [super updateCell:cardCell usingCard:card withGameState:  needState];
+-(void)updateCell: (id) cardCell usingCard: (Card*)card {
+    [super updateCell:cardCell usingCard:card];
     
     if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
         CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
@@ -43,6 +43,7 @@
                 PlayingCard *playingCard =(PlayingCard *) card;
                 playingCardView.rank = playingCard.rank;
                 playingCardView.suit = playingCard.suit;
+                
 
             }
         }

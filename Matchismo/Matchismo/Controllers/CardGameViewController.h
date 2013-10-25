@@ -18,7 +18,7 @@
 -(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger startCardsCount; // abstract
 @property (nonatomic) NSInteger gameType; //abstract
--(void)updateCell: (id) cardCell usingCard: (Card*)card withGameState: (BOOL) needState; // probably want to override it
+-(void)updateCell: (id) cardCell usingCard: (Card*)card ; // probably want to override it
 -(int) mode;
 @property(nonatomic) BOOL keepMatchedCards; // default is YES;
 @end
