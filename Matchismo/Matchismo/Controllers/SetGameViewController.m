@@ -13,7 +13,7 @@
 #import "SetCardView.h"
 
 @interface SetGameViewController ()
-
+@property (weak, nonatomic) IBOutlet UIButton *addCardsButton;
 @end
 
 @implementation SetGameViewController
@@ -21,6 +21,10 @@
 #define SET_GAME_STARTING_CARDS_COUNT 12
 #define SET_GAME_ID 2
 #define SET_GAME_MATCHING_MODE 3
+#define ACTIVE_ALPHA 1.0
+#define INACTIVE_ALPHA 0.5
+#define INVIS_ALPHA 0.0
+
 
 -(Deck*) createDeck{
     Deck* deck = [[SetDeck alloc]init];
@@ -28,17 +32,41 @@
 }
 
 -(NSInteger)gameType       {return SET_GAME_ID;}
--(NSInteger)startCardsCount{return SET_GAME_STARTING_CARDS_COUNT ;}
--(int)mode                 {return SET_GAME_MATCHING_MODE;}
--(BOOL)keepMatchedCards    {return NO;}
+-(BOOL)saveMatches    {return NO;}
 
+@synthesize startCardsCount = _startCardsCount;
+-(NSInteger)startCardsCount{
+    if (!_startCardsCount) _startCardsCount = SET_GAME_STARTING_CARDS_COUNT;
+    return _startCardsCount ;
+}
 
+@synthesize mode = _mode;
+-(int)mode{
+    if(!_mode)_mode = SET_GAME_MATCHING_MODE;
+    return _mode;        
+}
+
+-(void)startNewGame{
+    self.addCardsButton.userInteractionEnabled = YES;
+    self.addCardsButton.alpha = ACTIVE_ALPHA;
+    [super startNewGame];
+}
+
+#define CARDS_TO_ADD 3
+- (IBAction)addCards {
+    int cardsAdded = [self addCards:CARDS_TO_ADD];
+    if(cardsAdded != CARDS_TO_ADD){
+        self.addCardsButton.userInteractionEnabled = NO;
+        self.addCardsButton.alpha = INACTIVE_ALPHA;
+
+    }
+}
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 #define DEFAULT_TEXT_FONT_SIZE 20
 
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card {
+-(void)updateCell: (id) cardCell usingCard: (Card*)card{
     [super updateCell:cardCell usingCard:card];   
     if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
         CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
@@ -58,10 +86,6 @@
 
     
 }
-
-
-
-
 
 #define DEFAULT_STROKE_SIZE @-5
 -(NSAttributedString*) arrtibutedCard:(Card*) card{

@@ -12,13 +12,15 @@
 
 @interface CardGameViewController : UIViewController
 
-@property (readonly, strong, nonatomic) CardMatchingGame *game;
-
-
 -(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger startCardsCount; // abstract
 @property (nonatomic) NSInteger gameType; //abstract
--(void)updateCell: (id) cardCell usingCard: (Card*)card ; // probably want to override it
--(int) mode;
-@property(nonatomic) BOOL keepMatchedCards; // default is YES;
+@property(nonatomic) int mode; //abstract
+@property(nonatomic) BOOL saveMatches; // default is YES;
+-(void)updateCell: (id) cardCell usingCard: (Card*)card; // abstract
+
+// can override next methods but also need to use [super ...] version 
+-(void)startNewGame;
+-(void)flipCardAtIndex: (NSInteger) index;
+- (int)addCards: (NSInteger) numCardsToAdd;
 @end

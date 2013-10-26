@@ -11,11 +11,10 @@
 typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLIPPED_A_CARD};
 @interface CardMatchingGame : NSObject
 
-
-
 //designated init
 -(id)initWithCardCount:(NSUInteger) cardCount
-             usingDeck:(Deck *) deck;
+             usingDeck:(Deck *) deck
+               andMode:(int)mode;
 
 -(void)flipCardAtIndex:(NSUInteger) index;
 -(Card *)cardAtIndex:(NSUInteger) index;
@@ -24,8 +23,9 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 -(int)addCard;
 -(int)addCardAtIndex:(NSInteger) index;
--(void)saveAndRemoveMatchAtIndex:(NSInteger)index;
+-(void)saveMatchForIndex:(NSInteger)index;
 -(void)removeCardAtIndex:(NSInteger)index;
+-(NSArray*)findPossibleSolution;
 
 @property (nonatomic) int currentCardsCount;
 @property (nonatomic) int mode; //2, 3, 4... cards matching mode

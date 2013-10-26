@@ -10,6 +10,6 @@
 
 @interface CardView : UIView
 @property (nonatomic) BOOL faceUp;
-
-
+@property (nonatomic) BOOL hintHighlighted;
+@property (nonatomic) BOOL unplayable;
 @end

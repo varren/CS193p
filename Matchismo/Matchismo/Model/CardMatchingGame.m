@@ -43,20 +43,14 @@
     return [self.flippedCards copy];
 }
 
-#define DEFAULT_MODE 3
-
--(int) mode{
-    if(!_mode) _mode = DEFAULT_MODE;
-    return _mode;
-}
-
 -(int)currentCardsCount{
     return [self.cards count];
 }
 
--(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck{
+-(id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck andMode:(int)mode{
     self = [super init];
-    self.deck = deck;
+    _deck = deck;
+    _mode = mode;
     
     for (int i = 0; i < count; i++) {
         if([self addCard] == 0){
@@ -112,8 +106,6 @@
         card.unplayable = YES;
         self.status = GOT_MATCH;
         
-
-        
     } else {
         self.status = GOT_MISMATCH;
         self.lastTurnScore -= self.mismatchPenalty;
@@ -137,23 +129,60 @@
             cardsAdded = 1;
         }
     }
-    
     return cardsAdded;
 }
 
--(void)saveAndRemoveMatchAtIndex:(NSInteger)index{
+-(void)saveMatchForIndex:(NSInteger)index{
     if(self.cards.count > index || index >= 0){
         [self.matchedCards addObject:self.cards[index]];
-        [self.cards removeObjectAtIndex:index];
     }
-
 }
 
+-(NSArray*)findPossibleSolution{
+    NSArray* found = [self findPossibleSolutionFor:[NSMutableArray array] andCardAtIndex:0];
+    [self log:found];
+    return found;
+}
+
+-(void)log: (NSArray*)cards{
+    NSMutableString *text = [NSMutableString stringWithFormat:@"Size:%d: ", [cards count]];
+  
+    for (Card * card in cards) 
+        [text appendFormat:@" %d ", [self.cards indexOfObject:card]];
+    
+    NSLog(@" %@",text);
+}
+
+-(NSArray*)findPossibleSolutionFor:(NSMutableArray*)otherCards andCardAtIndex:(NSInteger)index{
+    [self log: otherCards];
+    if(index >= [self.cards count] || [otherCards count] > self.mode)return nil;
+    
+    if([otherCards count] == self.mode){
+        int score = [otherCards[0] match:[otherCards subarrayWithRange:NSMakeRange(1, [otherCards count]-1)]];
+        if(score > 0) return otherCards;
+        
+    }
+    
+
+    for (int i = index; i < [self.cards count]; i++){
+        Card* card = [self cardAtIndex:i];
+        if(!card.isUnplayable){
+            [otherCards addObject:card];
+            
+            if([self findPossibleSolutionFor:otherCards andCardAtIndex:i + 1]) 
+                return otherCards;
+            
+            [otherCards removeObject:card];
+        }
+    }
+    
+    return nil;
+}
 
 -(void)removeCardAtIndex:(NSInteger)index {
-    if(self.cards.count > index || index >= 0){
+    if(self.cards.count > index || index >= 0)
         [self.cards removeObjectAtIndex:index];
-    }
+    
 }
 
 # define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY

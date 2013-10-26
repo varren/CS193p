@@ -7,6 +7,7 @@
 //
 
 #import "PlayingCardView.h"
+#import <QuartzCore/QuartzCore.h>
 @interface PlayingCardView()
 @property (nonatomic) CGFloat faceCardScaleFactor;
 
@@ -52,16 +53,20 @@
     
     [roundedRect addClip];
     
+	
     [[UIColor whiteColor]setFill];
     UIRectFill(self.bounds);
     
     [self drawCard];
     
+    [super drawRect:rect];
+    
 }
 
 -(void)drawCard{
     if(self.faceUp){
-        UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@.jpg", [self rankAsString],self.suit]];
+        UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@.jpg", [self rankAsString], self.suit]];
+        
         if(faceImage){
             CGRect imageRect = CGRectInset(self.bounds,
                                            self.bounds.size.width * (1.0 - self.faceCardScaleFactor),

@@ -44,13 +44,14 @@
     UIBezierPath * roundedRect = [UIBezierPath bezierPathWithRoundedRect: self.bounds  cornerRadius:CORNER_RADIUS];
     
     [roundedRect addClip];
-    
-    
+
     UIColor *cardColor  = (self.faceUp) ? [[UIColor whiteColor] colorWithAlphaComponent: 0.7]: [UIColor whiteColor];
     
     [cardColor setFill];
+
      UIRectFill(self.bounds);
     [self drawCard];
+    [super drawRect:rect];
     
 }
 #define BORDERS_PERCENT_SIZE 0.1
