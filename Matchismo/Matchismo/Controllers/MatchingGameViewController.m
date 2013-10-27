@@ -27,6 +27,7 @@
     Deck* deck = [[PlayingCardDeck alloc]init];
     return deck;
 }
+
 @synthesize mode = _mode;
 -(int)mode{
     _mode = [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];

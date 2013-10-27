@@ -58,8 +58,28 @@
     if(cardsAdded != CARDS_TO_ADD){
         self.addCardsButton.userInteractionEnabled = NO;
         self.addCardsButton.alpha = INACTIVE_ALPHA;
-
     }
+}
+
+-(void) endTurnforPlayer:(NSInteger) player{
+    if(self.numberOfPlayers > 0){
+        [self selectCurrentPlayerAlert];
+    }else{
+        [super endTurnforPlayer:player];
+    }
+}
+
+-(void)selectCurrentPlayerAlert{
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Enter player" message:@"" delegate:self cancelButtonTitle:nil  otherButtonTitles:nil];
+    
+    for (int i = 1; i <= self.numberOfPlayers; i++)
+        [alertView addButtonWithTitle:[NSString stringWithFormat:@"Player %d", i]];
+    alertView.cancelButtonIndex = -1;
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [super endTurnforPlayer:buttonIndex];
 }
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2

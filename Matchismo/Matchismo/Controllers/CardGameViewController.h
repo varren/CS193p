@@ -10,17 +10,26 @@
 #import "Deck.h"
 #import "CardMatchingGame.h" 
 
-@interface CardGameViewController : UIViewController
+@interface CardGameViewController : UIViewController;
 
+#pragma mark - Abstract
 -(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger startCardsCount; // abstract
 @property (nonatomic) NSInteger gameType; //abstract
 @property(nonatomic) int mode; //abstract
-@property(nonatomic) BOOL saveMatches; // default is YES;
+
+#pragma mark - Optional
 -(void)updateCell: (id) cardCell usingCard: (Card*)card; // abstract
 
-// can override next methods but also need to use [super ...] version 
+@property(nonatomic) int numberOfPlayers; // default is 1
+@property(nonatomic) BOOL saveMatches; // default is YES;
+
+-(void)endTurnforPlayer:(NSInteger) player;
+
+#pragma mark - Required to use [super ...] version if overridden
+// can override next methods but also need to use [super ...] version
 -(void)startNewGame;
--(void)flipCardAtIndex: (NSInteger) index;
-- (int)addCards: (NSInteger) numCardsToAdd;
+-(void)flipCardAtIndex:(NSInteger) index;
+-(int)addCards: (NSInteger) numCardsToAdd;
+
 @end

@@ -11,6 +11,8 @@
 @implementation PlayingCard
 
 -(int)match:(NSArray *)otherCards{
+   
+   
     int score = 0;
     
     if (otherCards.count == 1) {
@@ -26,19 +28,22 @@
             
             score+=[self match:@[otherCards[i]]];
             
-            for (int j = 0; j<[otherCards count]; j++) 
+            for (int j = i + 1; j<[otherCards count]; j++)
                 score+=[otherCards[i]match:@[otherCards[j]]];
             
         }
         
-        score = score / ([otherCards count]);
-        
-        
-
-        
     }
-    
-    
+    /*
+    NSString * text = [NSString stringWithFormat:@"size: %d  elems: ", [otherCards count]];
+    text = [text stringByAppendingFormat:@" %@", self];
+    for (Card* card  in otherCards) {
+        text = [text stringByAppendingFormat:@" & %@", card];
+    }
+
+    text = [text stringByAppendingFormat:@" score = %d", score];
+    NSLog(@"%@", text);
+     */
     return score;
 }
 
