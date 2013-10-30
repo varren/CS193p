@@ -11,7 +11,7 @@
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (strong, nonatomic) NSMutableArray *mutableFlippedCards;
-@property (strong, nonatomic) NSMutableArray *mutableMatchedCards;
+@property (strong, nonatomic) NSMutableDictionary *matchedCardsForPlayer; // dictionary of @{player : mutableMatchesArray} and mutableMatchesArray consists of MatchesArrays of game-mode number of cards
 
 @property (nonatomic) int currentPlayer;
 @property (strong, nonatomic) NSMutableArray * scores;
@@ -44,13 +44,15 @@
     return _mutableFlippedCards;
 }
 
--(NSMutableArray *)mutableMatchedCards{
-    if (!_mutableMatchedCards) _mutableMatchedCards = [NSMutableArray array];
-    return  _mutableMatchedCards;
+-(NSMutableDictionary *)matchedCardsForPlayer{
+    if (!_matchedCardsForPlayer) _matchedCardsForPlayer = [NSMutableDictionary dictionary];
+        
+    
+    return  _matchedCardsForPlayer;
 }
 
 -(NSMutableArray *)scores{
-    if(!_scores)_scores = [[NSMutableArray alloc] initWithObjects:@(0), nil];
+    if(!_scores) _scores = [[NSMutableArray alloc] init];
     return _scores;
 }
 
@@ -58,8 +60,8 @@
     return [self.mutableFlippedCards copy];
 }
 
--(NSArray*) matchedCards{
-    return [self.mutableMatchedCards copy];
+-(NSArray*) matchedCardsForPlayer: (NSInteger) player{
+    return [self.matchedCardsForPlayer[@(player)] copy];
 }
 
 -(int)currentCardsCount{
@@ -82,10 +84,12 @@
     self = [super init];
     _deck = deck;
     _mode = mode;
-    _scores = [[NSMutableArray alloc] init];
+
     
-    for(int i = 0 ; i  < playersNum; i++)
-        [_scores addObject:@(0)];
+    for(int i = 0 ; i  < playersNum; i++){
+        [self.scores addObject:@(0)];
+        self.matchedCardsForPlayer[@(i)] = [NSMutableArray array];
+    }
     
     
     for (int i = 0; i < count; i++) {
@@ -153,14 +157,21 @@
         card.faceUp = YES;
     }
 }
+
 -(int)addCards:(NSInteger) numberOfCrds{
     int cardsAdded = 0;
     
-    for (int i =0 ; i<numberOfCrds; i++) 
+ 
+    self.currentPlayerScore -= ([[self findPossibleSolution] count] == 0) ?: self.penalty;
+    
+    for (int i = 0 ; i<numberOfCrds; i++)
             cardsAdded += [self addCardAtIndex:[self.cards count]];
+    
+
     
     return cardsAdded;
 }
+
 -(int)addCardAtIndex:(NSInteger) index{
     int cardsAdded = 0;
 
@@ -169,7 +180,6 @@
         if(card){
             self.cards[index] = card;
             cardsAdded = 1;
-            self.currentPlayerScore -= ([[self findPossibleSolution] count] == 0) ?: self.penalty;
         }
     }
     return cardsAdded;
@@ -181,11 +191,7 @@
     
 }
 
--(void)saveMatchForIndex:(NSInteger)index{
-    if(self.cards.count > index || index >= 0)
-        [self.mutableMatchedCards addObject:self.cards[index]];
-    
-}
+
 
 -(NSArray*)findPossibleSolution{
     NSArray* found = [self findPossibleSolutionForCards:[NSMutableArray array] andCardAtIndex:0];
@@ -226,6 +232,22 @@
     
     NSLog(@" %@",text);
 }
+-(void)debugAllMatchedCards{
+    NSMutableString *text = [NSMutableString stringWithFormat:@"Size:%d: ", [self.matchedCardsForPlayer count]];
+    
+    for (NSNumber *player in self.matchedCardsForPlayer.keyEnumerator){
+        NSArray * matchedCards = self.matchedCardsForPlayer[player];
+        [text appendFormat:@"\n%d): size %d ",[player intValue],[matchedCards count]];
+        for (NSArray *match in matchedCards) {
+             [text appendFormat:@" | %d", [match count]];
+        }
+    
+    }
+    
+    NSLog(@" %@",text);
+    
+    
+}
 
 #pragma mark - Players related fns
 
@@ -234,8 +256,12 @@
 }
 
 -(void) endOfTurnForPlayer: (NSInteger) player{
-    
+  
     self.currentPlayer = player;
+    [self debugAllMatchedCards];
+    if (self.status == GOT_MATCH)
+        [self.matchedCardsForPlayer[@(self.currentPlayer )] addObject: self.flippedCards];
+    [self debugAllMatchedCards];
     self.currentPlayerScore += self.lastTurnScore;
     self.currentPlayer++;
     

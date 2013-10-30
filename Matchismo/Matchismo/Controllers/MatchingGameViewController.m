@@ -76,11 +76,8 @@
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card {
-    [super updateCell:cardCell usingCard:card ];
-    
-    if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
-        CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
+-(void)updateView: (UIView*) cardView usingCard: (Card*)card {
+
         if([cardView isKindOfClass:[PlayingCardView class]]){
             PlayingCardView * playingCardView = (PlayingCardView *)cardView;
             if ([card isKindOfClass:[PlayingCard class]]) {
@@ -90,8 +87,8 @@
                 
 
             }
+        
         }
-    }
 }
 
 @end

@@ -52,7 +52,6 @@
     UIBezierPath * roundedRect = [UIBezierPath bezierPathWithRoundedRect: self.bounds  cornerRadius:CORNER_RADIUS];
     
     [roundedRect addClip];
-    
 	
     [[UIColor whiteColor]setFill];
     UIRectFill(self.bounds);

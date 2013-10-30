@@ -16,15 +16,16 @@
 -(Deck*) createDeck; //abstract
 @property (nonatomic) NSInteger startCardsCount; // abstract
 @property (nonatomic) NSInteger gameType; //abstract
-@property(nonatomic) int mode; //abstract
+@property (nonatomic) int mode; //abstract
 
 #pragma mark - Optional
--(void)updateCell: (id) cardCell usingCard: (Card*)card; // abstract
+-(void)updateView: (UIView*) cardView usingCard: (Card*)card; // abstract
+
+-(void)endTurnForPlayer:(NSInteger) currentPlayer;
 
 @property(nonatomic) int numberOfPlayers; // default is 1
 @property(nonatomic) BOOL saveMatches; // default is YES;
-
--(void)endTurnforPlayer:(NSInteger) player;
+@property(nonatomic) int currentPlayer;
 
 #pragma mark - Required to use [super ...] version if overridden
 // can override next methods but also need to use [super ...] version

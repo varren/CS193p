@@ -23,12 +23,11 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 -(Card *)cardAtIndex:(NSUInteger) index;
 -(NSArray*) flippedCards;
--(NSArray*) matchedCards;
+-(NSArray*) matchedCardsForPlayer: (NSInteger) player;
 
 @property (nonatomic) int currentCardsCount;
 
 -(int)addCards:(NSInteger) numberOfCrds;
--(void)saveMatchForIndex:(NSInteger)index;
 -(void)removeCardAtIndex:(NSInteger)index;
 -(void)flipCardAtIndex:(NSUInteger) index;
 

@@ -45,6 +45,9 @@
     if(!_mode)_mode = SET_GAME_MATCHING_MODE;
     return _mode;        
 }
+-(int)currentPlayer{
+    [self selectCurrentPlayerAlert];
+}
 
 -(void)startNewGame{
     self.addCardsButton.userInteractionEnabled = YES;
@@ -61,16 +64,16 @@
     }
 }
 
--(void) endTurnforPlayer:(NSInteger) player{
+-(void)endTurnForPlayer:(NSInteger) currentPlayer{
     if(self.numberOfPlayers > 0){
-        [self selectCurrentPlayerAlert];
+
     }else{
-        [super endTurnforPlayer:player];
+       [super endTurnForPlayer:currentPlayer];
     }
 }
 
 -(void)selectCurrentPlayerAlert{
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Enter player" message:@"" delegate:self cancelButtonTitle:nil  otherButtonTitles:nil];
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Set Found By:" message:@"" delegate:self cancelButtonTitle:nil  otherButtonTitles:nil];
     
     for (int i = 1; i <= self.numberOfPlayers; i++)
         [alertView addButtonWithTitle:[NSString stringWithFormat:@"Player %d", i]];
@@ -79,17 +82,14 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    [super endTurnforPlayer:buttonIndex];
+   [super endTurnForPlayer:buttonIndex];
 }
 #define DEFAULT_CARDBACK_TOP_INSERTS 6
 #define DEFAULT_CARDBACK_SIDES_INSERTS 2
 #define DEFAULT_TEXT_FONT_SIZE 20
 
 
--(void)updateCell: (id) cardCell usingCard: (Card*)card{
-    [super updateCell:cardCell usingCard:card];   
-    if([cardCell isKindOfClass:[CardCollectionViewCell class]]){
-        CardView *cardView = ((CardCollectionViewCell *)cardCell).cardView;
+-(void)updateView: (UIView*) cardView usingCard: (Card*)card{
         if([cardView isKindOfClass:[SetCardView class]]){
             SetCardView * setCardView = (SetCardView*)cardView;
             if ([card isKindOfClass:[SetCard class]]) {
@@ -102,9 +102,7 @@
 
             }
         }
-    }
-
-    
+ 
 }
 
 #define DEFAULT_STROKE_SIZE @-5

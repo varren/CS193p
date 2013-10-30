@@ -13,6 +13,8 @@
 		A07CA9FB1809FE2000A0C317 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CA9FA1809FE2000A0C317 /* SetCard.m */; };
 		A07CA9FE1809FE8000A0C317 /* SetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = A07CA9FD1809FE8000A0C317 /* SetDeck.m */; };
 		A07D1848180C31CC000BEECE /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07D1847180C31CC000BEECE /* SettingsViewController.m */; };
+		A07DE1EE1820EDB8001A5292 /* MatchedCardsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A07DE1ED1820EDB8001A5292 /* MatchedCardsCollectionViewCell.m */; };
+		A07DE1F118213DCB001A5292 /* MatchedCardsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07DE1F018213DCB001A5292 /* MatchedCardsView.m */; };
 		A07E1AC8180F735800FF682D /* PlayingCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = A07E1AC7180F735800FF682D /* PlayingCardView.m */; };
 		A07E1AE2180F85B300FF682D /* J♠.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1ACA180F85B300FF682D /* J♠.jpg */; };
 		A07E1AE3180F85B300FF682D /* J♠@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A07E1ACB180F85B300FF682D /* J♠@2x.jpg */; };
@@ -80,6 +82,10 @@
 		A07CA9FD1809FE8000A0C317 /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetDeck.m; path = Model/SetDeck.m; sourceTree = "<group>"; };
 		A07D1846180C31CC000BEECE /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SettingsViewController.h; sourceTree = "<absolute>"; };
 		A07D1847180C31CC000BEECE /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = /Users/uff/CS193p/Matchismo/Matchismo/Controllers/SettingsViewController.m; sourceTree = "<absolute>"; };
+		A07DE1EC1820EDB8001A5292 /* MatchedCardsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchedCardsCollectionViewCell.h; path = Views/MatchedCardsCollectionViewCell.h; sourceTree = "<group>"; };
+		A07DE1ED1820EDB8001A5292 /* MatchedCardsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchedCardsCollectionViewCell.m; path = Views/MatchedCardsCollectionViewCell.m; sourceTree = "<group>"; };
+		A07DE1EF18213DCB001A5292 /* MatchedCardsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchedCardsView.h; path = Views/MatchedCardsView.h; sourceTree = "<group>"; };
+		A07DE1F018213DCB001A5292 /* MatchedCardsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchedCardsView.m; path = Views/MatchedCardsView.m; sourceTree = "<group>"; };
 		A07E1AC6180F735700FF682D /* PlayingCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardView.h; path = Views/PlayingCardView.h; sourceTree = "<group>"; };
 		A07E1AC7180F735800FF682D /* PlayingCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardView.m; path = Views/PlayingCardView.m; sourceTree = "<group>"; };
 		A07E1ACA180F85B300FF682D /* J♠.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "J♠.jpg"; path = "/Users/uff/CS193p/Matchismo/Matchismo/Resources/Face Card Images/J♠.jpg"; sourceTree = "<absolute>"; };
@@ -223,6 +229,8 @@
 		A07E1AC5180F72D000FF682D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A07DE1EC1820EDB8001A5292 /* MatchedCardsCollectionViewCell.h */,
+				A07DE1ED1820EDB8001A5292 /* MatchedCardsCollectionViewCell.m */,
 				A07E1AC6180F735700FF682D /* PlayingCardView.h */,
 				A07E1AC7180F735800FF682D /* PlayingCardView.m */,
 				A082AED3181212D8000EAEB5 /* CardCollectionViewCell.h */,
@@ -231,6 +239,8 @@
 				A07E1EDF18131673004B21B5 /* SetCardView.m */,
 				A07EBEB51813949200442AF6 /* CardView.h */,
 				A07EBEB61813949200442AF6 /* CardView.m */,
+				A07DE1EF18213DCB001A5292 /* MatchedCardsView.h */,
+				A07DE1F018213DCB001A5292 /* MatchedCardsView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -455,6 +465,8 @@
 				A082AED5181212D8000EAEB5 /* CardCollectionViewCell.m in Sources */,
 				A07E1EE018131673004B21B5 /* SetCardView.m in Sources */,
 				A07EBEB71813949200442AF6 /* CardView.m in Sources */,
+				A07DE1EE1820EDB8001A5292 /* MatchedCardsCollectionViewCell.m in Sources */,
+				A07DE1F118213DCB001A5292 /* MatchedCardsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
