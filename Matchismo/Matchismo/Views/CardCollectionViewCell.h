@@ -11,4 +11,5 @@
 
 @interface CardCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet CardView *cardView;
+@property (strong, nonatomic) UIColor* borderColor;
 @end

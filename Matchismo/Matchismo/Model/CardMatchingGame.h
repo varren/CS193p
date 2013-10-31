@@ -21,25 +21,26 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 @property (nonatomic) int mode; //2, 3, 4... cards matching mode
 
--(Card *)cardAtIndex:(NSUInteger) index;
+-(Card *)cardAtIndex: (NSUInteger) index;
 -(NSArray*) flippedCards;
 -(NSArray*) matchedCardsForPlayer: (NSInteger) player;
 
 @property (nonatomic) int currentCardsCount;
 
--(int)addCards:(NSInteger) numberOfCrds;
--(void)removeCardAtIndex:(NSInteger)index;
--(void)flipCardAtIndex:(NSUInteger) index;
+-(int)addCards: (NSInteger) numberOfCrds;
+-(void)removeCardAtIndex: (NSInteger) index;
+-(void)flipCardAtIndex: (NSUInteger) index;
 
 -(NSArray*)findPossibleSolution;
 
 @property (readonly, nonatomic) GAME_STATUS status;
+@property(readonly, nonatomic) int lastTurnScore;
 
--(int)scoreForPlayer:(NSInteger) playerIndex;
 @property (readonly, nonatomic) int currentPlayer;
+-(int)scoreForPlayer: (NSInteger) playerIndex;
 -(void)endOfTurnForPlayer: (NSInteger) player;
 
-@property(readonly, nonatomic) int lastTurnScore;
+
 
 //interfaces for scoring
 @property (readonly, nonatomic) int bonus;

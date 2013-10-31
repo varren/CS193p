@@ -25,7 +25,6 @@
 
 @property(nonatomic) int numberOfPlayers; // default is 1
 @property(nonatomic) BOOL saveMatches; // default is YES;
-@property(nonatomic) int currentPlayer;
 
 #pragma mark - Required to use [super ...] version if overridden
 // can override next methods but also need to use [super ...] version

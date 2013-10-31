@@ -39,6 +39,7 @@
         _currentPlayer = 0;
 }
 
+
 -(NSMutableArray *) mutableFlippedCards{
     if(!_mutableFlippedCards)_mutableFlippedCards =[[NSMutableArray alloc]init];
     return _mutableFlippedCards;
@@ -46,8 +47,6 @@
 
 -(NSMutableDictionary *)matchedCardsForPlayer{
     if (!_matchedCardsForPlayer) _matchedCardsForPlayer = [NSMutableDictionary dictionary];
-        
-    
     return  _matchedCardsForPlayer;
 }
 
@@ -61,7 +60,9 @@
 }
 
 -(NSArray*) matchedCardsForPlayer: (NSInteger) player{
-    return [self.matchedCardsForPlayer[@(player)] copy];
+    NSArray * matchedCards = [self.matchedCardsForPlayer[@(player)] copy];
+    NSLog(@"MatchedCards size :%d for player %d", [matchedCards count], player);
+    return matchedCards;
 }
 
 -(int)currentCardsCount{
@@ -161,13 +162,10 @@
 -(int)addCards:(NSInteger) numberOfCrds{
     int cardsAdded = 0;
     
- 
     self.currentPlayerScore -= ([[self findPossibleSolution] count] == 0) ?: self.penalty;
     
     for (int i = 0 ; i<numberOfCrds; i++)
             cardsAdded += [self addCardAtIndex:[self.cards count]];
-    
-
     
     return cardsAdded;
 }
@@ -182,16 +180,14 @@
             cardsAdded = 1;
         }
     }
+    
     return cardsAdded;
 }
 
 -(void)removeCardAtIndex:(NSInteger)index {
     if(self.cards.count > index || index >= 0)
         [self.cards removeObjectAtIndex:index];
-    
 }
-
-
 
 -(NSArray*)findPossibleSolution{
     NSArray* found = [self findPossibleSolutionForCards:[NSMutableArray array] andCardAtIndex:0];
@@ -199,7 +195,7 @@
     return found;
 }
 
-//helper recursive fn
+// helper recursive fn
 -(NSArray*)findPossibleSolutionForCards:(NSMutableArray*)otherCards andCardAtIndex:(NSInteger)index{
     //[self debugLogCardsIn: otherCards];
     if(index >= [self.cards count] || [otherCards count] > self.mode)return nil;
@@ -232,6 +228,7 @@
     
     NSLog(@" %@",text);
 }
+
 -(void)debugAllMatchedCards{
     NSMutableString *text = [NSMutableString stringWithFormat:@"Size:%d: ", [self.matchedCardsForPlayer count]];
     
@@ -258,10 +255,10 @@
 -(void) endOfTurnForPlayer: (NSInteger) player{
   
     self.currentPlayer = player;
-    [self debugAllMatchedCards];
+    //[self debugAllMatchedCards];
     if (self.status == GOT_MATCH)
         [self.matchedCardsForPlayer[@(self.currentPlayer )] addObject: self.flippedCards];
-    [self debugAllMatchedCards];
+    //[self debugAllMatchedCards];
     self.currentPlayerScore += self.lastTurnScore;
     self.currentPlayer++;
     

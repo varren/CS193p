@@ -11,9 +11,10 @@
 #import "CardMatchingGame.h" 
 #import "CardCollectionViewCell.h"
 #import "MatchedCardsCollectionViewCell.h"
+#import "HeaderCollectionViewCell.h"
 
-#import <QuartzCore/QuartzCore.h>
-@interface CardGameViewController ()<UICollectionViewDataSource>
+
+@interface CardGameViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
@@ -31,9 +32,6 @@
 
 @implementation CardGameViewController
 
--(void)viewDidLoad{
-
-}
 -(void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
     [self.flippedCardCollectionView.collectionViewLayout invalidateLayout];
@@ -75,9 +73,6 @@
     _mode = mode;
 }
 
--(int) currentPlayer{
-    return self.game.currentPlayer;
-}
 
 #pragma mark - UICollectionViewDataSource protocol
 
@@ -93,24 +88,29 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
+    return [self numberofItemsInDisplay:collectionView.tag forSection:section];
+}
+
+-(NSInteger) numberofItemsInDisplay:(NSInteger)display forSection:(NSInteger)section{
     NSInteger count = 0;
     
-    if(collectionView.tag == MAIN_DISPLAY){
+    if(display == MAIN_DISPLAY){
         if (section == MAIN_CARDS_SECTION)
             count =  self.game.currentCardsCount;
         else if (section >= MATCHED_CARDS_SECTION)
             count = [[self.game matchedCardsForPlayer:section - 1] count];
-    } else if (collectionView.tag == FLIPPED_CARDS_DISPLAY)
+    } else if (display == FLIPPED_CARDS_DISPLAY)
         count =  [[self.game flippedCards] count];
     
     return count;
+
 }
-
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-
+    NSLog(@"Cell: section: %d , item %d", indexPath.section , indexPath.item);
     NSString *cellIdentifier = @"PlayingCard";
     if(collectionView.tag == MAIN_DISPLAY && indexPath.section > MAIN_CARDS_SECTION){
-        cellIdentifier = @"MatchedCards";
+         //cellIdentifier = @"TestCell";
+        cellIdentifier = [NSString stringWithFormat: @"Matched%dCards",self.mode];
     }
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: cellIdentifier forIndexPath:indexPath];
     
@@ -118,11 +118,31 @@
     
     return cell;
 }
-/*
+
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    return [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader  withReuseIdentifier:@"HeaderCell" forIndexPath:indexPath];
+    NSLog(@"Header:%d section: %d , item %d",collectionView.tag, indexPath.section , indexPath.item);
+    
+    UICollectionReusableView *cell = nil;
+    
+    if(collectionView.tag == MAIN_DISPLAY){
+        cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:@"header" forIndexPath:indexPath];
+        
+        HeaderCollectionViewCell * headerCell =  (HeaderCollectionViewCell *)cell;
+        
+        headerCell.color = [UIColor lightGrayColor];
+        headerCell.headerLabel.text = indexPath.section == MAIN_CARDS_SECTION ? @"":[NSString stringWithFormat:@"Player #%d matches", indexPath.section];
+    }
+    
+    return cell;
 }
-*/
+
+#define HEADER_HEIGHT_SCALE 0.1
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    if (collectionView.tag == MAIN_DISPLAY && section != MAIN_CARDS_SECTION && [self numberofItemsInDisplay:collectionView.tag forSection:section] > 0)
+        return CGSizeMake(collectionView.bounds.size.width, collectionView.bounds.size.height * HEADER_HEIGHT_SCALE);
+    else return CGSizeMake( 0,0 );
+}
+
 #define COLLECTION_VIEW_BORDERS 10.0f
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     
@@ -141,13 +161,15 @@
 }
 
 #define MAIN_CARD_CELL_WIDTH 60
-#define MAIN_CARD_CELL_HEIGHT 75
+#define MAIN_CARD_CELL_HEIGHT MAIN_CARD_CELL_WIDTH * 5/4
 
-#define MATCHED_CELL_WIDTH 140
-#define MATCHED_CELL_HEIGHT 60
+#define MATCHED_CARDS_SCALE 0.8
+#define MATCHED_CELL_WIDTH (MAIN_CARD_CELL_WIDTH * self.mode )* MATCHED_CARDS_SCALE
+#define MATCHED_CELL_HEIGHT MAIN_CARD_CELL_HEIGHT * MATCHED_CARDS_SCALE
 
-#define FLIPPED_CELL_WIDTH 50
-#define FLIPPED_CELL_HEIGHT 65
+#define FLIPPED_CARDS_SCALE 0.85
+#define FLIPPED_CELL_WIDTH MAIN_CARD_CELL_WIDTH * FLIPPED_CARDS_SCALE
+#define FLIPPED_CELL_HEIGHT MAIN_CARD_CELL_HEIGHT * FLIPPED_CARDS_SCALE
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     CGSize size;
     if(collectionView.tag == MAIN_DISPLAY){
@@ -161,7 +183,7 @@
     
     return size;
 }
-// need to figure out how to detect cell size
+// need to figure out how to detect cell size dynamically
 
 -(CGFloat)padding{
     return (self.flippedCardCollectionView.bounds.size.width - FLIPPED_CELL_WIDTH * self.mode) / (self.mode + 1) - 1;
@@ -211,6 +233,7 @@
 }
 
 -(void) updateMainCardsDisplayCell: (id) cell forIndex:(NSInteger)index animate: (BOOL) animate{
+   
     Card *card = [self.game cardAtIndex:index];
     CardView *cardView = ((CardCollectionViewCell *)cell).cardView;
     if(animate && cardView.faceUp != card.isFaceUp){
@@ -250,43 +273,33 @@
 
 
 -(void) updateMatchedCardsDisplayCell: (id) cell forPlayer: (NSInteger)player andIndex:(NSInteger)index animate: (BOOL) animate{
-    MatchedCardsCollectionViewCell * matchedCell = (MatchedCardsCollectionViewCell *)cell;
+    NSLog(@"UPDATING MATCHED CARDS player: %d, index: %d",player,index);
     NSArray* cards = [self.game matchedCardsForPlayer:player][index];
-    NSArray* cardViews = matchedCell.cardViews;
-    NSLog(@"cardViews %d, cards %d",[cardViews count], [cards count]);
+    NSArray* cardViews = ((MatchedCardsCollectionViewCell *)cell).cardViews;
+ 
     for (int i = 0; i < [cardViews count]; i++) {
         CardView *cardView = cardViews[i];
-
-        if( i < [cards count]){
-            [self updateView:cardView usingCard:cards[i]];
-            cardView.faceUp = YES;
-           // cardView.unplayable = YES;
-
-        } else{
-            cardView = nil;
-        }
+        [self updateView:cardView usingCard:cards[i]];
+        cardView.faceUp = YES;
     }
-
-
-
+    
 }
 
 -(void) updateFlippedCardsDisplayCell: (id) cell forIndex:(NSInteger)index animate: (BOOL) animate{
+    CardCollectionViewCell * cardCell = (CardCollectionViewCell *)cell;
     Card * card = [self.game flippedCards][index];
-    CardView *cardView = ((CardCollectionViewCell *)cell).cardView;
-
+    
+    CardView *cardView = cardCell.cardView;
     cardView.faceUp = YES;
     
-    UIColor * color = [UIColor grayColor];
-    if(self.game.status == GOT_MATCH)
-        color = [UIColor greenColor];
-    else if(self.game.status == GOT_MISMATCH)
-        color = [UIColor redColor];
     
-    CALayer * layer = [cell layer];
-    layer.borderColor = color.CGColor;
-    layer.borderWidth = 3.0;
-    layer.cornerRadius = 6.0;
+    if(self.game.status == GOT_MATCH)
+        cardCell.borderColor = [UIColor greenColor];
+    else if(self.game.status == GOT_MISMATCH)
+        cardCell.borderColor = [UIColor redColor];
+    else
+        cardCell.borderColor = [UIColor grayColor];
+   
     
     [self updateView:cardView usingCard:card];
 }
@@ -334,75 +347,81 @@
     }
     
     [self.game flipCardAtIndex:index];
-    if(self.game.status == GOT_MATCH){
-        [self endTurnForPlayer:self.currentPlayer];
-        
-    }
     
     
-    self.gameResult.score = [self.game scoreForPlayer:self.game.currentPlayer];
-
+    if(self.game.status == GOT_MATCH)
+        [self endTurnForPlayer:self.game.currentPlayer];
     
+   
 }
 
 -(void)endTurnForPlayer:(NSInteger) currentPlayer{
     [self.game endOfTurnForPlayer: currentPlayer];
+
+    [self addCardToCollection: self.cardCollectionView
+                      atIndex: [[self.game matchedCardsForPlayer:currentPlayer] count] - 1
+                   andSection: currentPlayer + 1
+                 scrollToItem: !self.saveMatches];
     
-    NSMutableArray * matchedCardsindexPaths = [NSMutableArray array];
-    NSArray* flippedCards = [self.game matchedCardsForPlayer:currentPlayer];
-    [self debugLogArrayOfMatches:flippedCards];
-    NSLog(@"%d, %d",[flippedCards count], currentPlayer + 1);
-    NSIndexPath * matcheCardIndex = [NSIndexPath indexPathForItem: [flippedCards count] - 1 inSection:currentPlayer + 1];
-    [matchedCardsindexPaths addObject:matcheCardIndex];
-    [self.cardCollectionView insertItemsAtIndexPaths:matchedCardsindexPaths];
+    if(!self.saveMatches)[self removeFlippedCards];
     
-    if(!self.saveMatches) [self removeFlippedCards];
+    self.gameResult.score = [self.game scoreForPlayer:currentPlayer];
 }
 
--(void)debugLogArrayOfMatches:(NSArray*) matches{
-    NSString *text = [NSString stringWithFormat:@"matches: %d ",[matches count]];
-    for (NSArray* match in matches) {
-        text =[text stringByAppendingFormat:@" | %d", [match count]];
-    }
-    NSLog(@"%@",text);
-}
 - (int) addCards: (NSInteger) numCardsToAdd {
-
-    NSMutableArray * indexPaths = [NSMutableArray array];
+    int cardsAdded = 0;
     
-    int startingIndex = self.game.currentCardsCount;
-    int cardsAdded = [self.game addCards: numCardsToAdd];
-    
-    for (int i = startingIndex; i < startingIndex + cardsAdded ; i++) {
-        NSIndexPath * nextCardPath = [NSIndexPath indexPathForItem: i inSection:MAIN_CARDS_SECTION];
-        [indexPaths addObject:nextCardPath];
+    for (int i = 0; i < numCardsToAdd; i++){
+        if(cardsAdded += [self.game addCards: 1])
+            [self addCardToCollection: self.cardCollectionView
+                              atIndex: self.game.currentCardsCount - 1
+                           andSection: MAIN_CARDS_SECTION
+                         scrollToItem: YES];
     }
     
-    if(cardsAdded){
-        [self.cardCollectionView insertItemsAtIndexPaths:indexPaths];
-        [self.cardCollectionView scrollToItemAtIndexPath:[indexPaths lastObject] atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
-    }
     [self updateUI];
+    
     return cardsAdded;
 }
 
 -(void)removeFlippedCards{
-    
-    NSMutableArray * indexPaths = [NSMutableArray array];
-    
     for (int i = self.game.currentCardsCount - 1; i >= 0; i--) {
         Card * card = [self.game cardAtIndex:i];
         if (card.isUnplayable){
-            NSIndexPath * nextCardPath = [NSIndexPath indexPathForItem: i inSection:MAIN_CARDS_SECTION];
             [self.game removeCardAtIndex: i];
-            [indexPaths addObject:nextCardPath];
+            [self removeCardFromCollection: self.cardCollectionView
+                                   atIndex: i
+                                andSection: MAIN_CARDS_SECTION];
         }
     }
-   
-    [self.cardCollectionView deleteItemsAtIndexPaths:indexPaths];
-    
     [self updateUI];
 }
+
+-(void) addCardToCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section scrollToItem: (BOOL) scroll{
+    NSLog(@"ADD:%d section %d , item %d",collection.tag,section, item);
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem: item inSection:section];
+    NSLog(@"ADDING:%d section %d , item %d",collection.tag,indexPath.section,indexPath.item);
+    [collection insertItemsAtIndexPaths:@[indexPath]];
+    NSLog(@"ADDED:%d section %d , item %d",collection.tag,indexPath.section,indexPath.item);
+    if(scroll) [collection scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+    NSLog(@"ADD DONE:%d section %d , item %d",collection.tag,section, item);
+}
+
+
+-(void) removeCardFromCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section {
+    NSLog(@"REMOVE:%d section %d , item %d",collection.tag,section, item);
+    [collection deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem: item inSection:section]]];
+}
+
+-(void)debugLogArrayOfMatches:(NSArray*) matches{
+    NSString *text = [NSString stringWithFormat:@"matches: %d ",[matches count]];
+    for (NSArray* match in matches) 
+        text =[text stringByAppendingFormat:@" | %d", [match count]];
+    NSLog(@"%@",text);
+}
+
+
 
 #pragma mark - Attributed String FNs
 -(NSAttributedString*) flippedCards{

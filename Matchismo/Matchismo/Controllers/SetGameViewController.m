@@ -45,9 +45,7 @@
     if(!_mode)_mode = SET_GAME_MATCHING_MODE;
     return _mode;        
 }
--(int)currentPlayer{
-    [self selectCurrentPlayerAlert];
-}
+
 
 -(void)startNewGame{
     self.addCardsButton.userInteractionEnabled = YES;
@@ -66,9 +64,9 @@
 
 -(void)endTurnForPlayer:(NSInteger) currentPlayer{
     if(self.numberOfPlayers > 0){
-
+        [self selectCurrentPlayerAlert];
     }else{
-       [super endTurnForPlayer:currentPlayer];
+       [super endTurnForPlayer: 0];
     }
 }
 
@@ -104,26 +102,4 @@
         }
  
 }
-
-#define DEFAULT_STROKE_SIZE @-5
--(NSAttributedString*) arrtibutedCard:(Card*) card{
-    
-    NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:card.contents];
-      /*
-       SetCard *setCard = (SetCard*)card;
-    
-    NSRange range = NSMakeRange(0, aString.length);
-  
-    NSDictionary* attributes = @{ NSForegroundColorAttributeName: [[self colorFor:setCard.color]
-                                        colorWithAlphaComponent: [@[@(1.0), @(0.5), @(0.0)][setCard.shading] floatValue]],
-                                  NSStrokeWidthAttributeName : DEFAULT_STROKE_SIZE,
-                                  NSStrokeColorAttributeName: [self colorFor:setCard.color] };
-   
-    if(range.location != NSNotFound)
-        [aString setAttributes: attributes range:range];
-     */
-    return aString;
-    
-}
-
 @end

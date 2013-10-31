@@ -7,9 +7,18 @@
 //
 
 #import "CardCollectionViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation CardCollectionViewCell
 
+-(void)setBorderColor:(UIColor *)borderColor{
+    _borderColor = borderColor;
+    CALayer * layer = [self layer];
+    layer.borderColor = borderColor.CGColor;
+    layer.borderWidth = 3.0;
+    layer.cornerRadius = 6.0;
+    [self setNeedsDisplay];
+}
 
 
 @end
