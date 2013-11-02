@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface GameResult : NSObject
-extern NSString *const USER_DEFAULTS_SCORES_KEY;
 
 -(id)initFor: (NSInteger)gameType;
 

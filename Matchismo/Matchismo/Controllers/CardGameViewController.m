@@ -13,9 +13,7 @@
 #import "MatchedCardsCollectionViewCell.h"
 #import "HeaderCollectionViewCell.h"
 
-
-@interface CardGameViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
-
+@interface CardGameViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *flippedCardCollectionView;
@@ -27,15 +25,15 @@
 @property (strong, nonatomic) GameResult *gameResult;
 @property (strong, nonatomic) NSArray * highlitedCards;
 
-
 @end
 
-@implementation CardGameViewController
+@implementation CardGameViewController;
 
 -(void)viewWillLayoutSubviews{
     [super viewWillLayoutSubviews];
     [self.flippedCardCollectionView.collectionViewLayout invalidateLayout];
 }
+
 
 
 -(Deck*) createDeck{return nil;} //abstract
@@ -73,8 +71,7 @@
     _mode = mode;
 }
 
-
-#pragma mark - UICollectionViewDataSource protocol
+#pragma mark - UICollectionView protocols
 
 #define MAIN_DISPLAY 0
 #define FLIPPED_CARDS_DISPLAY 1
@@ -83,6 +80,7 @@
 #define MATCHED_CARDS_SECTION 1
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
     return collectionView.tag == MAIN_DISPLAY ? self.numberOfPlayers + 1 : 1;
 }
 
@@ -91,14 +89,14 @@
     return [self numberofItemsInDisplay:collectionView.tag forSection:section];
 }
 
--(NSInteger) numberofItemsInDisplay:(NSInteger)display forSection:(NSInteger)section{
+-(NSInteger) numberofItemsInDisplay:(NSInteger) display forSection:(NSInteger) section{
     NSInteger count = 0;
-    
+
     if(display == MAIN_DISPLAY){
         if (section == MAIN_CARDS_SECTION)
             count =  self.game.currentCardsCount;
         else if (section >= MATCHED_CARDS_SECTION)
-            count = [[self.game matchedCardsForPlayer:section - 1] count];
+            count = [self.game numberOfMatchesForPlayer:section - 1];
     } else if (display == FLIPPED_CARDS_DISPLAY)
         count =  [[self.game flippedCards] count];
     
@@ -106,48 +104,53 @@
 
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"Cell: section: %d , item %d", indexPath.section , indexPath.item);
-    NSString *cellIdentifier = @"PlayingCard";
+       
+    UICollectionViewCell *cell  = nil;
+    
     if(collectionView.tag == MAIN_DISPLAY && indexPath.section > MAIN_CARDS_SECTION){
-         //cellIdentifier = @"TestCell";
-        cellIdentifier = [NSString stringWithFormat: @"Matched%dCards",self.mode];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier: [NSString stringWithFormat: @"Matched%dCards",self.mode] forIndexPath:indexPath];
+
+    }else{
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier: @"PlayingCard" forIndexPath:indexPath];
     }
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier: cellIdentifier forIndexPath:indexPath];
     
     [self updateCell:cell inCollection:collectionView atIndex:indexPath animate:NO];
-    
+
     return cell;
 }
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"Header:%d section: %d , item %d",collectionView.tag, indexPath.section , indexPath.item);
-    
+  
     UICollectionReusableView *cell = nil;
     
     if(collectionView.tag == MAIN_DISPLAY){
         cell = [collectionView dequeueReusableSupplementaryViewOfKind:kind  withReuseIdentifier:@"header" forIndexPath:indexPath];
         
         HeaderCollectionViewCell * headerCell =  (HeaderCollectionViewCell *)cell;
-        
-        headerCell.color = [UIColor lightGrayColor];
+
         headerCell.headerLabel.text = indexPath.section == MAIN_CARDS_SECTION ? @"":[NSString stringWithFormat:@"Player #%d matches", indexPath.section];
     }
-    
+
     return cell;
 }
 
-#define HEADER_HEIGHT_SCALE 0.1
+#define HEADER_HEIGHT 30
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    if (collectionView.tag == MAIN_DISPLAY && section != MAIN_CARDS_SECTION && [self numberofItemsInDisplay:collectionView.tag forSection:section] > 0)
-        return CGSizeMake(collectionView.bounds.size.width, collectionView.bounds.size.height * HEADER_HEIGHT_SCALE);
-    else return CGSizeMake( 0,0 );
+    
+    if (collectionView.tag == MAIN_DISPLAY && section != MAIN_CARDS_SECTION && [self numberofItemsInDisplay:collectionView.tag forSection:section] > 0){
+        return CGSizeMake(collectionView.bounds.size.width, HEADER_HEIGHT);
+    }
+    else {
+        return CGSizeZero;
+    }
 }
 
 #define COLLECTION_VIEW_BORDERS 10.0f
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     
-    if(collectionView.tag == MAIN_DISPLAY)
+    if(collectionView.tag == MAIN_DISPLAY){
         return UIEdgeInsetsMake(COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS, COLLECTION_VIEW_BORDERS);
+    }
     else {
         return UIEdgeInsetsMake(0, self.padding, 0, self.padding);
     }
@@ -171,7 +174,9 @@
 #define FLIPPED_CELL_WIDTH MAIN_CARD_CELL_WIDTH * FLIPPED_CARDS_SCALE
 #define FLIPPED_CELL_HEIGHT MAIN_CARD_CELL_HEIGHT * FLIPPED_CARDS_SCALE
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    CGSize size;
+    
+    CGSize size = CGSizeZero;
+    
     if(collectionView.tag == MAIN_DISPLAY){
         if (indexPath.section == MAIN_CARDS_SECTION)
             size = CGSizeMake(MAIN_CARD_CELL_WIDTH, MAIN_CARD_CELL_HEIGHT);
@@ -180,12 +185,11 @@
     } else if (collectionView.tag == FLIPPED_CARDS_DISPLAY)
             size = CGSizeMake(FLIPPED_CELL_WIDTH, FLIPPED_CELL_HEIGHT);
     
-    
     return size;
 }
-// need to figure out how to detect cell size dynamically
 
 -(CGFloat)padding{
+    // need to figure out how to detect cell size dynamically
     return (self.flippedCardCollectionView.bounds.size.width - FLIPPED_CELL_WIDTH * self.mode) / (self.mode + 1) - 1;
 }
 
@@ -193,7 +197,6 @@
 
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.5
-#define INVIS_ALPHA 0.0
 
 -(void)updateUI{
     
@@ -211,7 +214,7 @@
     NSString * scores = @"";
     
     for (int i = 0; i < self.numberOfPlayers; i++) {
-      scores = [scores stringByAppendingFormat:@"P%d = %d ",    i + 1, [self.game scoreForPlayer:i]];
+      scores = [scores stringByAppendingFormat:@"P%d = %d ",  i + 1, [self.game scoreForPlayer:i]];
     }
     
     return scores;
@@ -236,6 +239,7 @@
    
     Card *card = [self.game cardAtIndex:index];
     CardView *cardView = ((CardCollectionViewCell *)cell).cardView;
+    
     if(animate && cardView.faceUp != card.isFaceUp){
         [UIView transitionWithView:cardView
                           duration:0.5
@@ -273,11 +277,11 @@
 
 
 -(void) updateMatchedCardsDisplayCell: (id) cell forPlayer: (NSInteger)player andIndex:(NSInteger)index animate: (BOOL) animate{
-    NSLog(@"UPDATING MATCHED CARDS player: %d, index: %d",player,index);
-    NSArray* cards = [self.game matchedCardsForPlayer:player][index];
+ 
+    NSArray* cards = [self.game matchAtIndex:index forPlayer:player];
     NSArray* cardViews = ((MatchedCardsCollectionViewCell *)cell).cardViews;
  
-    for (int i = 0; i < [cardViews count]; i++) {
+    for (int i = 0; i < [cardViews count] && i < [cards count]; i++) {
         CardView *cardView = cardViews[i];
         [self updateView:cardView usingCard:cards[i]];
         cardView.faceUp = YES;
@@ -337,7 +341,7 @@
     if(indexPath && indexPath.section == MAIN_CARDS_SECTION)
         [self flipCardAtIndex:indexPath.item];
     
-    [self updateUI];
+  
 }
 
 -(void)flipCardAtIndex: (NSInteger) index{
@@ -352,20 +356,22 @@
     if(self.game.status == GOT_MATCH)
         [self endTurnForPlayer:self.game.currentPlayer];
     
-   
+    [self updateUI];
 }
 
 -(void)endTurnForPlayer:(NSInteger) currentPlayer{
     [self.game endOfTurnForPlayer: currentPlayer];
 
     [self addCardToCollection: self.cardCollectionView
-                      atIndex: [[self.game matchedCardsForPlayer:currentPlayer] count] - 1
+                      atIndex: [self.game numberOfMatchesForPlayer:currentPlayer] - 1
                    andSection: currentPlayer + 1
                  scrollToItem: !self.saveMatches];
     
     if(!self.saveMatches)[self removeFlippedCards];
     
     self.gameResult.score = [self.game scoreForPlayer:currentPlayer];
+    
+    [self updateUI];
 }
 
 - (int) addCards: (NSInteger) numCardsToAdd {
@@ -378,8 +384,6 @@
                            andSection: MAIN_CARDS_SECTION
                          scrollToItem: YES];
     }
-    
-    [self updateUI];
     
     return cardsAdded;
 }
@@ -394,51 +398,19 @@
                                 andSection: MAIN_CARDS_SECTION];
         }
     }
-    [self updateUI];
 }
 
 -(void) addCardToCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section scrollToItem: (BOOL) scroll{
-    NSLog(@"ADD:%d section %d , item %d",collection.tag,section, item);
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem: item inSection:section];
-    NSLog(@"ADDING:%d section %d , item %d",collection.tag,indexPath.section,indexPath.item);
     [collection insertItemsAtIndexPaths:@[indexPath]];
-    NSLog(@"ADDED:%d section %d , item %d",collection.tag,indexPath.section,indexPath.item);
     if(scroll) [collection scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
-    NSLog(@"ADD DONE:%d section %d , item %d",collection.tag,section, item);
 }
 
-
 -(void) removeCardFromCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section {
-    NSLog(@"REMOVE:%d section %d , item %d",collection.tag,section, item);
     [collection deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem: item inSection:section]]];
 }
 
--(void)debugLogArrayOfMatches:(NSArray*) matches{
-    NSString *text = [NSString stringWithFormat:@"matches: %d ",[matches count]];
-    for (NSArray* match in matches) 
-        text =[text stringByAppendingFormat:@" | %d", [match count]];
-    NSLog(@"%@",text);
-}
-
-
-
 #pragma mark - Attributed String FNs
--(NSAttributedString*) flippedCards{
-    NSMutableAttributedString * cards = [[NSMutableAttributedString alloc] init];
-    
-    for (int i = 0; i < [[self.game flippedCards] count]; i++) {
-        if(i) [cards appendAttributedString:[[NSMutableAttributedString alloc] initWithString: @" & " ]];
-        Card * card = [self.game flippedCards][i];
-        [cards appendAttributedString: [self arrtibutedCard:card]];
-    }
-    
-    return cards;
-}
-
--(NSAttributedString*) arrtibutedCard:(Card*) card {
-    return [[NSMutableAttributedString alloc] initWithString: [card contents]];
-}
 
 -(NSAttributedString*) status{
     NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString: @""];
@@ -465,6 +437,7 @@
     self.tabBarController.tabBar.isAccessibilityElement ?
     [self showTabBar:self.tabBarController]:
     [self hideTabBar:self.tabBarController];
+
 }
 
 // Method implementations FROM http://stackoverflow.com/questions/5272290/how-to-hide-uitabbarcontroller/5272334#5272334
@@ -495,7 +468,6 @@
     }
     [UIView commitAnimations];
     tabbarcontroller.tabBar.isAccessibilityElement = YES;
-
 }
 
 - (void) showTabBar:(UITabBarController *) tabbarcontroller
@@ -523,6 +495,16 @@
     }
     [UIView commitAnimations];
     tabbarcontroller.tabBar.isAccessibilityElement = NO;
- 
+
+
+}
+
+#pragma mark - debug helpers
+
+-(void)debugLogArrayOfMatches:(NSArray*) matches{
+    NSString *text = [NSString stringWithFormat:@"matches: %d ",[matches count]];
+    for (NSArray* match in matches)
+        text =[text stringByAppendingFormat:@" | %d", [match count]];
+    NSLog(@"%@",text);
 }
 @end

@@ -59,12 +59,6 @@
     return [self.mutableFlippedCards copy];
 }
 
--(NSArray*) matchedCardsForPlayer: (NSInteger) player{
-    NSArray * matchedCards = [self.matchedCardsForPlayer[@(player)] copy];
-    NSLog(@"MatchedCards size :%d for player %d", [matchedCards count], player);
-    return matchedCards;
-}
-
 -(int)currentCardsCount{
     return [self.cards count];
 }
@@ -110,6 +104,20 @@
 -(Card *)cardAtIndex:(NSUInteger)index{
     return (index < self.cards.count) ? self.cards[index] : nil;
 }
+
+-(NSArray*) matchAtIndex: (NSInteger) index forPlayer:(NSInteger) player{
+    
+    NSArray * matches =  self.matchedCardsForPlayer[@(player)];
+    if(matches && [matches count] > index){
+        return matches[index];
+    }
+    
+    return [NSArray array];
+}
+-(int)numberOfMatchesForPlayer:(NSInteger) player{
+    return [self.matchedCardsForPlayer[@(player)] count];
+}
+
 
 -(void)flipCardAtIndex:(NSUInteger)index{
     
@@ -271,9 +279,24 @@
 # define MATCH_BONUS 4 * DIFFICALTY_COEFFITIENT
 # define FLIP_COST 1
 
--(int)bonus{return MATCH_BONUS;}
--(int)flipCost{return FLIP_COST;}
--(int)difficulty{return DIFFICALTY_COEFFITIENT;}
--(int)penalty{return MISMATCH_PENALTY;}
+-(int)bonus{
+    if(!_bonus)_bonus = MATCH_BONUS;
+    return _bonus;
+}
+
+-(int)flipCost{
+    if(!_flipCost)_flipCost = FLIP_COST;
+    return _flipCost;
+}
+
+-(int)difficulty{
+    if(!_difficulty)_difficulty = DIFFICALTY_COEFFITIENT;
+    return _difficulty;
+}
+
+-(int)penalty{
+    if(!_penalty)_penalty = MISMATCH_PENALTY;
+    return _penalty;
+}
 
 @end

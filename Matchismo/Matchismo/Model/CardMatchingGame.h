@@ -21,16 +21,21 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 @property (nonatomic) int mode; //2, 3, 4... cards matching mode
 
+// cards
 -(Card *)cardAtIndex: (NSUInteger) index;
--(NSArray*) flippedCards;
--(NSArray*) matchedCardsForPlayer: (NSInteger) player;
-
 @property (nonatomic) int currentCardsCount;
-
--(int)addCards: (NSInteger) numberOfCrds;
+-(int)addCards: (NSInteger) numberOfCards;
 -(void)removeCardAtIndex: (NSInteger) index;
+
+// flipped cards
+-(NSArray*) flippedCards;
 -(void)flipCardAtIndex: (NSUInteger) index;
 
+// matched cards
+-(NSArray*) matchAtIndex: (NSInteger) index forPlayer:(NSInteger) player;
+-(int)numberOfMatchesForPlayer:(NSInteger) player;
+
+// ...
 -(NSArray*)findPossibleSolution;
 
 @property (readonly, nonatomic) GAME_STATUS status;
@@ -43,10 +48,10 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 
 //interfaces for scoring
-@property (readonly, nonatomic) int bonus;
-@property (readonly, nonatomic) int penalty;
-@property (readonly, nonatomic) int flipCost;
-@property (readonly, nonatomic) int difficulty;
+@property (nonatomic) int bonus;
+@property (nonatomic) int penalty;
+@property (nonatomic) int flipCost;
+@property (nonatomic) int difficulty;
 
 
 @end

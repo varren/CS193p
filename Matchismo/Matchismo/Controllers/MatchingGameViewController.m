@@ -72,10 +72,6 @@
 }
 
 
-
-#define DEFAULT_CARDBACK_TOP_INSERTS 6
-#define DEFAULT_CARDBACK_SIDES_INSERTS 2
-
 -(void)updateView: (UIView*) cardView usingCard: (Card*)card {
 
         if([cardView isKindOfClass:[PlayingCardView class]]){

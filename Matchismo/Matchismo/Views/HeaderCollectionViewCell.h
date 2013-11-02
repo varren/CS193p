@@ -11,5 +11,5 @@
 @interface HeaderCollectionViewCell : UICollectionReusableView
 
 @property (weak, nonatomic)IBOutlet UILabel * headerLabel;
-@property (strong, nonatomic) UIColor * color;
+
 @end

@@ -17,7 +17,18 @@
     return self;
 }
 
+
+#define CORNER_RADIUS 32.0
 -(void)setup{
+    
+    //UIBezierPath * roundedRect = [UIBezierPath bezierPathWithRoundedRect: self.bounds  cornerRadius:CORNER_RADIUS];
+    
+    //[roundedRect addClip];
+    //cell.backgroundColor = [UIColor redColor];
+    
+   // self.backgroundColor = [UIColor whiteColor];
+   // self.backgroundView.backgroundColor = [UIColor whiteColor];
+    
     //self.translatesAutoresizingMaskIntoConstraints = NO;
  //   self.superview.translatesAutoresizingMaskIntoConstraints = NO;
    // self.backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
