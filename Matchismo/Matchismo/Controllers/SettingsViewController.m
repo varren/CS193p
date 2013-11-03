@@ -56,8 +56,6 @@
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell * cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-
-
     
     switch (indexPath.section) {
         case DIFFICULTY_SECTION:
@@ -77,11 +75,6 @@
     }
     
     return cell;
-}
--(BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
-    if(indexPath.section == PLAYERS_SECTION)
-        return NO;
-    return YES;
 }
 
 #pragma mark - Difficulty Options
@@ -131,14 +124,15 @@
     NSLog(@"Reset Settings To Defaults");
 
     [[Settings instance] resetSettings];
-    self.numberOfPlayers = [Settings instance].numberOfPlayers;
-    self.difficulty = [Settings instance].difficulty;
+    [self reloadData];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:OTHER_OPTIONS_SECTION] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)resetScores {
     NSLog(@"Reset Scores");
     [[Settings instance] resetSavedScores];
-    [self.tableView reloadSectionIndexTitles]
+
+     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:OTHER_OPTIONS_SECTION] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Livecycle
@@ -146,7 +140,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+       
     }
     return self;
 }
@@ -154,6 +148,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self reloadData];
 	// Do any additional setup after loading the view.
 }
 
@@ -161,6 +156,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)reloadData{
+    self.numberOfPlayers = [Settings instance].numberOfPlayers;
+    self.difficulty = [Settings instance].difficulty;
 }
 
 @end

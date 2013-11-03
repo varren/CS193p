@@ -32,6 +32,17 @@ static Settings *sharedSingleton;
 
 #pragma mark - Setting Scores
 
+//
+// structure is:
+//
+// USER_DEFAULTS_SCORES_KEY       -> SCORES
+//
+// USER_DEFAULTS_ALL_SETTINGS_KEY -> NUMBER_OF_PLAYERS_KEY
+//                                   DIFFICULTY_KEY
+//                                   PLAYERS_SETTINGS -> PLAYER_NAME
+//                                                       PLAYER_COLOR
+//
+
 #define USER_DEFAULTS_SCORES_KEY @"GameResults_All"
 
 
@@ -58,9 +69,10 @@ static Settings *sharedSingleton;
 #define USER_DEFAULTS_ALL_SETTINGS_KEY @"GameSettings_main"
 #define NUMBER_OF_PLAYERS_KEY @"NumberOfPlayers"
 #define DIFFICULTY_KEY @"Difficulty"
+#define PLAYERS_SETTINGS @"PlayersSettings"
 
 -(NSDictionary *)settings{
-     return [self defaultsForKey:USER_DEFAULTS_ALL_SETTINGS_KEY];
+    return [self defaultsForKey:USER_DEFAULTS_ALL_SETTINGS_KEY];
 }
 
 -(void) setSettings:(NSDictionary *)settings{
@@ -72,19 +84,7 @@ static Settings *sharedSingleton;
 }
 
 -(void) setDifficulty:(int)difficulty{
-    NSMutableDictionary *settingsUserDefaults = [self.settings mutableCopy];
-    settingsUserDefaults[DIFFICULTY_KEY] = @(difficulty);
-    self.settings = settingsUserDefaults;
-}
-
--(int)numberOfPlayers{
-    return [self.settings[NUMBER_OF_PLAYERS_KEY] integerValue];
-}
-
--(void)setNumberOfPlayers:(int)numberOfPlayers{
-    NSMutableDictionary *settingsUserDefaults = [self.settings mutableCopy];
-    settingsUserDefaults[NUMBER_OF_PLAYERS_KEY] = @(numberOfPlayers);
-    self.settings = settingsUserDefaults;
+    [self saveSettings: @(difficulty)forKey:DIFFICULTY_KEY];
 }
 
 -(void) resetSettings{
@@ -92,7 +92,58 @@ static Settings *sharedSingleton;
 }
 
 -(NSDictionary*)defaultGameSettings{
-    return @{DIFFICULTY_KEY: @(1), NUMBER_OF_PLAYERS_KEY : @(1)};
+    return @{DIFFICULTY_KEY: @(1), NUMBER_OF_PLAYERS_KEY : @(1), PLAYERS_SETTINGS: @{}};
+}
+
+#pragma mark - Players Settings
+
+-(int)numberOfPlayers{
+    return [self.settings[NUMBER_OF_PLAYERS_KEY] integerValue];
+}
+
+-(void)setNumberOfPlayers:(int)numberOfPlayers{
+    [self saveSettings: @(numberOfPlayers)forKey:NUMBER_OF_PLAYERS_KEY];
+}
+
+-(NSDictionary*)playersSettingsForPlayer: (NSInteger)player{
+    NSDictionary * playersSettings = self.settings[PLAYERS_SETTINGS];
+    if(!playersSettings) playersSettings = @{};
+    
+    NSDictionary *currentPlayerSettings =  playersSettings[[@(player) description]];
+
+    if(!currentPlayerSettings) currentPlayerSettings =@{};
+    
+    return currentPlayerSettings;
+}
+
+-(void)setSettings: (NSDictionary*)playerSettings forPlayer:(NSInteger) player{
+    NSMutableDictionary * allPlayersSettings = [self.settings[PLAYERS_SETTINGS] mutableCopy];
+    allPlayersSettings[[@(player) description]] = playerSettings;
+    
+    [self saveSettings:allPlayersSettings forKey:PLAYERS_SETTINGS];
+}
+
+#define PLAYER_NAME_KEY @"PlayerName"
+-(NSString*)nameForPlayer: (NSInteger)player{
+    
+    NSDictionary * curentPlayerSettings = [self playersSettingsForPlayer:player];
+    
+    NSString * name = curentPlayerSettings[PLAYER_NAME_KEY];
+
+    if (!name) name = [NSString stringWithFormat: @"Player %d", player + 1];
+    
+    return name;
+}
+
+-(void)setName:(NSString*)name forPlayer:(NSInteger)player{
+    NSMutableDictionary * curentPlayerSettings = [[self playersSettingsForPlayer: player] mutableCopy];
+    
+    if(!curentPlayerSettings) curentPlayerSettings = [NSMutableDictionary dictionary];
+    
+    curentPlayerSettings[PLAYER_NAME_KEY] = name;
+
+    [self setSettings:curentPlayerSettings forPlayer:player];
+
 }
 
 #pragma mark - Generic User Defaults Setter and Getter
@@ -107,4 +158,13 @@ static Settings *sharedSingleton;
     if(!userDefaults) userDefaults = [[NSMutableDictionary alloc]init];
     return userDefaults;
 }
+
+-(void)saveSettings:(id)setting forKey:(NSString*) key{
+    NSMutableDictionary *playerSettingsUserDefaults = [self.settings mutableCopy];
+    
+    playerSettingsUserDefaults[key] = setting;
+    
+    self.settings = playerSettingsUserDefaults;
+}
+
 @end

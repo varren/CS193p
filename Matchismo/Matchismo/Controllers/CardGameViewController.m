@@ -12,6 +12,7 @@
 #import "CardCollectionViewCell.h"
 #import "MatchedCardsCollectionViewCell.h"
 #import "HeaderCollectionViewCell.h"
+#import "Settings.h"
 
 @interface CardGameViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -52,7 +53,7 @@
 }
 
 -(int)numberOfPlayers{
-    if(!_numberOfPlayers) _numberOfPlayers = 2;
+    if(!_numberOfPlayers) _numberOfPlayers = [Settings instance].numberOfPlayers;
     return _numberOfPlayers;
 }
 
@@ -384,7 +385,7 @@
                            andSection: MAIN_CARDS_SECTION
                          scrollToItem: YES];
     }
-    
+    [self updateUI];
     return cardsAdded;
 }
 
@@ -398,6 +399,7 @@
                                 andSection: MAIN_CARDS_SECTION];
         }
     }
+     [self updateUI];
 }
 
 -(void) addCardToCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section scrollToItem: (BOOL) scroll{

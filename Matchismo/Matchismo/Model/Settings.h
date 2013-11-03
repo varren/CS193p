@@ -19,5 +19,8 @@
 @property(nonatomic) int numberOfPlayers;
 @property(nonatomic) int difficulty;
 
+-(NSString*)nameForPlayer: (NSInteger)player;
+-(void)setName:(NSString*)name forPlayer:(NSInteger)player;
+
 -(void) resetSettings;
 @end
