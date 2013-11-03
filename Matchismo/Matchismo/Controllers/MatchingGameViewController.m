@@ -28,6 +28,29 @@
     return deck;
 }
 
+#define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY
+#define MISMATCH_PENALTY self.mode
+#define MATCH_BONUS 4 * DIFFICALTY_COEFFITIENT
+#define FLIP_COST 1
+
+#define EASY 0
+#define NORMAL 1
+#define HARD 2
+
+-(void)setGameDifficultyFor: (NSInteger) mode{
+    int matchBonus = MATCH_BONUS;
+    int misMatchPenalty = MISMATCH_PENALTY;
+    
+    if(mode == EASY){
+        matchBonus *= 2;
+        misMatchPenalty /= 2;
+    }else if(mode == HARD){
+        matchBonus /= 2;
+        misMatchPenalty *= 2;
+    }
+    
+    [self setGameBonus:matchBonus penalty:misMatchPenalty flipCost:FLIP_COST dificultyModifier:DIFFICALTY_COEFFITIENT];
+}
 @synthesize mode = _mode;
 -(int)mode{
     _mode = [[self.modeControl titleForSegmentAtIndex:[self.modeControl selectedSegmentIndex]] integerValue];

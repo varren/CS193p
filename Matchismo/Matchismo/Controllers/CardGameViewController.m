@@ -23,7 +23,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) GameResult *gameResult;
+@property (strong, nonatomic) NSMutableArray * gameResults; // of GameResult
+//@property (strong, nonatomic) GameResult *gameResult;
 @property (strong, nonatomic) NSArray * highlitedCards;
 
 @end
@@ -35,10 +36,15 @@
     [self.flippedCardCollectionView.collectionViewLayout invalidateLayout];
 }
 
-
-
 -(Deck*) createDeck{return nil;} //abstract
+-(void)setGameDifficultyFor: (NSInteger) mode{} //abstract
 
+-(void) setGameBonus:(NSInteger)bonus penalty:(NSInteger)penalty flipCost:(NSInteger) flipCost dificultyModifier: (NSInteger) difMod{
+    self.game.difficulty = difMod;
+    self.game.flipCost = flipCost;
+    self.game.bonus = bonus;
+    self.game.penalty = penalty;
+}
 #pragma mark - Properties
 
 -(CardMatchingGame *)game{
@@ -48,6 +54,7 @@
                  numOfPlayers: self.numberOfPlayers
                  usingDeck:[self createDeck]
                  andMode: self.mode];
+        [self setGameDifficultyFor: [Settings instance].difficulty];
     }
     return _game;
 }
@@ -57,9 +64,23 @@
     return _numberOfPlayers;
 }
 
--(GameResult*)gameResult{
-    if (!_gameResult) _gameResult = [[GameResult alloc] initFor: self.gameType];
-    return _gameResult;
+-(NSMutableArray*)gameResults{
+    if (!_gameResults) {
+      _gameResults = [NSMutableArray array];
+        for (int i = 0; i < self.numberOfPlayers; i++) {
+            GameResult * result = [[GameResult alloc] initFor: self.gameType andPlayerName:[[Settings instance] nameForPlayer:i]];
+            [_gameResults addObject:result];
+        }
+    }
+    
+    return _gameResults;
+}
+
+-(void)updateGameResults{
+    for (int i = 0; i< self.numberOfPlayers; i++) {
+        GameResult * result = self.gameResults[i];
+        result.score = [self.game scoreForPlayer:i];
+    }
 }
 
 -(BOOL)saveMatches{
@@ -207,6 +228,7 @@
 
     [self.flippedCardCollectionView reloadData];
     
+    [self updateGameResults];
     self.scoreLabel.text = [NSString stringWithFormat:@"Scores: %@",[self stringScores]];
     [self.statusLabel setAttributedText:[self status]];
 }
@@ -318,8 +340,9 @@
 }
 
 -(void)startNewGame{
-    self.gameResult = nil;
+    self.gameResults = nil;
     self.game = nil;
+    self.numberOfPlayers = 0;
     [self.cardCollectionView reloadData];
     [self updateUI];
 }
@@ -341,9 +364,8 @@
     
     if(indexPath && indexPath.section == MAIN_CARDS_SECTION)
         [self flipCardAtIndex:indexPath.item];
-    
-  
 }
+
 
 -(void)flipCardAtIndex: (NSInteger) index{
     if(self.game.status == NEW_GAME){
@@ -354,37 +376,43 @@
     [self.game flipCardAtIndex:index];
     
     
-    if(self.game.status == GOT_MATCH)
+    if(self.game.status == GOT_MATCH || self.game.status == GOT_MISMATCH)
         [self endTurnForPlayer:self.game.currentPlayer];
-    
-    [self updateUI];
+    else{
+        
+        [self updateUI];
+    }
 }
 
 -(void)endTurnForPlayer:(NSInteger) currentPlayer{
     [self.game endOfTurnForPlayer: currentPlayer];
 
-    [self addCardToCollection: self.cardCollectionView
-                      atIndex: [self.game numberOfMatchesForPlayer:currentPlayer] - 1
-                   andSection: currentPlayer + 1
-                 scrollToItem: !self.saveMatches];
-    
-    if(!self.saveMatches)[self removeFlippedCards];
-    
-    self.gameResult.score = [self.game scoreForPlayer:currentPlayer];
-    
+    if(self.game.status == GOT_MATCH){
+        [self addCardToCollection: self.cardCollectionView
+         atIndexPaths:@[[NSIndexPath indexPathForItem:[self.game numberOfMatchesForPlayer:currentPlayer] - 1 inSection: currentPlayer + 1]]
+                 scrollToItem:!self.saveMatches];
+                     
+        if(!self.saveMatches)[self removeFlippedCards];
+    }
     [self updateUI];
 }
 
 - (int) addCards: (NSInteger) numCardsToAdd {
-    int cardsAdded = 0;
+    BOOL needPenalty = [self.game hasSolution];
+    int cardsAdded = [self.game addCards: numCardsToAdd];
     
-    for (int i = 0; i < numCardsToAdd; i++){
-        if(cardsAdded += [self.game addCards: 1])
-            [self addCardToCollection: self.cardCollectionView
-                              atIndex: self.game.currentCardsCount - 1
-                           andSection: MAIN_CARDS_SECTION
-                         scrollToItem: YES];
-    }
+    if(cardsAdded && needPenalty)
+        for(int i =0; i<self.numberOfPlayers; i++)
+            [self.game givePenaltyForPlayer:i];
+    
+    NSMutableArray * indexPaths = [NSMutableArray array];
+    
+    for (int i = 0; i < cardsAdded; i++)
+        [indexPaths addObject:[NSIndexPath indexPathForItem:self.game.currentCardsCount - 1 - i inSection:MAIN_CARDS_SECTION]];
+        
+    if(cardsAdded)
+        [self addCardToCollection: self.cardCollectionView atIndexPaths:indexPaths scrollToItem: YES];
+
     [self updateUI];
     return cardsAdded;
 }
@@ -395,21 +423,20 @@
         if (card.isUnplayable){
             [self.game removeCardAtIndex: i];
             [self removeCardFromCollection: self.cardCollectionView
-                                   atIndex: i
-                                andSection: MAIN_CARDS_SECTION];
+                              atIndexPaths:@[[NSIndexPath indexPathForItem: i inSection:MAIN_CARDS_SECTION]]];
+                              
         }
     }
      [self updateUI];
 }
 
--(void) addCardToCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section scrollToItem: (BOOL) scroll{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem: item inSection:section];
-    [collection insertItemsAtIndexPaths:@[indexPath]];
-    if(scroll) [collection scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
+-(void) addCardToCollection: (UICollectionView*)collection atIndexPaths: (NSArray *) indexPaths scrollToItem: (BOOL) scroll{
+    [collection insertItemsAtIndexPaths:indexPaths];
+    if(scroll) [collection scrollToItemAtIndexPath:[indexPaths lastObject]  atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
 
--(void) removeCardFromCollection: (UICollectionView*)collection atIndex: (NSInteger) item andSection: (NSInteger)section {
-    [collection deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem: item inSection:section]]];
+-(void) removeCardFromCollection: (UICollectionView*)collection atIndexPaths: (NSArray *) indexPaths{
+    [collection deleteItemsAtIndexPaths:indexPaths];
 }
 
 #pragma mark - Attributed String FNs
@@ -509,4 +536,5 @@
         text =[text stringByAppendingFormat:@" | %d", [match count]];
     NSLog(@"%@",text);
 }
+
 @end

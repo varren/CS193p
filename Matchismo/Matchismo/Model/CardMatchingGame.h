@@ -43,8 +43,10 @@ typedef NS_ENUM(NSUInteger, GAME_STATUS) {NEW_GAME, GOT_MATCH, GOT_MISMATCH, FLI
 
 @property (readonly, nonatomic) int currentPlayer;
 -(int)scoreForPlayer: (NSInteger) playerIndex;
--(void)endOfTurnForPlayer: (NSInteger) player;
 
+-(void)givePenaltyForPlayer:(NSInteger) playerIndex;
+-(void)endOfTurnForPlayer: (NSInteger) player;
+-(BOOL)hasSolution;
 
 
 //interfaces for scoring

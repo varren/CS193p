@@ -11,7 +11,7 @@
 @interface CardMatchingGame()
 @property (strong, nonatomic) NSMutableArray *cards;
 @property (strong, nonatomic) NSMutableArray *mutableFlippedCards;
-@property (strong, nonatomic) NSMutableDictionary *matchedCardsForPlayer; // dictionary of @{player : mutableMatchesArray} and mutableMatchesArray consists of MatchesArrays of game-mode number of cards
+@property (strong, nonatomic) NSMutableDictionary *matchedCardsForPlayer; // dictionary of @{player: mutableMatchesArray}[playerID][matchCountForPlayer][matchedCardID] = Card
 
 @property (nonatomic) int currentPlayer;
 @property (strong, nonatomic) NSMutableArray * scores;
@@ -86,7 +86,6 @@
         self.matchedCardsForPlayer[@(i)] = [NSMutableArray array];
     }
     
-    
     for (int i = 0; i < count; i++) {
         if([self addCardAtIndex:[self.cards count]] == 0){
             NSLog(@"Can`t init deck");
@@ -142,7 +141,7 @@
         
         card.faceUp = !card.isFaceUp;
 
-         self.currentPlayerScore -= self.flipCost;
+        self.currentPlayerScore -= self.flipCost;
     }
 }
 
@@ -167,15 +166,22 @@
     }
 }
 
--(int)addCards:(NSInteger) numberOfCrds{
+-(int)addCards:(NSInteger) numberOfCards{
     int cardsAdded = 0;
     
-    self.currentPlayerScore -= ([[self findPossibleSolution] count] == 0) ?: self.penalty;
-    
-    for (int i = 0 ; i<numberOfCrds; i++)
+
+    for (int i = 0 ; i < numberOfCards; i++)
             cardsAdded += [self addCardAtIndex:[self.cards count]];
     
     return cardsAdded;
+}
+        
+-(void)givePenaltyForPlayer:(NSInteger) playerIndex{
+    self.scores[playerIndex] = @([self.scores[playerIndex] integerValue] - self.penalty);
+}
+        
+-(BOOL)hasSolution{
+    return [[self findPossibleSolution] count] != 0;
 }
 
 -(int)addCardAtIndex:(NSInteger) index{
@@ -199,6 +205,7 @@
 
 -(NSArray*)findPossibleSolution{
     NSArray* found = [self findPossibleSolutionForCards:[NSMutableArray array] andCardAtIndex:0];
+    if(!found) found = @[];
     //[self debugLogCardsIn:found];
     return found;
 }
@@ -272,31 +279,5 @@
     
 }
 
-#pragma mark - Scoring coefficients
-
-# define DIFFICALTY_COEFFITIENT 2/MISMATCH_PENALTY
-# define MISMATCH_PENALTY self.mode
-# define MATCH_BONUS 4 * DIFFICALTY_COEFFITIENT
-# define FLIP_COST 1
-
--(int)bonus{
-    if(!_bonus)_bonus = MATCH_BONUS;
-    return _bonus;
-}
-
--(int)flipCost{
-    if(!_flipCost)_flipCost = FLIP_COST;
-    return _flipCost;
-}
-
--(int)difficulty{
-    if(!_difficulty)_difficulty = DIFFICALTY_COEFFITIENT;
-    return _difficulty;
-}
-
--(int)penalty{
-    if(!_penalty)_penalty = MISMATCH_PENALTY;
-    return _penalty;
-}
 
 @end

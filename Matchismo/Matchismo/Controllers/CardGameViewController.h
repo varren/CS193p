@@ -17,6 +17,7 @@
 @property (nonatomic) NSInteger startCardsCount; // abstract
 @property (nonatomic) NSInteger gameType; //abstract
 @property (nonatomic) int mode; //abstract
+-(void)setGameDifficultyFor: (NSInteger) mode;
 
 #pragma mark - Optional
 -(void)updateView: (UIView*) cardView usingCard: (Card*)card; // abstract
@@ -31,5 +32,5 @@
 -(void)startNewGame;
 -(void)flipCardAtIndex:(NSInteger) index;
 -(int)addCards: (NSInteger) numCardsToAdd;
-
+-(void) setGameBonus:(NSInteger)bonus penalty:(NSInteger)penalty flipCost:(NSInteger) flipCost dificultyModifier: (NSInteger) difMod;
 @end

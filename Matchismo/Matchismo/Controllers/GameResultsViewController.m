@@ -17,12 +17,12 @@
 
 @implementation GameResultsViewController
 
-#define OUTPUT_SCORES_FORMAT @"%-5s |  %-5s \t| %4s \t| %-18s \n"
+#define OUTPUT_SCORES_FORMAT @"%s | %s | %s | %s | %s \n"
 #define CARD_MATCHING_GAME 1
 #define SETS_MATHCING_GAME 2
 -(void) updateUI{
     
-    NSString *text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[@"Type" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String],[@"Date" UTF8String]];
+    NSString *text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT, [@"Type" UTF8String],[@"Name" UTF8String],[@"Score" UTF8String],[@"Time" UTF8String],[@"Date" UTF8String]];
     
     NSMutableAttributedString * displayText = [[NSMutableAttributedString alloc]initWithString:text];
     
@@ -33,12 +33,11 @@
 
     for (GameResult *result in [[GameResult allGameResults]sortedArrayUsingSelector:self.sortedSelector]) {
         
-
         NSString *sScore = [NSString stringWithFormat:@"%d", result.score];
         NSString *sTime = [NSString stringWithFormat:@"%@", [dateFormatter stringFromDate:result.end]];
         NSString *sDuration = [NSString stringWithFormat:@"%0g sec",round(result.duration)];
         
-        text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT,[[self gameNameFrom:result] UTF8String], [sScore UTF8String], [sDuration UTF8String],[sTime UTF8String]];
+        text = [NSString stringWithFormat:OUTPUT_SCORES_FORMAT, [[self gameNameFrom:result] UTF8String], [result.playerName UTF8String],[sScore UTF8String], [sDuration UTF8String], [sTime UTF8String]];
         
         NSMutableAttributedString * newLine = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName: [self selectColorFor:result]}];
         

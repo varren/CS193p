@@ -10,7 +10,7 @@
 
 @interface GameResult : NSObject
 
--(id)initFor: (NSInteger)gameType;
+-(id)initFor: (NSInteger)gameType andPlayerName:(NSString*)name;
 
 + (NSArray *) allGameResults;
 
@@ -18,7 +18,10 @@
 @property (readonly, nonatomic) NSDate *end;
 @property (readonly, nonatomic) NSTimeInterval duration;
 
+@property (readonly, strong, nonatomic) NSString * playerName;
+
 @property (nonatomic) int score;
+
 @property (readonly, nonatomic) int gameType;
 
 //sorting options

@@ -30,10 +30,9 @@
 
 #define RESET_SCORES 0
 #define RESET_SETTINGS 1
+
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
     return [super tableView:tableView numberOfRowsInSection:section];
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -59,7 +58,6 @@
     
     switch (indexPath.section) {
         case DIFFICULTY_SECTION:
-            NSLog(@"ROW: %d , DIF: %d", indexPath.row, self.difficulty);
             cell.accessoryType = indexPath.row  == self.difficulty ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             break;
             
@@ -88,7 +86,7 @@
     _difficulty = difficulty;
     [Settings instance].difficulty = difficulty;
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:DIFFICULTY_SECTION] withRowAnimation:UITableViewRowAnimationNone];
-    NSLog(@"Difficulty set to %d", difficulty);
+
 }
 
 #pragma mark - Players Options
@@ -107,7 +105,7 @@
         self.numberOfPlayersSlider.value = numberOfPlayers;
         _numberOfPlayers = numberOfPlayers;
         [Settings instance].numberOfPlayers = numberOfPlayers;
-        NSLog(@"Number of players is %d",  numberOfPlayers);
+
     }
 
 }
@@ -121,15 +119,12 @@
 #pragma mark - Other Options
 
 -(void)resetSettingsToDefaults{
-    NSLog(@"Reset Settings To Defaults");
-
     [[Settings instance] resetSettings];
     [self reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:OTHER_OPTIONS_SECTION] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)resetScores {
-    NSLog(@"Reset Scores");
     [[Settings instance] resetSavedScores];
 
      [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:OTHER_OPTIONS_SECTION] withRowAnimation:UITableViewRowAnimationNone];

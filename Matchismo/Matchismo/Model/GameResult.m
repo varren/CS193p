@@ -13,6 +13,7 @@
 
 @property (readwrite, nonatomic) NSDate *start;
 @property (readwrite, nonatomic) NSDate *end;
+@property (strong, nonatomic) NSString * playerName;
 
 @end
 @implementation GameResult
@@ -21,6 +22,7 @@
 #define END_KEY @"EndTime"
 #define SCORE_KEY @"ScoreKey"
 #define GAME_TYPE @"GameType"
+#define PLAYER_NAME @"PlayerName"
 
 
 +(NSArray *)allGameResults{
@@ -33,12 +35,13 @@
     return allGameResults;
 }
 
--(id)initFor: (NSInteger)gameType{
+-(id)initFor: (NSInteger)gameType andPlayerName:(NSString *)name{
     self = [super init];
     if(self){
         _start = [NSDate date];
         _end = _start;
         _gameType = gameType;
+        _playerName = name;
     }
     return self;
 }
@@ -52,6 +55,7 @@
             _end = data [END_KEY];
             _score = [data[SCORE_KEY] integerValue];
             _gameType = [data[GAME_TYPE] integerValue];
+            _playerName = data[PLAYER_NAME];
             if(!_start || !_end) self = nil;
         }
     }
@@ -59,11 +63,11 @@
 }
 
 -(void)synchronise{
-    [[Settings instance] addScore:[self asPropertyList] forGameID:[self.start description]];
+    [[Settings instance] addScore:[self asPropertyList] forGameID:[NSString stringWithFormat:@"%@ - %@",[self.start description], self.playerName]];
 }
 
 -(id)asPropertyList{
-    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score), GAME_TYPE : @(self.gameType)};
+    return @{START_KEY :self.start,END_KEY : self.end, SCORE_KEY : @(self.score), GAME_TYPE : @(self.gameType), PLAYER_NAME : self.playerName};
 }
 
 
