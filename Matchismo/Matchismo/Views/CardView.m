@@ -32,6 +32,7 @@
     _hintHighlighted = hintHighlighted;
     [self setNeedsDisplay];
 }
+
 #define ACTIVE_ALPHA 1.0
 #define INACTIVE_ALPHA 0.5
 -(void)setUnplayable:(BOOL)unplayable{
