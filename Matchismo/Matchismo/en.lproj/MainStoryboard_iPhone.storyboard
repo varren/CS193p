@@ -1121,7 +1121,6 @@
         <class className="SuperCardViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SuperCardViewController.h"/>
             <relationships>
-                <relationship kind="action" name="swipe:" candidateClass="UISwipeGestureRecognizer"/>
                 <relationship kind="outlet" name="playingCardView" candidateClass="PlayingCardView"/>
             </relationships>
         </class>
