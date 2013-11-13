@@ -8,6 +8,7 @@
 
 #import "FlickrTagsTVC.h"
 #import "DataSource.h"
+#import "FlickrFetcher.h"
 
 @interface FlickrTagsTVC ()
 @property (strong, nonatomic) NSArray * photosForTag;
@@ -44,8 +45,10 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     UITableViewCell * senderCell = (UITableViewCell*)sender;
     NSIndexPath * indexPath = [self.tableView indexPathForCell:senderCell];
-
-    [segue.destinationViewController performSelector:@selector(setPhotos:) withObject:self.photosForTag[indexPath.row]];
+    
+    NSArray * taggedPhotosSorted =[self.photosForTag[indexPath.row] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[[NSSortDescriptor alloc] initWithKey:FLICKR_PHOTO_TITLE ascending:YES]]];
+    
+    [segue.destinationViewController performSelector:@selector(setPhotos:) withObject:taggedPhotosSorted];
     [segue.destinationViewController  setTitle:[self.tags[indexPath.row] capitalizedString]];
 }
 

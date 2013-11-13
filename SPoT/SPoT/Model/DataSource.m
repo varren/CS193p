@@ -10,8 +10,8 @@
 #import "FlickrFetcher.h"
 @interface DataSource()
 @property (strong, nonatomic) NSArray* latestUpdateCachedResults;
-@property (strong, nonatomic) NSMutableArray* recentPhotos;
-@property (strong, nonatomic) NSMutableArray* internalFavoritePhotos;
+@property (strong, nonatomic) NSArray* recentPhotos;
+@property (strong, nonatomic) NSArray* favoritePhotos;
 
 @end
 
@@ -40,21 +40,43 @@ static DataSource *sharedSingleton;
 -(NSArray *) latestUpdateCachedResults{
     if(!_latestUpdateCachedResults){
         _latestUpdateCachedResults = [FlickrFetcher stanfordPhotos];
-        NSLog(@"%@", _latestUpdateCachedResults);
     }
     
     return _latestUpdateCachedResults;
 }
+@synthesize recentPhotos = _recentPhotos;
 
--(NSMutableArray*) recentPhotos{
-    if(!_recentPhotos)_recentPhotos = [NSMutableArray array];
+#define RECENT_PHOTOS_KEY @"Recent Photos"
+
+-(NSArray*) recentPhotos{
+    if(!_recentPhotos)_recentPhotos = [[NSUserDefaults standardUserDefaults] valueForKey:RECENT_PHOTOS_KEY] ;
     return _recentPhotos;
 }
 
--(NSMutableArray*) internalFavoritePhotos{
-    if(!_internalFavoritePhotos)_internalFavoritePhotos = [NSMutableArray array];
-    return _internalFavoritePhotos;
+-(void)setRecentPhotos:(NSArray *)recentPhotos{
+    _recentPhotos = recentPhotos;
+    [[NSUserDefaults standardUserDefaults] setObject:recentPhotos forKey:RECENT_PHOTOS_KEY];
 }
+
+@synthesize  favoritePhotos = _favoritePhotos;
+
+#define FAVORITE_PHOTOS_KEY @"Favorite Photos"
+
+-(NSArray*) favoritePhotos{
+   
+    if(!_favoritePhotos){
+        _favoritePhotos = [[NSUserDefaults standardUserDefaults] valueForKey:FAVORITE_PHOTOS_KEY];
+        if(!_favoritePhotos) _favoritePhotos = [NSArray array];
+    }
+    return _favoritePhotos;
+}
+
+-(void)setFavoritePhotos:(NSArray *)favoritePhotos{
+    _favoritePhotos = favoritePhotos;
+    [[NSUserDefaults standardUserDefaults] setObject:favoritePhotos forKey:FAVORITE_PHOTOS_KEY];
+    
+}
+
 #pragma mark - Implementation
 
 -(NSArray *)possibleTags{
@@ -102,29 +124,29 @@ static DataSource *sharedSingleton;
 -(void) addRecentlyViewedPhoto:(NSDictionary *) photo{
     NSMutableArray * recent = [[NSMutableArray alloc] initWithObjects:photo, nil];
 
-    if([self.recentPhotos containsObject:photo])
-        [self.recentPhotos removeObject:photo];
+    for (NSDictionary * oldPhoto in self.recentPhotos) {
+        if([recent count] >= MAX_RECENT_PHOTOS_SAVED) break;
+        if(![oldPhoto isEqualToDictionary:photo])
+            [recent addObject:oldPhoto];
+    }
 
-    if([self.recentPhotos count] >= MAX_RECENT_PHOTOS_SAVED)
-         [self.recentPhotos removeObject:[self.recentPhotos lastObject]];
-
-    [recent addObjectsFromArray: self.recentPhotos];
-    
     self.recentPhotos = recent;
 }
 
-
--(NSArray *) favoritePhotos{
-    return self.internalFavoritePhotos;
-}
-
 -(void)addFavoritePhoto:(NSDictionary *) photo{
-    if(![self.internalFavoritePhotos containsObject:photo])
-        [self.internalFavoritePhotos addObject:photo];
+    if(![self.favoritePhotos containsObject:photo]){
+        NSMutableArray * mutableFavorit = [self.favoritePhotos mutableCopy];
+        [mutableFavorit addObject:photo];
+        self.favoritePhotos = mutableFavorit;
+    }
 }
 
 -(void)removeFromFavorite:(NSDictionary *)photo{
-    if([self.internalFavoritePhotos containsObject:photo])
-        [self.internalFavoritePhotos removeObject:photo];
+    if([self.favoritePhotos containsObject:photo]){
+        NSMutableArray * mutableFavorit = [self.favoritePhotos mutableCopy];
+        [mutableFavorit removeObject:photo];
+        self.favoritePhotos = mutableFavorit;
+    }
 }
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "FavoritesTVC.h"
+#import "DataSource.h"
 
 @implementation FavoritesTVC
 

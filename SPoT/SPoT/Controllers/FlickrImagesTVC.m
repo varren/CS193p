@@ -7,6 +7,8 @@
 //
 
 #import "FlickrImagesTVC.h"
+#import "DataSource.h"
+#import "FlickrFetcher.h"
 
 @interface FlickrImagesTVC ()
 

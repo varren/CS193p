@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataSource.h"
-#import "FlickrFetcher.h"
+
 
 @interface FlickrImagesTVC : UITableViewController
 

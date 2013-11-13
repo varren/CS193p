@@ -7,6 +7,7 @@
 //
 
 #import "FlickrRecentPhotosTVC.h"
+#import "DataSource.h"
 
 @implementation FlickrRecentPhotosTVC
 
