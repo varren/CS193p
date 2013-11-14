@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-
-@interface FlickrImagesTVC : UITableViewController
+#import "MenuDataTVC.h"
+@interface FlickrImagesTVC : MenuDataTVC
 
 @property (strong, nonatomic) NSArray * photos;
 

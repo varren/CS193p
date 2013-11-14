@@ -21,12 +21,19 @@
     [self.tableView reloadData];
 }
 
+
+#pragma mark - Seque
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     UITableViewCell * senderCell = (UITableViewCell*)sender;
     NSIndexPath * indexPath = [self.tableView indexPathForCell:senderCell];
     NSDictionary * photoInfo = self.photos[indexPath.row];
     
     [[DataSource instance] addRecentlyViewedPhoto:photoInfo];
+    
+    UIBarButtonItem * currentButtonItem = [[self.splitViewController.viewControllers lastObject] performSelector: @selector(splitViewBarButtonItem)];
+
+    [segue.destinationViewController performSelector: @selector(setSplitViewBarButtonItem:) withObject:currentButtonItem];
     
     [segue.destinationViewController setTitle:photoInfo[FLICKR_PHOTO_TITLE]];
     [segue.destinationViewController performSelector:@selector(setImage:) withObject:photoInfo];

@@ -30,6 +30,7 @@
 		A08378AF182F223400E79725 /* flickr-square.png in Resources */ = {isa = PBXBuildFile; fileRef = A08378AE182F223400E79725 /* flickr-square.png */; };
 		A08378B1182F223E00E79725 /* flickr.png in Resources */ = {isa = PBXBuildFile; fileRef = A08378B0182F223E00E79725 /* flickr.png */; };
 		A08378B3182F225500E79725 /* favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = A08378B2182F225500E79725 /* favorites.png */; };
+		A0847BE21834A9FC00F0F76A /* MenuDataTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A0847BE11834A9FC00F0F76A /* MenuDataTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,8 @@
 		A08378AE182F223400E79725 /* flickr-square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flickr-square.png"; sourceTree = "<group>"; };
 		A08378B0182F223E00E79725 /* flickr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flickr.png; sourceTree = "<group>"; };
 		A08378B2182F225500E79725 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorites.png; sourceTree = "<group>"; };
+		A0847BE01834A9FC00F0F76A /* MenuDataTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuDataTVC.h; path = Controllers/MenuDataTVC.h; sourceTree = "<group>"; };
+		A0847BE11834A9FC00F0F76A /* MenuDataTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuDataTVC.m; path = Controllers/MenuDataTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 		A07F4A9B182FD60F00113005 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A0847BE01834A9FC00F0F76A /* MenuDataTVC.h */,
+				A0847BE11834A9FC00F0F76A /* MenuDataTVC.m */,
 				A07F4A89182FB72500113005 /* FlickrTagsTVC.h */,
 				A07F4A8A182FB72500113005 /* FlickrTagsTVC.m */,
 				A07F4A98182FBAB200113005 /* FlickrImagesTVC.h */,
@@ -262,6 +267,7 @@
 				A07F4A97182FB9F500113005 /* ImageScrollViewController.m in Sources */,
 				A07F4A9A182FBAB300113005 /* FlickrImagesTVC.m in Sources */,
 				A07F4A9F182FDFF200113005 /* DataSource.m in Sources */,
+				A0847BE21834A9FC00F0F76A /* MenuDataTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

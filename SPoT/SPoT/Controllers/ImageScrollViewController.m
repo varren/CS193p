@@ -13,10 +13,15 @@
 @interface ImageScrollViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *barButtonTitle;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *splitViewBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @property (strong, nonatomic) UIImageView *imageView;
 
 @property (strong, nonatomic) NSURL *imageURL;
+
+@property (nonatomic) BOOL needToAutoResize;
 @end
 
 @implementation ImageScrollViewController;
@@ -31,34 +36,36 @@
 -(void)setImage:(NSDictionary *)image{
     _image = image;
     self.imageURL = [FlickrFetcher urlForPhoto:image format:FlickrPhotoFormatLarge];
+    self.favoriteButton.hidden = NO;
     [self resetImage];
 }
-
+-(void)setTitle:(NSString *)title{
+    super.title = title;
+    self.barButtonTitle.title = title;
+}
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return self.imageView;
 }
-/*
-//from http://stackoverflow.com/questions/1316451/center-content-of-uiscrollview-when-smaller
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView
-{
-    NSLog(@"zoomed");
-    //UIView *subView = [scrollView.subviews objectAtIndex:0];
-    
-    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
-    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
-    
-    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
-    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
-    
-    //subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-    //                             scrollView.contentSize.height * 0.5 + offsetY);
-    subView.center = CGPointMake(scrollView.bounds.size.width * 0.5,
-                                 scrollView.bounds.size.height * 0.5);
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView{
+    [self centerImage];
 }
- */
-#pragma mark - VCLifecicle
+
+-(void) setSplitViewBarButtonItem:(UIBarButtonItem *) barButtonItem{
+    NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+  
+    if (_splitViewBarButtonItem)
+        [toolbarItems removeObject:_splitViewBarButtonItem];
+    if (barButtonItem)
+        [toolbarItems insertObject:barButtonItem atIndex:0];
+        
+    self.toolbar.items = toolbarItems;
+    _splitViewBarButtonItem = barButtonItem;
+}
+
+#pragma mark - VC Life Cicle
 
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -67,9 +74,12 @@
     self.scrollView.maximumZoomScale = 5.0;
     self.scrollView.delegate = self;
     
-    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
-    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
-    self.favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:self.image];
+    self.needToAutoResize = YES;
+   
+    self.barButtonTitle.title  = self.title;
+    self.splitViewBarButtonItem = self.splitViewBarButtonItem;
+    
+    [self addToFavoritSetup];
     
     [self resetImage];
 }
@@ -77,40 +87,37 @@
 -(float)minZoomScaleToFillScreen{
     float wScale = self.scrollView.bounds.size.width/self.imageView.image.size.width;
     float hScale = self.scrollView.bounds.size.height/self.imageView.image.size.height;
-    [self debug];
     return MAX(wScale, hScale);
 }
--(void)debug{
-    NSLog(@"Zoom Scale: %f", self.scrollView.zoomScale);
 
-    NSLog(@"Content:%f*%f ",self.scrollView.contentSize.height,self.scrollView.contentSize.width);
-    NSLog(@"Bounds:%f*%f | x:%f y:%f",self.scrollView.bounds.size.height,self.scrollView.bounds.size.width,self.scrollView.bounds.origin.x,self.scrollView.bounds.origin.y);
-    NSLog(@"Frame:%f*%f | x:%f y:%f",self.scrollView.frame.size.height,self.scrollView.frame.size.width,self.scrollView.frame.origin.x,self.scrollView.frame.origin.y);
-    NSLog(@"IMGBounds:%f*%f | x:%f y:%f",self.imageView.bounds.size.height,self.imageView.bounds.size.width,self.imageView.bounds.origin.x,self.imageView.bounds.origin.y);
-    NSLog(@"IMGFrame:%f*%f | x:%f y:%f",self.imageView.frame.size.height,self.imageView.frame.size.width,self.imageView.frame.origin.x,self.imageView.frame.origin.y);
-    NSLog(@"---------------------------------------------------------------");
+-(void)viewWillLayoutSubviews{
+    self.needToAutoResize = CGRectIsEmpty(self.scrollView.bounds) ||
+    self.scrollView.contentSize.height == self.scrollView.bounds.size.height ||
+    self.scrollView.contentSize.width == self.scrollView.bounds.size.width;
 }
 
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-    self.scrollView.zoomScale = [self minZoomScaleToFillScreen];
+    
+    if(self.needToAutoResize)
+        self.scrollView.zoomScale = [self minZoomScaleToFillScreen];
+    else
+        [self centerImage];
 }
-- (void)viewWillAppear:(BOOL)animated
-{
+
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self resetImage];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     self.imageView.image = nil;
 }
 
 #pragma mark - Other
 
-- (void)resetImage
-{
+- (void)resetImage{
     if (self.scrollView) {
         self.scrollView.contentSize = CGSizeZero;
         self.imageView.image = nil;
@@ -120,18 +127,37 @@
         if (image) {
             self.scrollView.zoomScale = 1;
             self.scrollView.contentSize = image.size;
-            // [self.scrollView zoomToRect:self.scrollView.bounds animated:NO];
             self.imageView.image = image;
             self.imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-            self.scrollView.zoomScale = [self minZoomScaleToFillScreen];
-
-       
         }
     }
 }
+-(void)addToFavoritSetup{
+   
+    //favourite button init
+
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
+    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
+    self.favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:self.image];
+    
+    if(!self.image) self.favoriteButton.hidden = YES;
+}
+-(void)centerImage{
+    //Code from http://stackoverflow.com/questions/1316451/center-content-of-uiscrollview-when-smaller
+    
+    CGFloat offsetX = (self.scrollView.bounds.size.width > self.scrollView.contentSize.width)?
+    (self.scrollView.bounds.size.width - self.scrollView.contentSize.width) * 0.5 : 0.0;
+    
+    CGFloat offsetY = (self.scrollView.bounds.size.height > self.scrollView.contentSize.height)?
+    (self.scrollView.bounds.size.height - self.scrollView.contentSize.height) * 0.5 : 0.0;
+    
+    self.imageView.center = CGPointMake(self.scrollView.contentSize.width * 0.5 + offsetX, self.scrollView.contentSize.height * 0.5 + offsetY);
+}
 
 - (IBAction)addToFavorite:(id)sender {
-    self.favoriteButton.selected ? [[DataSource instance] removeFromFavorite:self.image] :[[DataSource instance] addFavoritePhoto:self.image];
+    self.favoriteButton.selected ?
+    [[DataSource instance] removeFromFavorite:self.image]
+    : [[DataSource instance] addFavoritePhoto:self.image];
     
     self.favoriteButton.selected = ! self.favoriteButton.selected;
 }

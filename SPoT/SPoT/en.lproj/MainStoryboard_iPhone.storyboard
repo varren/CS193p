@@ -22,14 +22,14 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bRY-wh-O0R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-57" y="103"/>
+            <point key="canvasLocation" x="-71" y="425"/>
         </scene>
         <!--Flickr TagsTVC - Flickr tags-->
         <scene sceneID="0H6-Mz-0lM">
             <objects>
                 <tableViewController id="oSN-Ip-Ly4" customClass="FlickrTagsTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rLI-qM-F1v">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -74,7 +74,7 @@
             <objects>
                 <tableViewController id="3NT-1h-bh1" customClass="FlickrImagesTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="N1h-Vv-cNl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -119,7 +119,7 @@
             <objects>
                 <viewController id="L7l-Id-UYz" customClass="ImageScrollViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WiQ-oA-Bin">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7CD-FA-NZ0"/>
@@ -158,7 +158,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1lv-aC-OUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1967" y="431"/>
+            <point key="canvasLocation" x="1629" y="499"/>
         </scene>
         <!--Navigation Controller - All-->
         <scene sceneID="wKY-VN-Ura">
@@ -181,7 +181,7 @@
             <objects>
                 <tableViewController id="Zf2-ek-0UF" customClass="FlickrRecentPhotosTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mxB-0S-oUh">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -226,7 +226,7 @@
             <objects>
                 <tableViewController id="Xmn-im-qKU" customClass="FavoritesTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zoM-Fy-2gE">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -305,37 +305,12 @@
         <image name="flickr-square.png" width="32" height="32"/>
         <image name="flickr.png" width="32" height="32"/>
     </resources>
-    <classes>
-        <class className="FavoritesTVC" superclassName="FlickrImagesTVC">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTVC.h"/>
-        </class>
-        <class className="FlickrImagesTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlickrImagesTVC.h"/>
-        </class>
-        <class className="FlickrRecentPhotosTVC" superclassName="FlickrImagesTVC">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlickrRecentPhotosTVC.h"/>
-        </class>
-        <class className="FlickrTagsTVC" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlickrTagsTVC.h"/>
-        </class>
-        <class className="ImageScrollViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageScrollViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addToFavorite:"/>
-                <relationship kind="outlet" name="favoriteButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eMK-0U-fE0"/>
+        <segue reference="SoW-yN-zd3"/>
     </inferredMetricsTieBreakers>
 </document>
