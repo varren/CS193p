@@ -7,19 +7,16 @@
 //
 
 #import "ImageScrollViewController.h"
-#import "DataSource.h"
-#import "FlickrFetcher.h"
 
 @interface ImageScrollViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *barButtonTitle;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *splitViewBarButtonItem;
+
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *splitViewBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *barButtonTitle;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
 
 @property (strong, nonatomic) UIImageView *imageView;
-
-@property (strong, nonatomic) NSURL *imageURL;
 
 @property (nonatomic) BOOL needToAutoResize;
 @end
@@ -33,16 +30,15 @@
     return _imageView;
 }
 
--(void)setImage:(NSDictionary *)image{
-    _image = image;
-    self.imageURL = [FlickrFetcher urlForPhoto:image format:FlickrPhotoFormatLarge];
-    self.favoriteButton.hidden = NO;
+-(void)setImageURL:(NSURL *)imageURL{
+    _imageURL = imageURL;
     [self resetImage];
 }
 -(void)setTitle:(NSString *)title{
     super.title = title;
     self.barButtonTitle.title = title;
 }
+
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -53,6 +49,7 @@
     [self centerImage];
 }
 
+#pragma mark - Segue fn
 -(void) setSplitViewBarButtonItem:(UIBarButtonItem *) barButtonItem{
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
   
@@ -63,6 +60,22 @@
         
     self.toolbar.items = toolbarItems;
     _splitViewBarButtonItem = barButtonItem;
+}
+
+-(void)setFavoriteButton:(UIBarButtonItem *)favoriteButton{
+    NSLog(@"SETTING %@",favoriteButton);
+    NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+
+    if(favoriteButton){
+        // probably can create conditions here...
+        // but it works fine this way
+        // if iPhone => navigationBar iPad => toolbar
+        [toolbarItems addObject:favoriteButton];
+        self.navigationItem.rightBarButtonItem = favoriteButton;
+    }
+    
+    self.toolbar.items = toolbarItems;
+    _favoriteButton = favoriteButton;
 }
 
 #pragma mark - VC Life Cicle
@@ -78,8 +91,7 @@
    
     self.barButtonTitle.title  = self.title;
     self.splitViewBarButtonItem = self.splitViewBarButtonItem;
-    
-    [self addToFavoritSetup];
+    self.favoriteButton = self.favoriteButton;
     
     [self resetImage];
 }
@@ -132,16 +144,7 @@
         }
     }
 }
--(void)addToFavoritSetup{
-   
-    //favourite button init
 
-    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
-    [self.favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
-    self.favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:self.image];
-    
-    if(!self.image) self.favoriteButton.hidden = YES;
-}
 -(void)centerImage{
     //Code from http://stackoverflow.com/questions/1316451/center-content-of-uiscrollview-when-smaller
     
@@ -153,15 +156,5 @@
     
     self.imageView.center = CGPointMake(self.scrollView.contentSize.width * 0.5 + offsetX, self.scrollView.contentSize.height * 0.5 + offsetY);
 }
-
-- (IBAction)addToFavorite:(id)sender {
-    self.favoriteButton.selected ?
-    [[DataSource instance] removeFromFavorite:self.image]
-    : [[DataSource instance] addFavoritePhoto:self.image];
-    
-    self.favoriteButton.selected = ! self.favoriteButton.selected;
-}
-
-
 
 @end

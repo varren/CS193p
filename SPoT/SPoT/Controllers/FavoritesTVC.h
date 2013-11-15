@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FlickrImagesTVC.h"
+
 @interface FavoritesTVC : FlickrImagesTVC
 
 @end

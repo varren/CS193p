@@ -36,8 +36,10 @@
     [segue.destinationViewController performSelector: @selector(setSplitViewBarButtonItem:) withObject:currentButtonItem];
     
     [segue.destinationViewController setTitle:photoInfo[FLICKR_PHOTO_TITLE]];
-    [segue.destinationViewController performSelector:@selector(setImage:) withObject:photoInfo];
-  
+    
+    [segue.destinationViewController performSelector:@selector(setImageURL:) withObject:[FlickrFetcher urlForPhoto:photoInfo format:FlickrPhotoFormatLarge]];
+    
+    [segue.destinationViewController performSelector:@selector(setFavoriteButton:) withObject:[self favoriteTabBarItemForPhoto:photoInfo]];
 }
 
 #pragma mark - Table view data source
@@ -57,6 +59,39 @@
     cell.detailTextLabel.text = [photoInfo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
     
     return cell;
+}
+
+#pragma mark - Favorite Button
+
+// kinda cool can create button and target action metod here and givethis button to ImageScrollView to display
+// probably overkill and there are better ways to do the same, but i decidet to practice segue
+// done it here and not in ImageScrollView because ISV knows nothing about NSDictionary image data to save it
+-(UIBarButtonItem*)favoriteTabBarItemForPhoto:(NSDictionary*) photo{
+
+    UIButton * favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [favoriteButton addTarget:self action:@selector(addToFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
+    [favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
+    [favoriteButton setFrame:CGRectMake(0, 0, 32, 32)];
+    favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:photo];
+    NSLog(@"%d", favoriteButton.selected);
+    UIBarButtonItem *favorite = [[UIBarButtonItem alloc] initWithCustomView:favoriteButton];
+    
+    return favorite;
+}
+
+
+- (IBAction)addToFavorite:(id)sender {
+    NSLog(@"GOT TARGET ACTION");
+    if([sender isKindOfClass:[UIButton class]]){
+        UIButton * favoriteButton = sender;
+        NSDictionary * latestPhoto = [[DataSource instance] recentlyViewedPhotos][0];
+        favoriteButton.selected ?
+        [[DataSource instance] removeFromFavorite:latestPhoto]
+        : [[DataSource instance] addFavoritePhoto:latestPhoto];
+    
+        favoriteButton.selected = !favoriteButton.selected;
+    }
 }
 
 

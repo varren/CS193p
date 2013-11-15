@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ImageScrollViewController : UIViewController
-@property (strong, nonatomic) NSDictionary *image;
-
+@property (strong, nonatomic) NSURL *imageURL;
 @end
