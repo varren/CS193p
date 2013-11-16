@@ -15,6 +15,11 @@
 @implementation MenuDataTVC
 #pragma mark - UISplitViewControllerDelegate
 
+-(void)setPhotos:(NSArray *)photos{
+    _photos = photos;
+    [self.tableView reloadData];
+}
+
 -(void)awakeFromNib{
     self.splitViewController.delegate = self;
 }

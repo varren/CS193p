@@ -16,12 +16,6 @@
 
 @implementation FlickrImagesTVC
 
--(void)setPhotos:(NSArray *)photos{
-    _photos = photos;
-    [self.tableView reloadData];
-}
-
-
 #pragma mark - Seque
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -63,7 +57,7 @@
 
 #pragma mark - Favorite Button
 
-// kinda cool can create button and target action metod here and givethis button to ImageScrollView to display
+// kinda cool can create button and target action metod here and give this button to ImageScrollView to display
 // probably overkill and there are better ways to do the same, but i decidet to practice segue
 // done it here and not in ImageScrollView because ISV knows nothing about NSDictionary image data to save it
 -(UIBarButtonItem*)favoriteTabBarItemForPhoto:(NSDictionary*) photo{
@@ -74,7 +68,7 @@
     [favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
     [favoriteButton setFrame:CGRectMake(0, 0, 32, 32)];
     favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:photo];
-    NSLog(@"%d", favoriteButton.selected);
+
     UIBarButtonItem *favorite = [[UIBarButtonItem alloc] initWithCustomView:favoriteButton];
     
     return favorite;
@@ -82,7 +76,7 @@
 
 
 - (IBAction)addToFavorite:(id)sender {
-    NSLog(@"GOT TARGET ACTION");
+    
     if([sender isKindOfClass:[UIButton class]]){
         UIButton * favoriteButton = sender;
         NSDictionary * latestPhoto = [[DataSource instance] recentlyViewedPhotos][0];

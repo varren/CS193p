@@ -46,8 +46,8 @@
 		A07F4A99182FBAB300113005 /* FlickrImagesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrImagesTVC.m; path = /Users/uff/CS193p/SPoT/SPoT/Controllers/FlickrImagesTVC.m; sourceTree = "<absolute>"; };
 		A07F4A9D182FDFF200113005 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSource.h; path = Model/DataSource.h; sourceTree = "<group>"; };
 		A07F4A9E182FDFF200113005 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataSource.m; path = Model/DataSource.m; sourceTree = "<group>"; };
-		A07F4AA018307CA500113005 /* favorites-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorites-gray.png"; sourceTree = "<group>"; };
-		A07F4AA118307CA500113005 /* favorites-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorites-red.png"; sourceTree = "<group>"; };
+		A07F4AA018307CA500113005 /* favorites-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favorites-gray.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/favorites-gray.png"; sourceTree = "<absolute>"; };
+		A07F4AA118307CA500113005 /* favorites-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favorites-red.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/favorites-red.png"; sourceTree = "<absolute>"; };
 		A08377971829670900F3B127 /* SPoT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPoT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A083779A1829670900F3B127 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A083779C1829670900F3B127 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,17 +58,17 @@
 		A08377A81829670900F3B127 /* SPoT-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPoT-Prefix.pch"; sourceTree = "<group>"; };
 		A08377A91829670900F3B127 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A08377AA1829670900F3B127 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A08377AC1829670900F3B127 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A08377AE1829670900F3B127 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		A08377B01829670900F3B127 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A08377AC1829670900F3B127 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = /Users/uff/CS193p/SPoT/SPoT/Resources/Default.png; sourceTree = "<absolute>"; };
+		A08377AE1829670900F3B127 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/Default@2x.png"; sourceTree = "<absolute>"; };
+		A08377B01829670900F3B127 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/Default-568h@2x.png"; sourceTree = "<absolute>"; };
 		A08377B31829670900F3B127 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		A08377B61829670900F3B127 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		A08377C11829689500F3B127 /* FlickrAPIKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrAPIKey.h; sourceTree = "<group>"; };
 		A08377C21829689500F3B127 /* FlickrFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrFetcher.h; sourceTree = "<group>"; };
 		A08377C31829689500F3B127 /* FlickrFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrFetcher.m; sourceTree = "<group>"; };
-		A08378AE182F223400E79725 /* flickr-square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flickr-square.png"; sourceTree = "<group>"; };
-		A08378B0182F223E00E79725 /* flickr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flickr.png; sourceTree = "<group>"; };
-		A08378B2182F225500E79725 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorites.png; sourceTree = "<group>"; };
+		A08378AE182F223400E79725 /* flickr-square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "flickr-square.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/flickr-square.png"; sourceTree = "<absolute>"; };
+		A08378B0182F223E00E79725 /* flickr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flickr.png; path = /Users/uff/CS193p/SPoT/SPoT/Resources/flickr.png; sourceTree = "<absolute>"; };
+		A08378B2182F225500E79725 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = favorites.png; path = /Users/uff/CS193p/SPoT/SPoT/Resources/favorites.png; sourceTree = "<absolute>"; };
 		A0847BE01834A9FC00F0F76A /* MenuDataTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuDataTVC.h; path = Controllers/MenuDataTVC.h; sourceTree = "<group>"; };
 		A0847BE11834A9FC00F0F76A /* MenuDataTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuDataTVC.m; path = Controllers/MenuDataTVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */

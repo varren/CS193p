@@ -11,7 +11,8 @@
 
 @implementation FlickrRecentPhotosTVC
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     self.photos = [[DataSource instance] recentlyViewedPhotos];
 }
 

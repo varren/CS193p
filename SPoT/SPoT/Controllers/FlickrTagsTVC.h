@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MenuDataTVC.h"
 @interface FlickrTagsTVC : MenuDataTVC
-@property (strong,nonatomic) NSArray * tags;
+
 
 @end

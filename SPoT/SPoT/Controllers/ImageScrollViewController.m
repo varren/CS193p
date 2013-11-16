@@ -15,9 +15,11 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *splitViewBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barButtonTitle;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) UIImageView *imageView;
 
+@property (atomic) NSInteger networkActivities;
 @property (nonatomic) BOOL needToAutoResize;
 @end
 
@@ -49,7 +51,7 @@
     [self centerImage];
 }
 
-#pragma mark - Segue fn
+#pragma mark - Segue fn and properties setters
 -(void) setSplitViewBarButtonItem:(UIBarButtonItem *) barButtonItem{
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
   
@@ -63,7 +65,7 @@
 }
 
 -(void)setFavoriteButton:(UIBarButtonItem *)favoriteButton{
-    NSLog(@"SETTING %@",favoriteButton);
+
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
 
     if(favoriteButton){
@@ -96,7 +98,7 @@
     [self resetImage];
 }
 
--(float)minZoomScaleToFillScreen{
+-(float)zoomScaleToFillScreen{
     float wScale = self.scrollView.bounds.size.width/self.imageView.image.size.width;
     float hScale = self.scrollView.bounds.size.height/self.imageView.image.size.height;
     return MAX(wScale, hScale);
@@ -112,7 +114,7 @@
     [super viewDidLayoutSubviews];
     
     if(self.needToAutoResize)
-        self.scrollView.zoomScale = [self minZoomScaleToFillScreen];
+        self.scrollView.zoomScale = [self zoomScaleToFillScreen];
     else
         [self centerImage];
 }
@@ -133,15 +135,33 @@
     if (self.scrollView) {
         self.scrollView.contentSize = CGSizeZero;
         self.imageView.image = nil;
-        
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:self.imageURL];
-        UIImage *image = [[UIImage alloc] initWithData:imageData];
-        if (image) {
-            self.scrollView.zoomScale = 1;
-            self.scrollView.contentSize = image.size;
-            self.imageView.image = image;
-            self.imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-        }
+        [self.activityIndicator startAnimating];
+        dispatch_queue_t loaderQueue = dispatch_queue_create("Image Loader", NULL);
+        dispatch_async(loaderQueue, ^{
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            self.networkActivities++;
+            [NSThread sleepForTimeInterval:2.0];
+            NSData *imageData = [[NSData alloc] initWithContentsOfURL:self.imageURL];
+            self.networkActivities--;
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
+              
+            
+            UIImage *image = [[UIImage alloc] initWithData:imageData];
+            
+                dispatch_async(dispatch_get_main_queue(),^{
+                    if (image) {
+                        self.scrollView.zoomScale = 1;
+                        self.scrollView.contentSize = image.size;
+                        self.imageView.image = image;
+                        self.imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+                        if(self.needToAutoResize)
+                            self.scrollView.zoomScale = [self zoomScaleToFillScreen];
+                    }
+                    
+                    [self.activityIndicator stopAnimating];
+                });
+        });
     }
 }
 

@@ -10,4 +10,6 @@
 
 @interface MenuDataTVC : UITableViewController
 
+@property (strong,nonatomic) NSArray * photos;
+
 @end

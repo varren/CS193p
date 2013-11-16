@@ -7,9 +7,8 @@
 //
 
 #import "DataSource.h"
-#import "FlickrFetcher.h"
+
 @interface DataSource()
-@property (strong, nonatomic) NSArray* latestUpdateCachedResults;
 @property (strong, nonatomic) NSArray* recentPhotos;
 @property (strong, nonatomic) NSArray* favoritePhotos;
 
@@ -37,13 +36,7 @@ static DataSource *sharedSingleton;
 
 #pragma mark - Properties
 
--(NSArray *) latestUpdateCachedResults{
-    if(!_latestUpdateCachedResults){
-        _latestUpdateCachedResults = [FlickrFetcher stanfordPhotos];
-    }
-    
-    return _latestUpdateCachedResults;
-}
+
 @synthesize recentPhotos = _recentPhotos;
 
 #define RECENT_PHOTOS_KEY @"Recent Photos"
@@ -79,42 +72,6 @@ static DataSource *sharedSingleton;
 
 #pragma mark - Implementation
 
--(NSArray *)possibleTags{
-    NSMutableArray * tags = [NSMutableArray array];
-    
-    for(NSDictionary * photoInfo in self.latestUpdateCachedResults){
-        NSArray * currentTags = [photoInfo[FLICKR_TAGS] componentsSeparatedByString:@" "];
-        for (NSString* tag in currentTags) 
-            if(![tags containsObject:tag])
-                [tags addObject:tag];
-    }
-    
-    return tags;
-}
--(NSArray *)photosForTags: (NSArray*) tags{
-    
-    NSMutableArray * tagedPhotos = [NSMutableArray  array];
-    
-    for(NSString* tag in tags)
-        [tagedPhotos addObject: [self photosForTag:tag from: self.latestUpdateCachedResults]];
-    
-    return tagedPhotos;
-}
-
-
--(NSArray*) photosForTag:(NSString*) tag from:(NSArray*) allPhotos{
-    
-    NSMutableArray * taggedPhotos = [NSMutableArray array];
-    
-    for(NSDictionary * photoInfo in allPhotos){
-        NSArray * currentTags = [photoInfo[FLICKR_TAGS] componentsSeparatedByString:@" "];
-        if([currentTags containsObject:tag])
-            [taggedPhotos addObject: photoInfo];
-    }
-    
-    return taggedPhotos;
-
-}
 
 -(NSArray *) recentlyViewedPhotos{
     return self.recentPhotos;

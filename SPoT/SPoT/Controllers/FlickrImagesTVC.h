@@ -10,6 +10,4 @@
 #import "MenuDataTVC.h"
 @interface FlickrImagesTVC : MenuDataTVC
 
-@property (strong, nonatomic) NSArray * photos;
-
 @end
