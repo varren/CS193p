@@ -7,6 +7,7 @@
 //
 
 #import "ImageScrollViewController.h"
+#import "DataCache.h"
 
 @interface ImageScrollViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -19,7 +20,7 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property (atomic) NSInteger networkActivities;
+
 @property (nonatomic) BOOL needToAutoResize;
 @end
 
@@ -136,18 +137,11 @@
         self.scrollView.contentSize = CGSizeZero;
         self.imageView.image = nil;
         [self.activityIndicator startAnimating];
+        
         dispatch_queue_t loaderQueue = dispatch_queue_create("Image Loader", NULL);
         dispatch_async(loaderQueue, ^{
             
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            self.networkActivities++;
-            [NSThread sleepForTimeInterval:2.0];
-            NSData *imageData = [[NSData alloc] initWithContentsOfURL:self.imageURL];
-            self.networkActivities--;
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
-              
-            
-            UIImage *image = [[UIImage alloc] initWithData:imageData];
+            UIImage *image = [[DataCache instance] getImage: self.imageURL];
             
                 dispatch_async(dispatch_get_main_queue(),^{
                     if (image) {
@@ -164,6 +158,7 @@
         });
     }
 }
+
 
 -(void)centerImage{
     //Code from http://stackoverflow.com/questions/1316451/center-content-of-uiscrollview-when-smaller

@@ -7,13 +7,13 @@
 //
 
 #import "FlickrRecentPhotosTVC.h"
-#import "DataSource.h"
+#import "DataCache.h"
 
 @implementation FlickrRecentPhotosTVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.photos = [[DataSource instance] recentlyViewedPhotos];
+    self.photos = [[DataCache instance] recentlyViewedPhotos];
 }
 
 @end

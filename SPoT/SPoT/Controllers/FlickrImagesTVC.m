@@ -7,7 +7,7 @@
 //
 
 #import "FlickrImagesTVC.h"
-#import "DataSource.h"
+#import "DataCache.h"
 #import "FlickrFetcher.h"
 
 @interface FlickrImagesTVC ()
@@ -23,7 +23,7 @@
     NSIndexPath * indexPath = [self.tableView indexPathForCell:senderCell];
     NSDictionary * photoInfo = self.photos[indexPath.row];
     
-    [[DataSource instance] addRecentlyViewedPhoto:photoInfo];
+    [[DataCache instance] addRecentlyViewedPhoto:photoInfo];
     
     UIBarButtonItem * currentButtonItem = [[self.splitViewController.viewControllers lastObject] performSelector: @selector(splitViewBarButtonItem)];
 
@@ -67,7 +67,7 @@
     [favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
     [favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
     [favoriteButton setFrame:CGRectMake(0, 0, 32, 32)];
-    favoriteButton.selected = [[[DataSource instance] favoritePhotos] containsObject:photo];
+    favoriteButton.selected = [[[DataCache instance] favoritePhotos] containsObject:photo];
 
     UIBarButtonItem *favorite = [[UIBarButtonItem alloc] initWithCustomView:favoriteButton];
     
@@ -79,10 +79,10 @@
     
     if([sender isKindOfClass:[UIButton class]]){
         UIButton * favoriteButton = sender;
-        NSDictionary * latestPhoto = [[DataSource instance] recentlyViewedPhotos][0];
+        NSDictionary * latestPhoto = [[DataCache instance] recentlyViewedPhotos][0];
         favoriteButton.selected ?
-        [[DataSource instance] removeFromFavorite:latestPhoto]
-        : [[DataSource instance] addFavoritePhoto:latestPhoto];
+        [[DataCache instance] removeFromFavorite:latestPhoto]
+        : [[DataCache instance] addFavoritePhoto:latestPhoto];
     
         favoriteButton.selected = !favoriteButton.selected;
     }

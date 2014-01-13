@@ -22,6 +22,7 @@
     [self reloadData];
     [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
 }
+
 -(void)reloadData{
     [self.refreshControl beginRefreshing];
     dispatch_queue_t flickrFetchQueue = dispatch_queue_create("Flickr Fetch Queue", NULL);

@@ -6,19 +6,20 @@
 //  Copyright (c) 2013 mmh. All rights reserved.
 //
 
-#import "DataSource.h"
+#import "DataCache.h"
 
-@interface DataSource()
+@interface DataCache()
 @property (strong, nonatomic) NSArray* recentPhotos;
 @property (strong, nonatomic) NSArray* favoritePhotos;
+@property (atomic) NSInteger networkActivities;
 
 @end
 
-@implementation DataSource;
+@implementation DataCache;
 
 #pragma mark - Singletone
 
-static DataSource *sharedSingleton;
+static DataCache *sharedSingleton;
 
 + (void)initialize
 {
@@ -26,11 +27,11 @@ static DataSource *sharedSingleton;
     if(!initialized)
     {
         initialized = YES;
-        sharedSingleton = [[DataSource alloc] init];
+        sharedSingleton = [[DataCache alloc] init];
     }
 }
 
-+(DataSource *) instance{
++(DataCache *) instance{
     return sharedSingleton;
 }
 
@@ -101,9 +102,27 @@ static DataSource *sharedSingleton;
 -(void)removeFromFavorite:(NSDictionary *)photo{
     if([self.favoritePhotos containsObject:photo]){
         NSMutableArray * mutableFavorit = [self.favoritePhotos mutableCopy];
-        [mutableFavorit removeObject:photo];
+        [mutableFavorit removeObject:photo];	
         self.favoritePhotos = mutableFavorit;
     }
+}
+
+-(UIImage *) getImage: (NSURL *) imageURL{
+    
+    UIImage * image = nil;
+    if(imageURL){
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+        self.networkActivities++;
+        [NSThread sleepForTimeInterval:2.0];
+        NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
+        self.networkActivities--;
+
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
+    
+        image = [[UIImage alloc] initWithData:imageData];
+    }
+    return image;
 }
 
 @end

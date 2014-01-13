@@ -7,13 +7,13 @@
 //
 
 #import "FavoritesTVC.h"
-#import "DataSource.h"
+#import "DataCache.h"
 
 @implementation FavoritesTVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.photos = [[DataSource instance] favoritePhotos];
+    self.photos = [[DataCache instance] favoritePhotos];
 }
 
 @end

@@ -12,7 +12,7 @@
 		A07F4A94182FB80200113005 /* FavoritesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A07F4A93182FB80200113005 /* FavoritesTVC.m */; };
 		A07F4A97182FB9F500113005 /* ImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A07F4A96182FB9F500113005 /* ImageScrollViewController.m */; };
 		A07F4A9A182FBAB300113005 /* FlickrImagesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A07F4A99182FBAB300113005 /* FlickrImagesTVC.m */; };
-		A07F4A9F182FDFF200113005 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = A07F4A9E182FDFF200113005 /* DataSource.m */; };
+		A07F4A9F182FDFF200113005 /* DataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A07F4A9E182FDFF200113005 /* DataCache.m */; };
 		A07F4AA218307CA500113005 /* favorites-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = A07F4AA018307CA500113005 /* favorites-gray.png */; };
 		A07F4AA318307CA500113005 /* favorites-red.png in Resources */ = {isa = PBXBuildFile; fileRef = A07F4AA118307CA500113005 /* favorites-red.png */; };
 		A083779B1829670900F3B127 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A083779A1829670900F3B127 /* UIKit.framework */; };
@@ -44,8 +44,8 @@
 		A07F4A96182FB9F500113005 /* ImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageScrollViewController.m; path = /Users/uff/CS193p/SPoT/SPoT/Controllers/ImageScrollViewController.m; sourceTree = "<absolute>"; };
 		A07F4A98182FBAB200113005 /* FlickrImagesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlickrImagesTVC.h; path = /Users/uff/CS193p/SPoT/SPoT/Controllers/FlickrImagesTVC.h; sourceTree = "<absolute>"; };
 		A07F4A99182FBAB300113005 /* FlickrImagesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlickrImagesTVC.m; path = /Users/uff/CS193p/SPoT/SPoT/Controllers/FlickrImagesTVC.m; sourceTree = "<absolute>"; };
-		A07F4A9D182FDFF200113005 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSource.h; path = Model/DataSource.h; sourceTree = "<group>"; };
-		A07F4A9E182FDFF200113005 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataSource.m; path = Model/DataSource.m; sourceTree = "<group>"; };
+		A07F4A9D182FDFF200113005 /* DataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataCache.h; path = Model/DataCache.h; sourceTree = "<group>"; };
+		A07F4A9E182FDFF200113005 /* DataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataCache.m; path = Model/DataCache.m; sourceTree = "<group>"; };
 		A07F4AA018307CA500113005 /* favorites-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favorites-gray.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/favorites-gray.png"; sourceTree = "<absolute>"; };
 		A07F4AA118307CA500113005 /* favorites-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "favorites-red.png"; path = "/Users/uff/CS193p/SPoT/SPoT/Resources/favorites-red.png"; sourceTree = "<absolute>"; };
 		A08377971829670900F3B127 /* SPoT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPoT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,8 +109,8 @@
 		A07F4A9C182FDADF00113005 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A07F4A9D182FDFF200113005 /* DataSource.h */,
-				A07F4A9E182FDFF200113005 /* DataSource.m */,
+				A07F4A9D182FDFF200113005 /* DataCache.h */,
+				A07F4A9E182FDFF200113005 /* DataCache.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -266,7 +266,7 @@
 				A07F4A94182FB80200113005 /* FavoritesTVC.m in Sources */,
 				A07F4A97182FB9F500113005 /* ImageScrollViewController.m in Sources */,
 				A07F4A9A182FBAB300113005 /* FlickrImagesTVC.m in Sources */,
-				A07F4A9F182FDFF200113005 /* DataSource.m in Sources */,
+				A07F4A9F182FDFF200113005 /* DataCache.m in Sources */,
 				A0847BE21834A9FC00F0F76A /* MenuDataTVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
