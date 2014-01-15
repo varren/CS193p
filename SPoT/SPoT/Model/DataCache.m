@@ -11,8 +11,11 @@
 @interface DataCache()
 @property (strong, nonatomic) NSArray* recentPhotos;
 @property (strong, nonatomic) NSArray* favoritePhotos;
+@property (strong, nonatomic) NSArray *listOfCachedPhotos;
+
 @property (atomic) NSInteger networkActivities;
 
+@property (strong, nonatomic) NSString * cachedPhotosDIR;
 @end
 
 @implementation DataCache;
@@ -37,7 +40,108 @@ static DataCache *sharedSingleton;
 
 #pragma mark - Properties
 
+#pragma mark - Cached Photos
 
+@synthesize listOfCachedPhotos = _listOfCachedPhotos;
+
+#define CACHED_PHOTOS_KEY @"ListOfCachedPhotos"
+-(void) setListOfCachedPhotos:(NSArray *)listOfCachedPhotos{
+    _listOfCachedPhotos = listOfCachedPhotos;
+    [[NSUserDefaults standardUserDefaults] setObject:listOfCachedPhotos forKey:CACHED_PHOTOS_KEY];
+}
+
+-(NSArray*)listOfCachedPhotos{
+    if(!_listOfCachedPhotos){
+        _listOfCachedPhotos = [[NSUserDefaults standardUserDefaults] valueForKey:CACHED_PHOTOS_KEY];
+        if(!_listOfCachedPhotos) _listOfCachedPhotos = [NSArray array];
+    }
+    return _listOfCachedPhotos;
+}
+
+#define CACHED_PHOTOS_DIR_NAME @"CachedPhotos"
+-(NSString*) cachedPhotosDIR{
+    if(!_cachedPhotosDIR){
+        NSString * cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        _cachedPhotosDIR =  [cache stringByAppendingPathComponent:CACHED_PHOTOS_DIR_NAME];
+    
+        NSFileManager * fileManager = [NSFileManager defaultManager];
+    
+        if (![fileManager fileExistsAtPath:_cachedPhotosDIR]) {
+            [fileManager createDirectoryAtPath:_cachedPhotosDIR withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+    }
+    
+    return _cachedPhotosDIR;
+}
+
+-(unsigned long long) cachedDirSize{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    NSArray * photos = [fm contentsOfDirectoryAtPath:self.cachedPhotosDIR error:NO];
+    unsigned long long dirSize = 0;
+    for (NSString * photoName in photos) {
+        NSString* photoPath = [self.cachedPhotosDIR stringByAppendingPathComponent:photoName];
+        dirSize += [[fm attributesOfItemAtPath:photoPath error:NO] fileSize];
+
+    }
+    NSLog(@"Cache size is: %llu KB",dirSize/1024);
+    return dirSize;
+}
+
+-(NSData*) getPhotoFromCacheByID:(NSString *)ID{
+    NSData * neededPhoto = nil;
+    
+    if([self.listOfCachedPhotos containsObject:ID]){
+        NSString * photoPath = [self.cachedPhotosDIR stringByAppendingPathComponent:ID];
+        
+        if([[NSFileManager defaultManager] fileExistsAtPath:photoPath])
+            neededPhoto = [NSData dataWithContentsOfFile:photoPath];
+    }
+    NSLog(@"Getting %@ photo \n result is %@", ID, neededPhoto ? @"cached" : @"not cached");
+    NSLog(@"%@", self.listOfCachedPhotos);
+    return neededPhoto;
+}
+
+#define MAX_CACHE_SIZE 2 * 1024 * 1024
+-(void) cachePhoto: (NSData*) photo withID:(NSString*) ID{
+    if(![self.listOfCachedPhotos containsObject:ID]){
+        NSLog(@"Saving %@ photo", ID);
+        NSLog(@"%@", self.listOfCachedPhotos);
+    
+    
+    
+    NSMutableArray* mutablePhotosList =  [self.listOfCachedPhotos mutableCopy];
+    [mutablePhotosList addObject:ID];
+    self.listOfCachedPhotos = mutablePhotosList;
+    
+    NSString * photoPath = [[self cachedPhotosDIR] stringByAppendingPathComponent:ID];
+    [photo writeToFile: photoPath atomically:YES];
+
+    
+    //Remove oldest cached photo if needed
+    while([self cachedDirSize] > MAX_CACHE_SIZE){
+        if([self.listOfCachedPhotos count] > 0){
+            NSString * oldestPhotoPath = [[self cachedPhotosDIR] stringByAppendingPathComponent:self.listOfCachedPhotos[0]];
+            [[NSFileManager defaultManager] removeItemAtPath:oldestPhotoPath error: NO];
+        
+            NSMutableArray* mutablePhotosList = [self.listOfCachedPhotos mutableCopy];
+            [mutablePhotosList removeObjectAtIndex:0];
+            self.listOfCachedPhotos = mutablePhotosList;
+        }
+
+    }
+    
+    
+    }
+}
+
+-(void)resetCache{
+    [[NSFileManager defaultManager] removeItemAtPath:self.cachedPhotosDIR error:NO];
+    self.listOfCachedPhotos = nil;
+}
+
+
+#pragma mark - Recent Photos
 @synthesize recentPhotos = _recentPhotos;
 
 #define RECENT_PHOTOS_KEY @"Recent Photos"
@@ -51,7 +155,7 @@ static DataCache *sharedSingleton;
     _recentPhotos = recentPhotos;
     [[NSUserDefaults standardUserDefaults] setObject:recentPhotos forKey:RECENT_PHOTOS_KEY];
 }
-
+#pragma mark - Favorite Photos
 @synthesize  favoritePhotos = _favoritePhotos;
 
 #define FAVORITE_PHOTOS_KEY @"Favorite Photos"
@@ -108,21 +212,33 @@ static DataCache *sharedSingleton;
 }
 
 -(UIImage *) getImage: (NSURL *) imageURL{
-    
+  
     UIImage * image = nil;
     if(imageURL){
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        NSData *imageData = [self getPhotoFromCacheByID:[[imageURL path] lastPathComponent]];
         
-        self.networkActivities++;
-        [NSThread sleepForTimeInterval:2.0];
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
-        self.networkActivities--;
-
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
-    
+        if(!imageData) {
+            imageData = [self loadImageFromNet:imageURL];
+            [self cachePhoto:imageData withID: [[imageURL path] lastPathComponent]];
+        }
+       
         image = [[UIImage alloc] initWithData:imageData];
     }
     return image;
+}
+
+-(NSData*)loadImageFromNet: (NSURL *) imageURL{
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    self.networkActivities++;
+    [NSThread sleepForTimeInterval:2.0];
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
+    self.networkActivities--;
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
+    
+    return imageData;
 }
 
 @end
