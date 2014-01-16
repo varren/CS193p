@@ -21,6 +21,8 @@
 @property (strong, nonatomic) UIImageView *imageView;
 
 
+
+@property(nonatomic) BOOL imgHasLoaded;
 @property (nonatomic) BOOL needToAutoResize;
 @end
 
@@ -133,7 +135,10 @@
 #pragma mark - Other
 
 - (void)resetImage{
-    if (self.scrollView) {
+    if (self.scrollView && !self.imgHasLoaded) {
+        self.imgHasLoaded = YES;
+
+        
         self.scrollView.contentSize = CGSizeZero;
         self.imageView.image = nil;
         [self.activityIndicator startAnimating];
@@ -156,7 +161,8 @@
                     [self.activityIndicator stopAnimating];
                 });
         });
-    }
+        
+    } 
 }
 
 
