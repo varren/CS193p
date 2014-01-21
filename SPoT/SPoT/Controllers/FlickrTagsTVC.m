@@ -27,9 +27,9 @@
     [self.refreshControl beginRefreshing];
     dispatch_queue_t flickrFetchQueue = dispatch_queue_create("Flickr Fetch Queue", NULL);
     dispatch_async(flickrFetchQueue, ^{
-        [UIApplication sharedApplication].networkActivityIndicatorVisible =YES;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         NSArray *flickrPhotos = [FlickrFetcher stanfordPhotos];
-        [UIApplication sharedApplication].networkActivityIndicatorVisible =NO;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.tags = nil;
             self.taggedPhotos = nil;

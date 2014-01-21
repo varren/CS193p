@@ -20,8 +20,6 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-
-
 @property(nonatomic) BOOL imgHasLoaded;
 @property (nonatomic) BOOL needToAutoResize;
 @end
