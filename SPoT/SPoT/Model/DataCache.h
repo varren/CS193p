@@ -19,4 +19,6 @@
 -(void)removeFromFavorite:(NSDictionary *)photo;
 -(UIImage *) getImage: (NSURL *) imageURL;
 
+
+-(NSArray *)loadPhotosInfoFromNet;
 @end

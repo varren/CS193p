@@ -76,7 +76,7 @@
 	switch (format) {
 		case FlickrPhotoFormatSquare:    formatString = @"s"; break;
 		case FlickrPhotoFormatLarge:     formatString = @"b"; break;
-		// case FlickrPhotoFormatThumbnail: formatString = @"t"; break;
+        //case FlickrPhotoFormatThumbnail: formatString = @"t"; break;
 		// case FlickrPhotoFormatSmall:     formatString = @"m"; break;
 		// case FlickrPhotoFormatMedium500: formatString = @"-"; break;
 		// case FlickrPhotoFormatMedium640: formatString = @"z"; break;

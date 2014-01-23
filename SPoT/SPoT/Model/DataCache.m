@@ -7,6 +7,8 @@
 //
 
 #import "DataCache.h"
+#import "FlickrFetcher.h"
+
 
 @interface DataCache()
 @property (strong, nonatomic) NSArray* recentPhotos;
@@ -38,6 +40,7 @@ static DataCache *sharedSingleton;
 }
 
 #pragma mark - Properties
+
 
 #pragma mark - Cached Photos
 
@@ -226,14 +229,26 @@ static DataCache *sharedSingleton;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    self.networkActivities++;
+    
     //[NSThread sleepForTimeInterval:2.0];
     NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
-    self.networkActivities--;
+    
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
     
     return imageData;
+}
+-(NSArray* )loadPhotosInfoFromNet{
+    NSArray *flickrPhotos = nil;
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.networkActivities++;
+    flickrPhotos = [FlickrFetcher stanfordPhotos];
+    self.networkActivities--;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = self.networkActivities ? YES: NO;
+    
+
+    return flickrPhotos;
 }
 
 @end

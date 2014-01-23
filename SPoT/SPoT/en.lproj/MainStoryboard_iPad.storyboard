@@ -39,10 +39,10 @@
             </objects>
             <point key="canvasLocation" x="-1599" y="-792"/>
         </scene>
-        <!--Flickr TagsTVC - Flickr tags-->
+        <!--Demo TagCDTVC - Flickr tags-->
         <scene sceneID="5nd-4F-U9z">
             <objects>
-                <tableViewController id="Ye3-Rm-5Ov" customClass="FlickrTagsTVC" sceneMemberID="viewController">
+                <tableViewController id="Ye3-Rm-5Ov" customClass="DemoTagCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FDq-w3-hSM">
                         <rect key="frame" x="0.0" y="64" width="320" height="739"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +71,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="1bI-AD-ZYe" kind="push" identifier="Show Tagged Photos" id="jPx-bV-5Gl"/>
+                                    <segue destination="1bI-AD-ZYe" kind="push" identifier="setTag:" id="jPx-bV-5Gl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -90,10 +90,10 @@
             </objects>
             <point key="canvasLocation" x="-614" y="-1674"/>
         </scene>
-        <!--Flickr ImagesTVC - Tagged Photos-->
+        <!--Photos By TagCDTVC - Tagged Photos-->
         <scene sceneID="y31-D4-FTS">
             <objects>
-                <tableViewController id="1bI-AD-ZYe" customClass="FlickrImagesTVC" sceneMemberID="viewController">
+                <tableViewController id="1bI-AD-ZYe" customClass="PhotosByTagCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="b6H-kk-cek">
                         <rect key="frame" x="0.0" y="64" width="320" height="739"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,7 +122,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="Show Image" splitViewControllerTargetIndex="1" id="uki-at-CSl"/>
+                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="setImageURL:" splitViewControllerTargetIndex="1" id="uki-at-CSl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -250,7 +250,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="Show Image" splitViewControllerTargetIndex="1" id="tln-ZI-Ohe"/>
+                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="setImageURL:" splitViewControllerTargetIndex="1" id="tln-ZI-Ohe"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -298,7 +298,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="Show Image" splitViewControllerTargetIndex="1" id="cpP-Jx-3fI"/>
+                                    <segue destination="4H7-qi-7P1" kind="replace" identifier="setImageURL:" splitViewControllerTargetIndex="1" id="cpP-Jx-3fI"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -355,12 +355,58 @@
         <image name="flickr-square.png" width="32" height="32"/>
         <image name="flickr.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="CoreDataTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoreDataTableViewController.h"/>
+        </class>
+        <class className="DemoTagCDTVC" superclassName="TagCDTVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DemoTagCDTVC.h"/>
+        </class>
+        <class className="FavoritesTVC" superclassName="FlickrImagesTVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoritesTVC.h"/>
+        </class>
+        <class className="FlickrImagesTVC" superclassName="MenuDataTVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlickrImagesTVC.h"/>
+            <relationships>
+                <relationship kind="action" name="addToFavorite:"/>
+            </relationships>
+        </class>
+        <class className="FlickrRecentPhotosTVC" superclassName="FlickrImagesTVC">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FlickrRecentPhotosTVC.h"/>
+        </class>
+        <class className="ImageScrollViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageScrollViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="barButtonTitle" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="favoriteButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="splitViewBarButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="MenuDataTVC" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MenuDataTVC.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PhotosByTagCDTVC" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotosByTagCDTVC.h"/>
+        </class>
+        <class className="TagCDTVC" superclassName="CoreDataTableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TagCDTVC.h"/>
+        </class>
+        <class className="UIRefreshControl" superclassName="UIControl">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIRefreshControl.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cpP-Jx-3fI"/>
+        <segue reference="tln-ZI-Ohe"/>
     </inferredMetricsTieBreakers>
 </document>

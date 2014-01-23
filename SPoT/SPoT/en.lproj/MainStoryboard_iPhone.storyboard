@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="-71" y="425"/>
         </scene>
-        <!--Flickr TagsTVC - Flickr tags-->
+        <!--Demo TagCDTVC - Flickr tags-->
         <scene sceneID="0H6-Mz-0lM">
             <objects>
-                <tableViewController id="oSN-Ip-Ly4" customClass="FlickrTagsTVC" sceneMemberID="viewController">
+                <tableViewController id="oSN-Ip-Ly4" customClass="DemoTagCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="rLI-qM-F1v">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,7 +54,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="3NT-1h-bh1" kind="push" identifier="Show Tagged Photos" id="dBb-Ao-5lR"/>
+                                    <segue destination="3NT-1h-bh1" kind="push" identifier="setTag:" id="dBb-Ao-5lR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -72,10 +72,10 @@
             </objects>
             <point key="canvasLocation" x="826" y="-214"/>
         </scene>
-        <!--Flickr ImagesTVC - Tagged Photos-->
+        <!--Photos By TagCDTVC - Tagged Photos-->
         <scene sceneID="u2c-z6-b7a">
             <objects>
-                <tableViewController id="3NT-1h-bh1" customClass="FlickrImagesTVC" sceneMemberID="viewController">
+                <tableViewController id="3NT-1h-bh1" customClass="PhotosByTagCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="N1h-Vv-cNl">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,7 +102,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="L7l-Id-UYz" kind="push" identifier="Show Image" id="SoW-yN-zd3"/>
+                                    <segue destination="L7l-Id-UYz" kind="push" identifier="setImageURL:" id="SoW-yN-zd3"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -194,7 +194,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="L7l-Id-UYz" kind="push" identifier="Show Image" id="M45-Nu-ca0"/>
+                                    <segue destination="L7l-Id-UYz" kind="push" identifier="setImageURL:" id="M45-Nu-ca0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -239,7 +239,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="L7l-Id-UYz" kind="push" identifier="Show Image" id="eMK-0U-fE0"/>
+                                    <segue destination="L7l-Id-UYz" kind="push" identifier="setImageURL:" id="eMK-0U-fE0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -298,6 +298,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SoW-yN-zd3"/>
+        <segue reference="eMK-0U-fE0"/>
     </inferredMetricsTieBreakers>
 </document>
