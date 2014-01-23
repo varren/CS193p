@@ -30,12 +30,13 @@
         photo  = [NSEntityDescription insertNewObjectForEntityForName:@"Photo" inManagedObjectContext:context];
         
         photo.title = [photoDictionary[FLICKR_PHOTO_TITLE] description];
-        photo.subtitle = [[photoDictionary valueForKey:FLICKR_PHOTO_DESCRIPTION] description];
+        photo.subtitle = [[photoDictionary valueForKeyPath:FLICKR_PHOTO_DESCRIPTION] description];
         photo.imgURL = [[FlickrFetcher urlForPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
         photo.thumbnailURL = [[FlickrFetcher urlForPhoto:photoDictionary format:FlickrPhotoFormatSquare] absoluteString];
         photo.uniqueID = [photoDictionary[FLICKR_PHOTO_ID] description];
         photo.favourite = FALSE;
         photo.removed = NO;
+        photo.accessDate = nil;
         
         for(NSString *tagName in [photoDictionary[FLICKR_TAGS] componentsSeparatedByString:@" "]){
             Tag *tag = [Tag tagWithName:tagName inManagedObjectContext:context];

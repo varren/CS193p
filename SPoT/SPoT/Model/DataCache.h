@@ -11,14 +11,8 @@
 @interface DataCache : NSObject
 +(DataCache*)instance; //singletone
 
--(NSArray *) recentlyViewedPhotos;
--(void) addRecentlyViewedPhoto:(NSDictionary *) photo;
-
--(NSArray *) favoritePhotos;
--(void)addFavoritePhoto:(NSDictionary *) photo;
--(void)removeFromFavorite:(NSDictionary *)photo;
 -(UIImage *) getImage: (NSURL *) imageURL;
+-(NSData*)loadImageFromNet: (NSURL *) imageURL;
+-(NSArray *) loadPhotosInfoFromNet;
 
-
--(NSArray *)loadPhotosInfoFromNet;
 @end

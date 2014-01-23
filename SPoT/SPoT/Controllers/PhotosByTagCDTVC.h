@@ -7,9 +7,9 @@
 //
 // can preform "setTag:" segue
 
-#import "CoreDataTableViewController.h"
+#import "PhotosCDTVC.h"
 #import "Tag.h"
 
-@interface PhotosByTagCDTVC : CoreDataTableViewController
+@interface PhotosByTagCDTVC : PhotosCDTVC
 @property(strong,nonatomic) Tag * tag;
 @end

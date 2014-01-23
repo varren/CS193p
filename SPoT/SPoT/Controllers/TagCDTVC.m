@@ -21,19 +21,21 @@
     }
     
     if (indexPath) {
-        if([segue.identifier isEqualToString:@"setTag:"]
-           && [segue.destinationViewController respondsToSelector:@selector(setTag:)]){
-            
+        if([segue.identifier isEqualToString:@"setTag:"]){
+           if([segue.destinationViewController respondsToSelector:@selector(setTag:)]){
+               
             Tag * tag = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
             [segue.destinationViewController performSelector:@selector(setTag:) withObject:tag];
-
+               
+           }
         }
     }
+    
 }
 
 -(void)setManagedObjectContext:(NSManagedObjectContext*) managedObjectContext{
     _managedObjectContext = managedObjectContext;
+
     if(managedObjectContext){
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Tag"];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];

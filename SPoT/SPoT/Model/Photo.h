@@ -2,7 +2,7 @@
 //  Photo.h
 //  SPoT
 //
-//  Created by mmh on 21/01/2014.
+//  Created by mmh on 22/01/2014.
 //  Copyright (c) 2014 mmh. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSNumber * favourite;
 @property (nonatomic, retain) NSString * imgURL;
-@property (nonatomic, retain) NSDate * lastTimeViewed;
+@property (nonatomic, retain) NSDate * accessDate;
 @property (nonatomic, retain) NSNumber * removed;
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSData * thumbnail;

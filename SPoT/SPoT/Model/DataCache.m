@@ -11,8 +11,6 @@
 
 
 @interface DataCache()
-@property (strong, nonatomic) NSArray* recentPhotos;
-@property (strong, nonatomic) NSArray* favoritePhotos;
 
 @property (atomic) NSInteger networkActivities;
 
@@ -38,8 +36,6 @@ static DataCache *sharedSingleton;
 +(DataCache *) instance{
     return sharedSingleton;
 }
-
-#pragma mark - Properties
 
 
 #pragma mark - Cached Photos
@@ -112,6 +108,7 @@ static DataCache *sharedSingleton;
         NSLog(@"Setting %@ photo", ID);
         
         //Remove oldest cached photo if needed
+
         while([self cachedDirSize] + photo.length > MAX_CACHE_SIZE){
             NSArray * photos = [self listOfCachedPhotos] ;
             
@@ -121,8 +118,10 @@ static DataCache *sharedSingleton;
             
             NSString * oldestPhotoPath = [((NSURL*)[photos lastObject]) path];
             NSLog(@"Removing: %@", oldestPhotoPath);
+            
             [[NSFileManager defaultManager] removeItemAtPath: oldestPhotoPath error: NO];
         }
+    
     
         // saving new photo
         [photo writeToFile: [[self cachedPhotosDIR] stringByAppendingPathComponent:ID] atomically:YES];
@@ -135,76 +134,6 @@ static DataCache *sharedSingleton;
     [[NSFileManager defaultManager] removeItemAtPath:self.cachedPhotosDIR error:NO];
 }
 
-
-#pragma mark - Recent Photos
-@synthesize recentPhotos = _recentPhotos;
-
-#define RECENT_PHOTOS_KEY @"Recent Photos"
-
--(NSArray*) recentPhotos{
-    if(!_recentPhotos)_recentPhotos = [[NSUserDefaults standardUserDefaults] valueForKey:RECENT_PHOTOS_KEY] ;
-    return _recentPhotos;
-}
-
--(void)setRecentPhotos:(NSArray *)recentPhotos{
-    _recentPhotos = recentPhotos;
-    [[NSUserDefaults standardUserDefaults] setObject:recentPhotos forKey:RECENT_PHOTOS_KEY];
-}
-#pragma mark - Favorite Photos
-@synthesize  favoritePhotos = _favoritePhotos;
-
-#define FAVORITE_PHOTOS_KEY @"Favorite Photos"
-
--(NSArray*) favoritePhotos{
-   
-    if(!_favoritePhotos){
-        _favoritePhotos = [[NSUserDefaults standardUserDefaults] valueForKey:FAVORITE_PHOTOS_KEY];
-        if(!_favoritePhotos) _favoritePhotos = [NSArray array];
-    }
-    return _favoritePhotos;
-}
-
--(void)setFavoritePhotos:(NSArray *)favoritePhotos{
-    _favoritePhotos = favoritePhotos;
-    [[NSUserDefaults standardUserDefaults] setObject:favoritePhotos forKey:FAVORITE_PHOTOS_KEY];
-    
-}
-
-#pragma mark - Implementation
-
-
--(NSArray *) recentlyViewedPhotos{
-    return self.recentPhotos;
-}
-
-#define MAX_RECENT_PHOTOS_SAVED 20
--(void) addRecentlyViewedPhoto:(NSDictionary *) photo{
-    NSMutableArray * recent = [[NSMutableArray alloc] initWithObjects:photo, nil];
-
-    for (NSDictionary * oldPhoto in self.recentPhotos) {
-        if([recent count] >= MAX_RECENT_PHOTOS_SAVED) break;
-        if(![oldPhoto isEqualToDictionary:photo])
-            [recent addObject:oldPhoto];
-    }
-
-    self.recentPhotos = recent;
-}
-
--(void)addFavoritePhoto:(NSDictionary *) photo{
-    if(![self.favoritePhotos containsObject:photo]){
-        NSMutableArray * mutableFavorit = [self.favoritePhotos mutableCopy];
-        [mutableFavorit addObject:photo];
-        self.favoritePhotos = mutableFavorit;
-    }
-}
-
--(void)removeFromFavorite:(NSDictionary *)photo{
-    if([self.favoritePhotos containsObject:photo]){
-        NSMutableArray * mutableFavorit = [self.favoritePhotos mutableCopy];
-        [mutableFavorit removeObject:photo];	
-        self.favoritePhotos = mutableFavorit;
-    }
-}
 
 -(UIImage *) getImage: (NSURL *) imageURL{
   
@@ -238,6 +167,7 @@ static DataCache *sharedSingleton;
     
     return imageData;
 }
+
 -(NSArray* )loadPhotosInfoFromNet{
     NSArray *flickrPhotos = nil;
     

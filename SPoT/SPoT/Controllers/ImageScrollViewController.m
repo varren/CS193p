@@ -20,7 +20,6 @@
 
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property(nonatomic) BOOL imgHasLoaded;
 @property (nonatomic) BOOL needToAutoResize;
 @end
 
@@ -133,8 +132,8 @@
 #pragma mark - Other
 
 - (void)resetImage{
-    if (self.scrollView && !self.imgHasLoaded) {
-        self.imgHasLoaded = YES;
+    if (self.scrollView) {
+
 
         
         self.scrollView.contentSize = CGSizeZero;

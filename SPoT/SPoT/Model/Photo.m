@@ -2,7 +2,7 @@
 //  Photo.m
 //  SPoT
 //
-//  Created by mmh on 21/01/2014.
+//  Created by mmh on 22/01/2014.
 //  Copyright (c) 2014 mmh. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 
 @dynamic favourite;
 @dynamic imgURL;
-@dynamic lastTimeViewed;
+@dynamic accessDate;
 @dynamic removed;
 @dynamic subtitle;
 @dynamic thumbnail;

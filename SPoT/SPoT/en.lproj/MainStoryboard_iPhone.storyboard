@@ -164,10 +164,10 @@
             </objects>
             <point key="canvasLocation" x="447" y="-200"/>
         </scene>
-        <!--Flickr Recent PhotosTVC - Recently Viewed-->
+        <!--Recent PhotosCDTVC - Recently Viewed-->
         <scene sceneID="osN-sS-mxd">
             <objects>
-                <tableViewController id="Zf2-ek-0UF" customClass="FlickrRecentPhotosTVC" sceneMemberID="viewController">
+                <tableViewController id="Zf2-ek-0UF" customClass="RecentPhotosCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mxB-0S-oUh">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -209,10 +209,10 @@
             </objects>
             <point key="canvasLocation" x="826" y="431"/>
         </scene>
-        <!--FavoritesTVC - Favorites-->
+        <!--Favorite PhotosCDTVC - Favorites-->
         <scene sceneID="VR1-K4-bZJ">
             <objects>
-                <tableViewController id="Xmn-im-qKU" customClass="FavoritesTVC" sceneMemberID="viewController">
+                <tableViewController id="Xmn-im-qKU" customClass="FavoritePhotosCDTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zoM-Fy-2gE">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -298,6 +298,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eMK-0U-fE0"/>
+        <segue reference="M45-Nu-ca0"/>
     </inferredMetricsTieBreakers>
 </document>
