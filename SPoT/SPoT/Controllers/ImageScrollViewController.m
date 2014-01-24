@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *splitViewBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *barButtonTitle;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *favoriteButton;
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) UIImageView *imageView;

@@ -2,7 +2,7 @@
 //  Photo.h
 //  SPoT
 //
-//  Created by mmh on 22/01/2014.
+//  Created by mmh on 24/01/2014.
 //  Copyright (c) 2014 mmh. All rights reserved.
 //
 
@@ -13,15 +13,16 @@
 
 @interface Photo : NSManagedObject
 
+@property (nonatomic, retain) NSDate * accessDate;
 @property (nonatomic, retain) NSNumber * favourite;
 @property (nonatomic, retain) NSString * imgURL;
-@property (nonatomic, retain) NSDate * accessDate;
-@property (nonatomic, retain) NSNumber * removed;
 @property (nonatomic, retain) NSString * subtitle;
 @property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSString * thumbnailURL;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * uniqueID;
+@property (nonatomic, retain) NSString * sectionName;
+@property (nonatomic, retain) NSString * mainTag;
 @property (nonatomic, retain) NSSet *tags;
 @end
 

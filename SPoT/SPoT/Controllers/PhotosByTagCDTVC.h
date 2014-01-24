@@ -8,7 +8,7 @@
 // can preform "setTag:" segue
 
 #import "PhotosCDTVC.h"
-#import "Tag.h"
+#import "Tag+Create.h"
 
 @interface PhotosByTagCDTVC : PhotosCDTVC
 @property(strong,nonatomic) Tag * tag;

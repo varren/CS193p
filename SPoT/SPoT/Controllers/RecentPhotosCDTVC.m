@@ -25,10 +25,9 @@
 
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
         request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"accessDate" ascending:NO selector:@selector(compare:)]];
-        request.predicate = [NSPredicate predicateWithFormat:@"accessDate != nil"];
+        request.predicate = [NSPredicate predicateWithFormat:@"accessDate != nil AND tags.@count > 0"];
         request.fetchLimit = RECENT_PHOTOS_LIMIT;
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[SharedDocument instance].document.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:[SharedDocument instance].document.managedObjectContext sectionNameKeyPath:@"accessDate" cacheName:nil];
         
     }else{
 

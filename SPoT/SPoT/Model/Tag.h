@@ -2,7 +2,7 @@
 //  Tag.h
 //  SPoT
 //
-//  Created by mmh on 22/01/2014.
+//  Created by mmh on 24/01/2014.
 //  Copyright (c) 2014 mmh. All rights reserved.
 //
 
@@ -13,7 +13,6 @@
 
 @interface Tag : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * ignored;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *photos;
 @end

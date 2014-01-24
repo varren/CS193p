@@ -9,8 +9,11 @@
 #import "PhotosCDTVC.h"
 #import "Photo.h"
 #import "DataCache.h"
+#import "SharedDocument.h"
 
 @implementation PhotosCDTVC
+
+
 
 #pragma mark - Segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -24,6 +27,7 @@
     if (indexPath) {
         if([segue.identifier isEqualToString:@"setImageURL:"]){
             Photo * photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
             
             if([segue.destinationViewController respondsToSelector:@selector(setImageURL:)]){
     
@@ -36,13 +40,13 @@
             if([segue.destinationViewController respondsToSelector:@selector(setTitle:)]){
                 [segue.destinationViewController performSelector:@selector(setTitle:)withObject:photo.title];
             }
-            /*
+            
             UIBarButtonItem * currentButtonItem = [[self.splitViewController.viewControllers lastObject] performSelector: @selector(splitViewBarButtonItem)];
             
             [segue.destinationViewController performSelector: @selector(setSplitViewBarButtonItem:) withObject:currentButtonItem];
             
             [segue.destinationViewController performSelector:@selector(setFavoriteButton:) withObject:[self favoriteTabBarItemForPhoto:photo]];
-            */
+            
         }
     }
 }
@@ -77,7 +81,7 @@
     return cell;
 }
 
-/*
+
 #pragma mark - Favorite Button
 
 // kinda cool can create button and target action metod here and give this button to ImageScrollView to display
@@ -90,6 +94,7 @@
     [favoriteButton setImage:[UIImage imageNamed:@"favorites-gray.png"]  forState:UIControlStateNormal];
     [favoriteButton setImage:[UIImage imageNamed:@"favorites-red.png"]  forState:UIControlStateSelected];
     [favoriteButton setFrame:CGRectMake(0, 0, 32, 32)];
+    favoriteButton.titleLabel.text = photo.uniqueID;
     favoriteButton.selected = [photo.favourite boolValue];
     
     UIBarButtonItem *favorite = [[UIBarButtonItem alloc] initWithCustomView:favoriteButton];
@@ -101,14 +106,30 @@
 - (IBAction)addToFavorite:(id)sender {
     
     if([sender isKindOfClass:[UIButton class]]){
-        UIButton * favoriteButton = sender;
-        NSDictionary * latestPhoto = [[DataCache instance] recentlyViewedPhotos][0];
-        favoriteButton.selected ?
-        [[DataCache instance] removeFromFavorite:latestPhoto]
-        : [[DataCache instance] addFavoritePhoto:latestPhoto];
-        
+        UIButton * favoriteButton = sender;        
         favoriteButton.selected = !favoriteButton.selected;
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+        request.predicate = [NSPredicate predicateWithFormat:@"uniqueID == %@", favoriteButton.titleLabel.text];
+        NSError * error = nil;
+        NSArray *matches = [[SharedDocument instance].document.managedObjectContext executeFetchRequest:request error:&error];
+        Photo* photo = [matches lastObject];
+        if (photo) photo.favourite = [NSNumber numberWithBool: !photo.favourite.boolValue];
     }
 }
-*/
+
+
+#pragma mark - Delete Gesture
+
+-(BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+-(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        Photo* photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        photo.tags = nil;
+    }
+}
+
 @end

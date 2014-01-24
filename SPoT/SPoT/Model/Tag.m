@@ -2,7 +2,7 @@
 //  Tag.m
 //  SPoT
 //
-//  Created by mmh on 22/01/2014.
+//  Created by mmh on 24/01/2014.
 //  Copyright (c) 2014 mmh. All rights reserved.
 //
 
@@ -12,7 +12,6 @@
 
 @implementation Tag
 
-@dynamic ignored;
 @dynamic name;
 @dynamic photos;
 

@@ -20,12 +20,20 @@
 -(void) setupFetchResultsController{
     
     if(self.tag.managedObjectContext){
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
-        request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        request.predicate = [NSPredicate predicateWithFormat:@"ANY tags == %@", self.tag];
-
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.tag.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-
+        if(self.tag.name == [Tag allTag]){
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"mainTag" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+            request.predicate = [NSPredicate predicateWithFormat:@"ANY tags == %@", self.tag];
+            
+            self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.tag.managedObjectContext sectionNameKeyPath:@"mainTag" cacheName:nil];
+            
+        }else{
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+            request.predicate = [NSPredicate predicateWithFormat:@"ANY tags == %@", self.tag];
+            
+            self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.tag.managedObjectContext sectionNameKeyPath:@"sectionName" cacheName:nil];
+        }
     }else{
         self.fetchedResultsController = nil;
     }
