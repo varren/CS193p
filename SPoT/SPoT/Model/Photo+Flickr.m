@@ -34,14 +34,19 @@
         photo.imgURL = [[FlickrFetcher urlForPhoto:photoDictionary format:FlickrPhotoFormatLarge] absoluteString];
         photo.thumbnailURL = [[FlickrFetcher urlForPhoto:photoDictionary format:FlickrPhotoFormatSquare] absoluteString];
         photo.uniqueID = [photoDictionary[FLICKR_PHOTO_ID] description];
-        photo.favourite = FALSE;
-        photo.removed = NO;
+        photo.favourite = NO;
         photo.accessDate = nil;
+        photo.sectionName = [[photo.title substringToIndex: 1] uppercaseString];
         
-        for(NSString *tagName in [photoDictionary[FLICKR_TAGS] componentsSeparatedByString:@" "]){
+        NSMutableArray * tags = [[photoDictionary[FLICKR_TAGS] componentsSeparatedByString:@" "] mutableCopy];
+        [tags addObject:[Tag allTag]];
+        [tags removeObjectsInArray:[Tag ignoredTags]];
+        photo.mainTag = tags[0];
+        for(NSString *tagName in tags){
             Tag *tag = [Tag tagWithName:tagName inManagedObjectContext:context];
             [photo addTagsObject:tag];
         }
+        
     } else{
         photo = [matches lastObject];
     }

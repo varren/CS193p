@@ -11,4 +11,6 @@
 @interface Tag (Create)
 
 + (Tag *) tagWithName:(NSString*) name inManagedObjectContext: (NSManagedObjectContext *) context;
++(NSString*) allTag;
++(NSArray*) ignoredTags;
 @end

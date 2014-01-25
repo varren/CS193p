@@ -35,4 +35,12 @@ inManagedObjectContext: (NSManagedObjectContext *) context{
     return tag;
 
 }
+
++(NSString*) allTag{
+    return @"all";
+}
+
++(NSArray*) ignoredTags{
+    return @[@"cs193pspot", @"portrait", @"landscape"];
+}
 @end

@@ -8,7 +8,7 @@
 
 #import "FavoritePhotosCDTVC.h"
 #import "SharedDocument.h"
-
+#import "Photo.h"
 @implementation FavoritePhotosCDTVC
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -34,6 +34,13 @@
         
         
         self.fetchedResultsController = nil;
+    }
+    
+}
+-(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        Photo* photo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        photo.favourite = NO;
     }
 }
 @end
